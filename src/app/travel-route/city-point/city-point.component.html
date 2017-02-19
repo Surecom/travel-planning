@@ -1,0 +1,19 @@
+<div class="city-point d-flex justify-content-start">
+  <div class="p-2">
+    <h4>
+      <small class="text-muted">From:</small>
+      {{city.from}}
+      <small class="text-muted">To:</small>
+      {{city.to}}
+    </h4>
+    <h1 class="display-3">{{city.title}}</h1>
+    <p>
+      {{city.description}}
+    </p>
+  </div>
+  <div class="ml-auto p-2">
+    <button type="button" class="close" aria-label="Close" (click)="removeCity()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>

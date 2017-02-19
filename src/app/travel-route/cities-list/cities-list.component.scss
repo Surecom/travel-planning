@@ -1,0 +1,12 @@
+@import "../travel-route.component";
+
+@for $i from 1 through length($colors) {
+  /deep/ div:nth-child(#{length($colors)}n+#{$i}) {
+    div.city-point {
+      border-left-color: nth($colors, $i);
+      &:hover {
+        background-color: lighten(nth($colors, $i), 35%);
+      }
+    }
+  }
+}

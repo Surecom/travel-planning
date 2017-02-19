@@ -1,0 +1,6 @@
+<div class="tab-content">
+  <md-progress-spinner *ngIf="(citiesLoading$ | async)" mode="indeterminate"></md-progress-spinner>
+  <div *ngFor="let city of (cities$ | async)">
+    <div city-point [city]="city"></div>
+  </div>
+</div>

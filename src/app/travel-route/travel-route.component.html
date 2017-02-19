@@ -1,0 +1,17 @@
+<div class="form-group">
+  <label class="col-form-label">Planned trip length</label>
+  <div class="col-1">
+    <input class="form-control" #daysInput
+           type="number" [value]="days" (change)="dayChange(daysInput.value)">
+  </div>
+</div>
+<div slider [cities]="(cities$ | async)" [days]="days"></div>
+<ul class="nav nav-tabs tab-travel" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" routerLink="/travel/city-list" routerLinkActive="active" role="tab">City List</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" routerLink="/travel/city-add" routerLinkActive="active" role="tab">Add City</a>
+  </li>
+</ul>
+<router-outlet></router-outlet>
