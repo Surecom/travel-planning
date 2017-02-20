@@ -21,5 +21,4 @@ export class CitiesListComponent implements OnInit {
     this.cities$ = this.store.select('cities').map((state: CityState) => state.cities);
     this.citiesLoading$ = this.store.select('cities').map((state: CityState) => state.loading);
   }
-
 }
