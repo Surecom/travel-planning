@@ -12,7 +12,6 @@ import { Observable } from 'rxjs/Observable';
 })
 export class TravelRouteComponent implements OnInit {
 
-  public days = 0;
   public cities$: Observable<CityModel[]>;
 
   constructor(private store: Store<CityModel>) { }
@@ -20,9 +19,5 @@ export class TravelRouteComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(loadCities());
     this.cities$ = this.store.select('cities').map((state: CityState) => state.cities);
-  }
-
-  dayChange(value: string) {
-    this.days = parseInt(value, 10);
   }
 }
