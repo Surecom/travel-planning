@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { SliderComponent } from './slider/slider.component';
+import { Component, OnInit } from '@angular/core';
 import { CityModel } from './models/city-model';
 import { Store } from '@ngrx/store';
 import { loadCities } from './travel-route.actions';
 import { CityState } from './reducers/city.reducer';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: '[travel-route]',
@@ -13,11 +12,8 @@ import { Observable } from 'rxjs';
 })
 export class TravelRouteComponent implements OnInit {
 
-  days: number = 0;
-  cities$: Observable<CityModel[]>;
-
-  @ViewChild(SliderComponent)
-  private slider: SliderComponent;
+  public days = 0;
+  public cities$: Observable<CityModel[]>;
 
   constructor(private store: Store<CityModel>) { }
 
@@ -27,6 +23,6 @@ export class TravelRouteComponent implements OnInit {
   }
 
   dayChange(value: string) {
-    this.days = parseInt(value);
+    this.days = parseInt(value, 10);
   }
 }

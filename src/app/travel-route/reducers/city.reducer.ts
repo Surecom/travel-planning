@@ -21,25 +21,25 @@ export function reducer(state: CityState = initialState, action: Action): CitySt
       return {
         loading: true,
         cities: []
-      }
+      };
     }
     case ActionTypes.LOAD_CITIES_SUCCESS: {
       return {
         loading: false,
         cities: action.payload
-      }
+      };
     }
     case ActionTypes.ADD_CITY_SUCCESS: {
       return {
         loading: false,
         cities: [...state.cities, action.payload]
-      }
+      };
     }
     case ActionTypes.REMOVE_CITY_SUCCESS: {
       return {
         loading: false,
         cities: state.cities.filter((city: CityModel) => city.id !== action.payload.id)
-      }
+      };
     }
     default: {
       return state;
