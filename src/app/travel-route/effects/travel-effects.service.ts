@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { ActionTypes, loadCitiesSuccess, addCitySuccess, removeCitySuccess } from '../travel-route.actions';
 import { Database } from '@ngrx/db';
