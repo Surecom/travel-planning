@@ -5,22 +5,22 @@ import { Store } from '@ngrx/store';
 import { addCity } from '../travel-route.actions';
 
 @Component({
-  selector: 'city-add',
+  selector: 'app-city-add',
   templateUrl: './city-add.component.html',
   styleUrls: ['./city-add.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CityAddComponent implements OnInit, AfterViewInit {
 
-  private cityForm: FormGroup;
+  public cityForm: FormGroup;
   private formErrors = {
     title: ''
   };
   private validationMessages = {
-	  title: {
-      required: "Field is required",
-      minlength: "Minimum length is 5 chars",
-      maxlength: "Maximum length is 50 chars"
+    title: {
+      required: 'Field is required',
+      minlength: 'Minimum length is 5 chars',
+      maxlength: 'Maximum length is 50 chars'
     }
   };
 

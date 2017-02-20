@@ -1,5 +1,4 @@
-import {Component, ChangeDetectorRef, ViewChild, ChangeDetectionStrategy} from '@angular/core';
-import {SliderComponent} from "./travel-route/slider/slider.component";
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +7,5 @@ import {SliderComponent} from "./travel-route/slider/slider.component";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-  constructor(){}
-
+  constructor() { }
 }

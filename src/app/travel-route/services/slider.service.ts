@@ -21,7 +21,7 @@ export class SliderService {
         to: value => moment(Math.floor(value)).format(TravelRoute.DATE_FORMAT),
         from: value => value
       }
-    }
+    };
   }
 
   set currentOptions(value: any) {

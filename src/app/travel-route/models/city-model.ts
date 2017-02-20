@@ -16,7 +16,7 @@ export class CityModel {
   public title: string;
   public description: string;
 
-  constructor(cityModel: ICityModel){
+  constructor(cityModel: ICityModel) {
     this.id = this.guid();
     this.to = cityModel.to;
     this.from = cityModel.from;
@@ -31,7 +31,7 @@ export class CityModel {
       from: this.from,
       title: this.title,
       description: this.description
-    }
+    };
   }
 
   private guid: () => string = (): string =>

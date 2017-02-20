@@ -2,7 +2,7 @@ import {
   Component, ViewChild, ElementRef, AfterViewInit, Input, OnDestroy, ChangeDetectionStrategy, OnChanges, QueryList
 } from '@angular/core';
 
-import {SliderService} from '../services/slider.service';
+import { SliderService } from '../services/slider.service';
 
 import * as noUiSlider from 'nouislider';
 import * as _ from 'lodash';
@@ -19,10 +19,10 @@ import { TravelRoute } from '../common/constants';
 export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
 
   @Input()
-  private days: number = 0;
+  private days = 0;
 
   @Input()
-  private softLimitDays: number = 4;
+  private softLimitDays = 0;
 
   @Input()
   private cities: QueryList<CityModel>;
@@ -30,10 +30,11 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
   @ViewChild('slider')
   private slider: ElementRef;
 
-  private leftLimit: number = 0;
-  private rightLimit: number = 0;
+  private leftLimit = 0;
+  private rightLimit = 0;
 
-  constructor(private sliderService: SliderService) { }
+  constructor(private sliderService: SliderService) {
+  }
 
   ngOnDestroy(): void {
     this.slider.nativeElement.noUiSlider.off('change');
@@ -45,27 +46,29 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
   }
 
   ngAfterViewInit() {
-    if (this.days <= 1) { return; }
+    if (this.days <= 1) {
+      return;
+    }
     this.update();
   }
 
   private update() {
     let ranges: number[] = [];
-    if(this.cities.length > 0) {
+    if (this.cities.length > 0) {
       ranges = this.cities
         .map((city: CityModel) => moment(city.to).diff(moment(city.from), 'days'));
       this.days = ranges.reduce((s: number, o: number) => s + o);
     }
-    let start: number[] = [0, ...ranges];
+    const start: number[] = [0, ...ranges];
 
-    for(let i: number = 0; i < this.cities.length; i++) {
+    for (let i = 0; i < this.cities.length; i++) {
       if (i === 0) {
         start[i] = moment(this.cities[i].from).add(start[i], 'days').valueOf();
       }
       start[i + 1] = moment(this.cities[i].from).add(start[i + 1], 'days').valueOf();
     }
 
-    if(this.cities.length > 0 && !this.slider.nativeElement.noUiSlider) {
+    if (this.cities.length > 0 && !this.slider.nativeElement.noUiSlider) {
       noUiSlider.create(this.slider.nativeElement,
         this.sliderService.currentOptions = _.assign(this.sliderService.defaultOptions, {
           start: [
@@ -88,13 +91,13 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
 
       this.slider.nativeElement.noUiSlider.on('change', this.softLimit);
 
-      let connect: Array<Element> = this.slider.nativeElement.querySelectorAll('.noUi-connect');
+      const connect: Array<Element> = this.slider.nativeElement.querySelectorAll('.noUi-connect');
 
-      for(let i = 0; i < connect.length; i++ ) {
-        connect[i].classList.add(`c-${i+1}-color`);
+      for (let i = 0; i < connect.length; i++) {
+        connect[i].classList.add(`c - $ { i+1}-color`);
       }
     }
-    if(this.slider.nativeElement.noUiSlider && this.cities.length > 0) {
+    if (this.slider.nativeElement.noUiSlider && this.cities.length > 0) {
       this.slider.nativeElement.noUiSlider.updateOptions(
         this.sliderService.currentOptions = _.assign(this.sliderService.currentOptions, {
           start: [
@@ -117,7 +120,7 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
   }
 
   private softLimit: Function = (values, handle) => {
-    let tmp = values;
+    const tmp = values;
     if (moment(values[handle], TravelRoute.DATE_FORMAT).valueOf() < this.leftLimit) {
       tmp[handle] = this.leftLimit;
     } else if (moment(values[handle], TravelRoute.DATE_FORMAT).valueOf() > this.rightLimit) {

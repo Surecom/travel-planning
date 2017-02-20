@@ -1,7 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CityModel } from '../models/city-model';
-import { MdIconRegistry } from '@angular/material';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { removeCity } from '../travel-route.actions';
 
@@ -14,7 +12,7 @@ import { removeCity } from '../travel-route.actions';
 export class CityPointComponent implements OnInit {
 
   @Input()
-  private city: CityModel;
+  public city: CityModel;
 
   constructor(private store: Store<CityModel>) { }
 
