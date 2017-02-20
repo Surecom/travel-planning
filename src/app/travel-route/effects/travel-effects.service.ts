@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/toArray';
 import { Action } from '@ngrx/store';
 import { ActionTypes, loadCitiesSuccess, addCitySuccess, removeCitySuccess } from '../travel-route.actions';
 import { Database } from '@ngrx/db';
