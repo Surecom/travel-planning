@@ -14,6 +14,7 @@ export const ActionTypes = {
   REMOVE_CITY_SUCCESS: 'REMOVE_CITY_SUCCESS'
 };
 
+
 const loadCities: Function = (): Action => {
   return {
     type: ActionTypes.LOAD_CITIES,
