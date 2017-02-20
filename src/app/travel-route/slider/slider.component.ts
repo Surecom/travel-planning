@@ -65,95 +65,47 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
       start[i + 1] = moment(this.cities[i].from).add(start[i + 1], 'days').valueOf();
     }
 
-    if (this.cities.length > 0 && !this.slider.nativeElement.noUiSlider) {
-      noUiSlider.create(this.slider.nativeElement,
-        this.sliderService.currentOptions = _.assign(this.sliderService.defaultOptions, {
-          start: [
-            ...start
-          ],
-          range: {
-            min: moment(start[0]).add(-this.softLimitDays, 'days').valueOf(),
-            max: moment(start[start.length - 1]).add(this.softLimitDays, 'days').valueOf()
-          },
-          pips: {
-            mode: 'count',
-            values: 1,
-            density: 100 / (this.days + this.softLimitDays * 2)
-          }
-        })
-      );
-
-      this.leftLimit = start[0];
-      this.rightLimit = start[start.length - 1];
-
-      this.slider.nativeElement.noUiSlider.on('change', this.softLimit);
-
-      const connect: Array<Element> = this.slider.nativeElement.querySelectorAll('.noUi-connect');
-
-      for (let i = 0; i < connect.length; i++) {
-        connect[i].classList.add(`c-${i+1}-color`);
-      }
-    }
-    if (this.slider.nativeElement.noUiSlider && this.cities.length > 0) {
+    if (this.slider.nativeElement.noUiSlider) {
       this.slider.nativeElement.noUiSlider.off('change');
       this.slider.nativeElement.noUiSlider.destroy();
-      noUiSlider.create(this.slider.nativeElement,
-        this.sliderService.currentOptions = _.assign(this.sliderService.defaultOptions, {
-          start: [
-            ...start
-          ],
-          range: {
-            min: moment(start[0]).add(-this.softLimitDays, 'days').valueOf(),
-            max: moment(start[start.length - 1]).add(this.softLimitDays, 'days').valueOf()
-          },
-          pips: {
-            mode: 'count',
-            values: 1,
-            density: 100 / (this.days + this.softLimitDays * 2)
-          }
-        })
-      );
-
-      this.leftLimit = start[0];
-      this.rightLimit = start[start.length - 1];
-
-      this.slider.nativeElement.noUiSlider.on('change', this.softLimit);
-
-      const connect: Array<Element> = this.slider.nativeElement.querySelectorAll('.noUi-connect');
-
-      for (let i = 0; i < connect.length; i++) {
-        connect[i].classList.add(`c-${i+1}-color`);
-      }
-      /*this.leftLimit = start[0];
-      this.rightLimit = start[start.length - 1];
-      this.slider.nativeElement.noUiSlider.updateOptions(
-        this.sliderService.currentOptions = _.assign(this.sliderService.currentOptions, {
-          start: [
-            ...start
-          ],
-          range: {
-            min: moment(start[0]).add(-this.softLimitDays, 'days').valueOf(),
-            max: moment(start[start.length - 1]).add(this.softLimitDays, 'days').valueOf()
-          },
-          pips: {
-            mode: 'count',
-            values: 1,
-            density: 100 / (this.days + this.softLimitDays * 2)
-          }
-        })
-      );
-      this.slider.nativeElement.removeChild(this.slider.nativeElement.querySelector('.noUi-pips'));
-      this.slider.nativeElement.noUiSlider.pips(this.sliderService.currentOptions.pips);*/
+    }
+    if (this.cities.length > 0) {
+      this.createSlider(this.slider.nativeElement, start, this.days, this.softLimitDays);
     }
   }
 
-  private softLimit: Function = (values, handle) => {
-    const tmp = values;
-    if (moment(values[handle], TravelRoute.DATE_FORMAT).valueOf() < this.leftLimit) {
-      tmp[handle] = this.leftLimit;
-    } else if (moment(values[handle], TravelRoute.DATE_FORMAT).valueOf() > this.rightLimit) {
-      values[handle] = this.rightLimit;
+  private createSlider(root: any, range: number[], totalDays: number, softLimit: number): void {
+    noUiSlider.create(root,
+      this.sliderService.currentOptions = _.assign(this.sliderService.defaultOptions, {
+        start: [
+          ...range
+        ],
+        range: {
+          min: moment(range[0]).add(-softLimit, 'days').valueOf(),
+          max: moment(range[range.length - 1]).add(softLimit, 'days').valueOf()
+        },
+        pips: {
+          mode: 'count',
+          values: 1,
+          density: 100 / (totalDays + softLimit * 2)
+        }
+      })
+    );
+
+    root.noUiSlider.on('change', (values, handle) => {
+      const tmp = values;
+      if (moment(values[handle], TravelRoute.DATE_FORMAT).valueOf() < range[0]) {
+        tmp[handle] = range[0];
+      } else if (moment(values[handle], TravelRoute.DATE_FORMAT).valueOf() > range[range.length - 1]) {
+        values[handle] = range[range.length - 1];
+      }
+      root.noUiSlider.set(tmp);
+    });
+
+    const connect: Array<Element> = root.querySelectorAll('.noUi-connect');
+
+    for (let i = 0; i < connect.length; i++) {
+      connect[i].classList.add(`c-${i+1}-color`);
     }
-    this.slider.nativeElement.noUiSlider.set(tmp);
   }
 }
