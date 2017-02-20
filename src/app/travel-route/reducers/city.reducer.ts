@@ -6,6 +6,7 @@ import { Action } from '@ngrx/store';
 import { ActionTypes } from '../travel-route.actions';
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import { TravelRoute } from '../common/constants';
 
 export interface CityState {
   loading: boolean;
@@ -34,7 +35,10 @@ export function reducer(state: CityState = initialState, action: Action): CitySt
     case ActionTypes.ADD_CITY_SUCCESS: {
       return {
         loading: false,
-        cities: _.sortBy([...state.cities, action.payload], (city: CityModel) => moment(city.from).valueOf())
+        cities: _.sortBy(
+          [...state.cities, action.payload],
+          (city: CityModel) => moment(city.from, TravelRoute.DATE_FORMAT).valueOf()
+        )
       };
     }
     case ActionTypes.REMOVE_CITY_SUCCESS: {

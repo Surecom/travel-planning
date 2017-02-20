@@ -1,25 +1,28 @@
 /**
  * Created by Surecom-npm on 2/19/2017.
  */
+import * as moment from 'moment';
+import { TravelRoute } from '../common/constants';
+
 export interface ICityModel {
   id?: string;
-  to: Date;
-  from: Date;
+  to: string;
+  from: string;
   title: string;
   description: string;
 }
 
 export class CityModel {
   public id: string;
-  public to: Date;
-  public from: Date;
+  public to: string;
+  public from: string;
   public title: string;
   public description: string;
 
   constructor(cityModel: ICityModel) {
     this.id = this.guid();
-    this.to = cityModel.to;
-    this.from = cityModel.from;
+    this.to = moment(cityModel.to).format(TravelRoute.DATE_FORMAT);
+    this.from = moment(cityModel.from).format(TravelRoute.DATE_FORMAT);
     this.title = cityModel.title;
     this.description = cityModel.description;
   }
