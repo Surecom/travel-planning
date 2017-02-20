@@ -2,7 +2,7 @@
  * Created by Surecom-npm on 2/19/2017.
  */
 import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { CityModel } from './models/city-model';
 
 export const ActionTypes = {
@@ -14,46 +14,46 @@ export const ActionTypes = {
   REMOVE_CITY_SUCCESS: 'REMOVE_CITY_SUCCESS'
 };
 
-let loadCities: Function = (): Action => {
+const loadCities: Function = (): Action => {
   return {
     type: ActionTypes.LOAD_CITIES,
     payload: {}
-  }
+  };
 };
 
-let loadCitiesSuccess: Function = (cities: Observable<CityModel[]>): Action => {
+const loadCitiesSuccess: Function = (cities: Observable<CityModel[]>): Action => {
   return {
     type: ActionTypes.LOAD_CITIES_SUCCESS,
     payload: cities
-  }
+  };
 };
 
-let addCity: Function = (city: CityModel): Action => {
+const addCity: Function = (city: CityModel): Action => {
   return {
     type: ActionTypes.ADD_CITY,
     payload: city
-  }
+  };
 };
 
-let addCitySuccess: Function = (city: CityModel): Action => {
+const addCitySuccess: Function = (city: CityModel): Action => {
   return {
     type: ActionTypes.ADD_CITY_SUCCESS,
     payload: city
-  }
+  };
 };
 
-let removeCity: Function = (city: CityModel): Action => {
+const removeCity: Function = (city: CityModel): Action => {
   return {
     type: ActionTypes.REMOVE_CITY,
     payload: city
-  }
+  };
 };
 
-let removeCitySuccess: Function = (city: CityModel): Action => {
+const removeCitySuccess: Function = (city: CityModel): Action => {
   return {
     type: ActionTypes.REMOVE_CITY_SUCCESS,
     payload: city
-  }
+  };
 };
 
 export {
