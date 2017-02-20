@@ -53,16 +53,16 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
     let ranges: number[] = [];
     if (this.cities.length > 0) {
       ranges = this.cities
-        .map((city: CityModel) => moment(city.to).diff(moment(city.from), 'days'));
+        .map((city: CityModel) => moment(city.to, TravelRoute.DATE_FORMAT).diff(moment(city.from, TravelRoute.DATE_FORMAT), 'days'));
       this.days = ranges.reduce((s: number, o: number) => s + o);
     }
     const start: number[] = [0, ...ranges];
 
     for (let i = 0; i < this.cities.length; i++) {
       if (i === 0) {
-        start[i] = moment(this.cities[i].from).add(start[i], 'days').valueOf();
+        start[i] = moment(this.cities[i].from, TravelRoute.DATE_FORMAT).add(start[i], 'days').valueOf();
       }
-      start[i + 1] = moment(this.cities[i].from).add(start[i + 1], 'days').valueOf();
+      start[i + 1] = moment(this.cities[i].from, TravelRoute.DATE_FORMAT).add(start[i + 1], 'days').valueOf();
     }
 
     if (this.slider.nativeElement.noUiSlider) {
@@ -105,7 +105,7 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
     const connect: Array<Element> = root.querySelectorAll('.noUi-connect');
 
     for (let i = 0; i < connect.length; i++) {
-      connect[i].classList.add(`c-${i+1}-color`);
+      connect[i].classList.add(`c-${i + 1}-color`);
     }
   }
 }

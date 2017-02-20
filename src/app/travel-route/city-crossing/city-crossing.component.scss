@@ -1,0 +1,13 @@
+.city-crossing-card {
+  height: 200px;
+  border-style: dashed;
+  img {
+    width: 400px;
+    align-self: flex-end;
+    opacity: .1;
+  }
+}
+
+:host {
+  margin-left: 100px;
+}
