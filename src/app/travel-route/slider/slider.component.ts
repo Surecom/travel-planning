@@ -1,6 +1,5 @@
-import {
-  Component, ViewChild, ElementRef, AfterViewInit, Input, OnDestroy, ChangeDetectionStrategy, OnChanges, QueryList
-} from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, Input,
+  OnDestroy, ChangeDetectionStrategy, OnChanges, QueryList } from '@angular/core';
 
 import { SliderService } from '../services/slider.service';
 
@@ -19,10 +18,7 @@ import { TravelRoute } from '../common/constants';
 export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
 
   @Input()
-  private days = 0;
-
-  @Input()
-  private softLimitDays = 0;
+  private softLimitDays = 4;
 
   @Input()
   private cities: QueryList<CityModel>;
@@ -30,6 +26,7 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
   @ViewChild('slider')
   private slider: ElementRef;
 
+  private days = 0;
   private leftLimit = 0;
   private rightLimit = 0;
 
@@ -94,10 +91,41 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
       const connect: Array<Element> = this.slider.nativeElement.querySelectorAll('.noUi-connect');
 
       for (let i = 0; i < connect.length; i++) {
-        connect[i].classList.add(`c - $ { i+1}-color`);
+        connect[i].classList.add(`c-${i+1}-color`);
       }
     }
     if (this.slider.nativeElement.noUiSlider && this.cities.length > 0) {
+      this.slider.nativeElement.noUiSlider.off('change');
+      this.slider.nativeElement.noUiSlider.destroy();
+      noUiSlider.create(this.slider.nativeElement,
+        this.sliderService.currentOptions = _.assign(this.sliderService.defaultOptions, {
+          start: [
+            ...start
+          ],
+          range: {
+            min: moment(start[0]).add(-this.softLimitDays, 'days').valueOf(),
+            max: moment(start[start.length - 1]).add(this.softLimitDays, 'days').valueOf()
+          },
+          pips: {
+            mode: 'count',
+            values: 1,
+            density: 100 / (this.days + this.softLimitDays * 2)
+          }
+        })
+      );
+
+      this.leftLimit = start[0];
+      this.rightLimit = start[start.length - 1];
+
+      this.slider.nativeElement.noUiSlider.on('change', this.softLimit);
+
+      const connect: Array<Element> = this.slider.nativeElement.querySelectorAll('.noUi-connect');
+
+      for (let i = 0; i < connect.length; i++) {
+        connect[i].classList.add(`c-${i+1}-color`);
+      }
+      /*this.leftLimit = start[0];
+      this.rightLimit = start[start.length - 1];
       this.slider.nativeElement.noUiSlider.updateOptions(
         this.sliderService.currentOptions = _.assign(this.sliderService.currentOptions, {
           start: [
@@ -115,7 +143,7 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
         })
       );
       this.slider.nativeElement.removeChild(this.slider.nativeElement.querySelector('.noUi-pips'));
-      this.slider.nativeElement.noUiSlider.pips(this.sliderService.currentOptions.pips);
+      this.slider.nativeElement.noUiSlider.pips(this.sliderService.currentOptions.pips);*/
     }
   }
 
