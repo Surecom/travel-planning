@@ -1,5 +1,5 @@
 <div total-days [cities]="(cities$ | async)"></div>
-<div slider [cities]="(cities$ | async)"></div>
+<div slider [cities]="(cities$ | async)" (updateCities)="updateCities($event)"></div>
 <ul class="nav nav-tabs tab-travel" role="tablist">
   <li class="nav-item">
     <a class="nav-link" data-toggle="tab" routerLink="/travel/city-list" routerLinkActive="active" role="tab">City List</a>

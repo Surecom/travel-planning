@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/toArray';
 import { Action } from '@ngrx/store';
-import { ActionTypes, loadCitiesSuccess, addCitySuccess, removeCitySuccess } from '../travel-route.actions';
+import { ActionTypes, loadCitiesSuccess, addCitySuccess, removeCitySuccess, updateCitiesDateSuccess } from '../travel-route.actions';
 import { Database } from '@ngrx/db';
 import { CityModel, ICityModel } from '../models/city-model';
 import { defer } from 'rxjs/observable/defer';
@@ -12,6 +12,7 @@ import { MdSnackBar } from '@angular/material';
 
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { IUpdateModel } from '../models/update-model';
 import { TravelRoute } from '../common/constants';
 
 @Injectable()
@@ -40,9 +41,40 @@ export class TravelEffectsService {
     .mergeMap((city: ICityModel) =>
       this.db.insert('cities', [city])
         .map(() => {
-          this.snackBar.open(`City ${city.title} added successfully!`);
+          this.snackBar.open(`City ${city.title} added successfully!`, null, {duration: 3000});
           return addCitySuccess(city);
         })
+    );
+
+
+  @Effect()
+  updateCityDate$: Observable<Action> = this.actions$
+    .ofType(ActionTypes.UPDATE_CITIES_DATES)
+    .map((cityUpdateAction: Action) => cityUpdateAction.payload)
+    .mergeMap((cityUpdateModels: IUpdateModel[]) =>
+      this.db.query('cities')
+        .toArray()
+        .map((cities: CityModel[]) =>
+          _.filter(cities, (city: CityModel) => {
+            const newTo = _.find(cityUpdateModels, (model: IUpdateModel) => city.to === model.oldDate);
+            const newFrom = _.find(cityUpdateModels, (model: IUpdateModel) => city.from === model.oldDate);
+            if (newTo) {
+              city.to = newTo.newDate;
+            }
+            if (newFrom) {
+              city.from = newFrom.newDate;
+            }
+            return newTo || newFrom;
+          })
+        )
+        .mergeMap((newCities: CityModel[]) =>
+          this.db.insert('cities', newCities)
+            .toArray()
+            .map((updatedCities: CityModel[]) => {
+              this.snackBar.open(`Cities dates updated successfully!`, null, {duration: 3000});
+              return updateCitiesDateSuccess(updatedCities);
+            })
+        )
     );
 
   @Effect()
@@ -52,7 +84,7 @@ export class TravelEffectsService {
     .mergeMap((city: ICityModel) =>
       this.db.executeWrite('cities', 'delete', [ city.id ])
         .map(() => {
-          this.snackBar.open(`City ${city.title} removed successfully!`);
+          this.snackBar.open(`City ${city.title} removed successfully!`, null, {duration: 3000});
           return removeCitySuccess(city);
         })
     );

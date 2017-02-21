@@ -47,6 +47,22 @@ export function reducer(state: CityState = initialState, action: Action): CitySt
         cities: state.cities.filter((city: CityModel) => city.id !== action.payload.id)
       };
     }
+    case ActionTypes.UPDATE_CITIES_DATES: {
+      return {
+        loading: true,
+        cities: state.cities
+      };
+    }
+    case ActionTypes.UPDATE_CITIES_DATES_SUCCESS: {
+      const tmp = _.sortBy(
+        _.unionBy(action.payload, state.cities, 'id'),
+        (city: CityModel) => moment(city.from, TravelRoute.DATE_FORMAT).valueOf()
+      );
+      return {
+        loading: false,
+        cities: tmp
+      };
+    }
     default: {
       return state;
     }
