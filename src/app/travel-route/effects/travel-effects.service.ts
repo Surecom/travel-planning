@@ -12,6 +12,7 @@ import { MdSnackBar } from '@angular/material';
 
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { TravelRoute } from '../common/constants';
 
 @Injectable()
 export class TravelEffectsService {
@@ -28,7 +29,9 @@ export class TravelEffectsService {
       .switchMap(() =>
         this.db.query('cities')
           .toArray()
-          .map((cities: CityModel[]) => loadCitiesSuccess(_.sortBy(cities, (city: CityModel) => moment(city.from).valueOf()))));
+          .map((cities: CityModel[]) => loadCitiesSuccess(
+            _.sortBy(cities, (city: CityModel) => moment(city.from, TravelRoute.DATE_FORMAT).valueOf())
+          )));
 
   @Effect()
   addCity$: Observable<Action> = this.actions$

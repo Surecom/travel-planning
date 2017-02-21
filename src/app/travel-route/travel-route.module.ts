@@ -16,6 +16,9 @@ import { schema } from './db';
 import { DBModule } from '@ngrx/db';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MaterialModule } from '@angular/material';
+import { TotalDaysComponent } from './total-days/total-days.component';
+import { CityCrossingComponent } from './city-crossing/city-crossing.component';
+import { CityCrossingModalComponent } from './city-crossing-modal/city-crossing-modal.component';
 
 @NgModule({
   imports: [
@@ -35,7 +38,10 @@ import { MaterialModule } from '@angular/material';
     SliderComponent,
     CityPointComponent,
     CityAddComponent,
-    CitiesListComponent
+    CitiesListComponent,
+    TotalDaysComponent,
+    CityCrossingComponent,
+    CityCrossingModalComponent
   ],
   exports: [TravelRouteComponent],
   providers: [SliderService]
