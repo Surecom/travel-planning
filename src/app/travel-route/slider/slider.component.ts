@@ -1,5 +1,7 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, Input,
-  OnDestroy, ChangeDetectionStrategy, OnChanges, QueryList } from '@angular/core';
+import {
+  Component, ViewChild, ElementRef, AfterViewInit, Input,
+  OnDestroy, ChangeDetectionStrategy, OnChanges, QueryList, Output, EventEmitter
+} from '@angular/core';
 
 import { SliderService } from '../services/slider.service';
 
@@ -8,6 +10,7 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import { CityModel } from '../models/city-model';
 import { TravelRoute } from '../common/constants';
+import { UpdateModel } from '../models/update-model';
 
 @Component({
   selector: '[slider]',
@@ -26,9 +29,11 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
   @ViewChild('slider')
   private slider: ElementRef;
 
+  @Output()
+  private updateCities: EventEmitter<UpdateModel[]> = new EventEmitter();
+
   private days = 0;
-  private leftLimit = 0;
-  private rightLimit = 0;
+  private oldValueDates: string[];
 
   constructor(private sliderService: SliderService) {
   }
@@ -53,7 +58,8 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
     let ranges: number[] = [];
     if (this.cities.length > 0) {
       ranges = this.cities
-        .map((city: CityModel) => moment(city.to, TravelRoute.DATE_FORMAT).diff(moment(city.from, TravelRoute.DATE_FORMAT), 'days'));
+        .map((city: CityModel) =>
+          Math.abs(moment(city.to, TravelRoute.DATE_FORMAT).diff(moment(city.from, TravelRoute.DATE_FORMAT), 'days')));
       this.days = ranges.reduce((s: number, o: number) => s + o);
     }
     const start: number[] = [0, ...ranges];
@@ -66,7 +72,6 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
     }
 
     if (this.slider.nativeElement.noUiSlider) {
-      this.slider.nativeElement.noUiSlider.off('change');
       this.slider.nativeElement.noUiSlider.destroy();
     }
     if (this.cities.length > 0) {
@@ -92,14 +97,24 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
       })
     );
 
-    root.noUiSlider.on('change', (values, handle) => {
-      const tmp = values;
-      if (moment(values[handle], TravelRoute.DATE_FORMAT).valueOf() < range[0]) {
-        tmp[handle] = range[0];
-      } else if (moment(values[handle], TravelRoute.DATE_FORMAT).valueOf() > range[range.length - 1]) {
-        values[handle] = range[range.length - 1];
+    root.noUiSlider.on('end', values => {
+      if (_.difference(this.oldValueDates, values).length !== 0) {
+        const updateModels: UpdateModel[] = [];
+        for (let i = 0; i < values.length; i++) {
+          if (values[i] !== this.oldValueDates[i]) {
+            updateModels.push(new UpdateModel({
+              newDate: values[i],
+              oldDate: this.oldValueDates[i]
+            }));
+          }
+        }
+        this.oldValueDates = values;
+        this.updateCities.emit(updateModels);
       }
-      root.noUiSlider.set(tmp);
+    });
+
+    root.noUiSlider.on('start', values => {
+      this.oldValueDates = values;
     });
 
     const connect: Array<Element> = root.querySelectorAll('.noUi-connect');

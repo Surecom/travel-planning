@@ -4,6 +4,7 @@
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { CityModel } from './models/city-model';
+import { IUpdateModel } from './models/update-model';
 
 export const ActionTypes = {
   LOAD_CITIES: 'LOAD_CITIES',
@@ -11,7 +12,9 @@ export const ActionTypes = {
   ADD_CITY: 'ADD_CITY',
   ADD_CITY_SUCCESS: 'ADD_CITY_SUCCESS',
   REMOVE_CITY: 'REMOVE_CITY',
-  REMOVE_CITY_SUCCESS: 'REMOVE_CITY_SUCCESS'
+  REMOVE_CITY_SUCCESS: 'REMOVE_CITY_SUCCESS',
+  UPDATE_CITIES_DATES: 'UPDATE_CITIES_DATES',
+  UPDATE_CITIES_DATES_SUCCESS: 'UPDATE_CITIES_DATES_SUCCESS'
 };
 
 
@@ -43,6 +46,20 @@ const addCitySuccess: Function = (city: CityModel): Action => {
   };
 };
 
+const updateCitiesDate: Function = (citiesDate: IUpdateModel[]): Action => {
+  return {
+    type: ActionTypes.UPDATE_CITIES_DATES,
+    payload: citiesDate
+  };
+};
+
+const updateCitiesDateSuccess: Function = (citiesDate: IUpdateModel[]): Action => {
+  return {
+    type: ActionTypes.UPDATE_CITIES_DATES_SUCCESS,
+    payload: citiesDate
+  };
+};
+
 const removeCity: Function = (city: CityModel): Action => {
   return {
     type: ActionTypes.REMOVE_CITY,
@@ -60,6 +77,8 @@ const removeCitySuccess: Function = (city: CityModel): Action => {
 export {
   loadCities,
   loadCitiesSuccess,
+  updateCitiesDate,
+  updateCitiesDateSuccess,
   addCity,
   addCitySuccess,
   removeCity,
