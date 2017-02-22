@@ -3,24 +3,24 @@
  */
 import * as moment from 'moment';
 import { TravelRoute } from '../common/constants';
+import {Model} from './model';
 
 export interface ICityModel {
-  id?: string;
+  id: string;
   to: string;
   from: string;
   title: string;
   description: string;
 }
 
-export class CityModel {
-  public id: string;
+export class CityModel extends Model {
   public to: string;
   public from: string;
   public title: string;
   public description: string;
 
   constructor(cityModel: ICityModel) {
-    this.id = this.guid();
+    super();
     this.to = moment(cityModel.to).format(TravelRoute.DATE_FORMAT);
     this.from = moment(cityModel.from).format(TravelRoute.DATE_FORMAT);
     this.title = cityModel.title;
@@ -36,14 +36,4 @@ export class CityModel {
       description: this.description
     };
   }
-
-  private guid: () => string = (): string =>
-    this.s4() + this.s4() + '-' +
-    this.s4() + '-' +
-    this.s4() + '-' +
-    this.s4() + '-' +
-    this.s4() + this.s4() + this.s4();
-
-  private s4: () => string = (): string => Math.floor((1 + Math.random()) * 0x10000)
-    .toString(16).substring(1);
 }

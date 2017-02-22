@@ -3,3 +3,7 @@
 @import "~nouislider/distribute/nouislider.css";
 @import "~bootstrap/scss/bootstrap.scss";
 @import "~@angular/material/core/theming/prebuilt/indigo-pink";
+
+*:focus {
+  outline: none;
+}

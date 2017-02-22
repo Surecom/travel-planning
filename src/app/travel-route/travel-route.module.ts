@@ -33,6 +33,9 @@ import { CityCrossingModalComponent } from './city-crossing-modal/city-crossing-
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
     MaterialModule
   ],
+  entryComponents: [
+    CityCrossingModalComponent
+  ],
   declarations: [
     TravelRouteComponent,
     SliderComponent,

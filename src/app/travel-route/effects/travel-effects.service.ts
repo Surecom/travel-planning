@@ -10,7 +10,7 @@ import { CityModel, ICityModel } from '../models/city-model';
 import { defer } from 'rxjs/observable/defer';
 import { MdSnackBar } from '@angular/material';
 
-import * as _ from 'lodash';
+import { sortBy, filter, find } from 'lodash';
 import * as moment from 'moment';
 import { ICityDateUpdate } from '../models/city-date-update';
 import { TravelRoute } from '../common/constants';
@@ -31,7 +31,7 @@ export class TravelEffectsService {
         this.db.query('cities')
           .toArray()
           .map((cities: CityModel[]) => loadCitiesSuccess(
-            _.sortBy(cities, (city: CityModel) => moment(city.from, TravelRoute.DATE_FORMAT).valueOf())
+            sortBy(cities, (city: CityModel) => moment(city.from, TravelRoute.DATE_FORMAT).valueOf())
           )));
 
   @Effect()
@@ -55,9 +55,9 @@ export class TravelEffectsService {
       this.db.query('cities')
         .toArray()
         .map((cities: CityModel[]) =>
-          _.filter(cities, (city: CityModel) => {
-            const newTo = _.find(cityUpdateModels, (model: ICityDateUpdate) => city.to === model.oldDate);
-            const newFrom = _.find(cityUpdateModels, (model: ICityDateUpdate) => city.from === model.oldDate);
+          filter(cities, (city: CityModel) => {
+            const newTo = find(cityUpdateModels, (model: ICityDateUpdate) => city.to === model.oldDate);
+            const newFrom = find(cityUpdateModels, (model: ICityDateUpdate) => city.from === model.oldDate);
             if (newTo) {
               city.to = newTo.newDate;
             }

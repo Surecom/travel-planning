@@ -6,7 +6,7 @@ import {
 import { SliderService } from '../services/slider.service';
 
 import * as noUiSlider from 'nouislider';
-import * as _ from 'lodash';
+import { assign, difference } from 'lodash';
 import * as moment from 'moment';
 import { CityModel } from '../models/city-model';
 import { TravelRoute } from '../common/constants';
@@ -81,7 +81,7 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
 
   private createSlider(root: any, range: number[], totalDays: number, softLimit: number): void {
     noUiSlider.create(root,
-      this.sliderService.currentOptions = _.assign(this.sliderService.defaultOptions, {
+      this.sliderService.currentOptions = assign(this.sliderService.defaultOptions, {
         start: [
           ...range
         ],
@@ -98,7 +98,7 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
     );
 
     root.noUiSlider.on('end', values => {
-      if (_.difference(this.oldValueDates, values).length !== 0) {
+      if (difference(this.oldValueDates, values).length !== 0) {
         const updateModels: CityDateUpdate[] = [];
         for (let i = 0; i < values.length; i++) {
           if (values[i] !== this.oldValueDates[i]) {

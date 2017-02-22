@@ -1,7 +1,6 @@
-<button *ngIf="!show" type="button" class="btn btn-success btn-lg" (click)="showModal()">Show</button>
-<div *ngIf="show" class="card city-crossing-card">
+<div class="card city-crossing-card">
   <div class="ml-auto p-2">
-    <button type="button" class="close" aria-label="Close" (click)="hideModal()">
+    <button type="button" class="close" aria-label="Close" (click)="removeTransfer()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>

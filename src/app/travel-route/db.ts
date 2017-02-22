@@ -10,6 +10,10 @@ export const schema: DBSchema = {
     cities: {
       autoIncrement: true,
       primaryKey: 'id'
+    },
+    transfers: {
+      autoIncrement: true,
+      primaryKey: 'id'
     }
   }
 };

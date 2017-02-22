@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {CityTransferModel} from '../models/city-transfer-model';
 
 @Component({
   selector: '[city-crossing]',
@@ -7,17 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CityCrossingComponent implements OnInit {
 
-  private show = false;
+  @Output()
+  public removeTransfer: EventEmitter<CityTransferModel> = new EventEmitter();
+
   constructor() { }
+
   ngOnInit() {
   }
-
-  showModal() {
-     this.show = true;
-  }
-
-  hideModal() {
-    this.show = false;
-  }
-
 }
