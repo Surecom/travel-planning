@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CityCrossingComponent implements OnInit {
 
+  private show = false;
   constructor() { }
-
   ngOnInit() {
+  }
+
+  showModal() {
+     this.show = true;
+  }
+
+  hideModal() {
+    this.show = false;
   }
 
 }
