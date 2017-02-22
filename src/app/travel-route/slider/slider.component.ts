@@ -10,7 +10,7 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import { CityModel } from '../models/city-model';
 import { TravelRoute } from '../common/constants';
-import { UpdateModel } from '../models/update-model';
+import { CityDateUpdate } from '../models/city-date-update';
 
 @Component({
   selector: '[slider]',
@@ -30,7 +30,7 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
   private slider: ElementRef;
 
   @Output()
-  private updateCities: EventEmitter<UpdateModel[]> = new EventEmitter();
+  private updateCities: EventEmitter<CityDateUpdate[]> = new EventEmitter();
 
   private days = 0;
   private oldValueDates: string[];
@@ -99,10 +99,10 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
 
     root.noUiSlider.on('end', values => {
       if (_.difference(this.oldValueDates, values).length !== 0) {
-        const updateModels: UpdateModel[] = [];
+        const updateModels: CityDateUpdate[] = [];
         for (let i = 0; i < values.length; i++) {
           if (values[i] !== this.oldValueDates[i]) {
-            updateModels.push(new UpdateModel({
+            updateModels.push(new CityDateUpdate({
               newDate: values[i],
               oldDate: this.oldValueDates[i]
             }));

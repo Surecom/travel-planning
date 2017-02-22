@@ -4,7 +4,7 @@
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { CityModel } from './models/city-model';
-import { IUpdateModel } from './models/update-model';
+import { ICityDateUpdate } from './models/city-date-update';
 
 export const ActionTypes = {
   LOAD_CITIES: 'LOAD_CITIES',
@@ -46,14 +46,14 @@ const addCitySuccess: Function = (city: CityModel): Action => {
   };
 };
 
-const updateCitiesDate: Function = (citiesDate: IUpdateModel[]): Action => {
+const updateCitiesDate: Function = (citiesDate: ICityDateUpdate[]): Action => {
   return {
     type: ActionTypes.UPDATE_CITIES_DATES,
     payload: citiesDate
   };
 };
 
-const updateCitiesDateSuccess: Function = (citiesDate: IUpdateModel[]): Action => {
+const updateCitiesDateSuccess: Function = (citiesDate: ICityDateUpdate[]): Action => {
   return {
     type: ActionTypes.UPDATE_CITIES_DATES_SUCCESS,
     payload: citiesDate

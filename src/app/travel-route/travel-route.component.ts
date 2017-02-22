@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { loadCities, updateCitiesDate } from './travel-route.actions';
 import { CityState } from './reducers/city.reducer';
 import { Observable } from 'rxjs/Observable';
-import { UpdateModel } from './models/update-model';
+import { CityDateUpdate } from './models/city-date-update';
 
 @Component({
   selector: '[travel-route]',
@@ -22,7 +22,7 @@ export class TravelRouteComponent implements OnInit {
     this.cities$ = this.store.select('cities').map((state: CityState) => state.cities);
   }
 
-  updateCities(dates: UpdateModel[]) {
-    this.store.dispatch(updateCitiesDate(dates.map((date: UpdateModel) => date.toModel())));
+  updateCities(dates: CityDateUpdate[]) {
+    this.store.dispatch(updateCitiesDate(dates.map((date: CityDateUpdate) => date.toModel())));
   }
 }

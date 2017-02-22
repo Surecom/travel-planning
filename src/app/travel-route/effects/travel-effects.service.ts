@@ -12,7 +12,7 @@ import { MdSnackBar } from '@angular/material';
 
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { IUpdateModel } from '../models/update-model';
+import { ICityDateUpdate } from '../models/city-date-update';
 import { TravelRoute } from '../common/constants';
 
 @Injectable()
@@ -51,13 +51,13 @@ export class TravelEffectsService {
   updateCityDate$: Observable<Action> = this.actions$
     .ofType(ActionTypes.UPDATE_CITIES_DATES)
     .map((cityUpdateAction: Action) => cityUpdateAction.payload)
-    .mergeMap((cityUpdateModels: IUpdateModel[]) =>
+    .mergeMap((cityUpdateModels: ICityDateUpdate[]) =>
       this.db.query('cities')
         .toArray()
         .map((cities: CityModel[]) =>
           _.filter(cities, (city: CityModel) => {
-            const newTo = _.find(cityUpdateModels, (model: IUpdateModel) => city.to === model.oldDate);
-            const newFrom = _.find(cityUpdateModels, (model: IUpdateModel) => city.from === model.oldDate);
+            const newTo = _.find(cityUpdateModels, (model: ICityDateUpdate) => city.to === model.oldDate);
+            const newFrom = _.find(cityUpdateModels, (model: ICityDateUpdate) => city.from === model.oldDate);
             if (newTo) {
               city.to = newTo.newDate;
             }
