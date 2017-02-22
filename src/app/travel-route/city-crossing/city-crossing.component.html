@@ -1,4 +1,5 @@
-<div class="card city-crossing-card">
+<button *ngIf="!show" (click)="showModal()">Show</button>
+<div *ngIf="show" class="card city-crossing-card">
   <img class="card-img" src="../../../assets/city-crossing-img.svg" alt="Card image">
   <div class="card-img-overlay">
     <h4 class="card-title">By what city crossing way</h4>
