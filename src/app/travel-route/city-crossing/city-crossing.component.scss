@@ -1,3 +1,19 @@
+@import "../common/variables";
+
+@for $i from 1 through length($colors) {
+  :host-context(.tab-content > div:nth-child(#{length($colors)}n+#{$i})) {
+    &[city-crossing] button {
+      /deep/ .mat-ripple-element {
+        background-color: rgba(nth($colors, $i), .1);
+      }
+      /deep/ .mat-button-focus-overlay {
+        background-color: rgba(nth($colors, $i), .12);
+      }
+    }
+  }
+}
+
+
 .city-crossing-card {
   height: 200px;
   border-style: dashed;
@@ -11,6 +27,18 @@
   }
 }
 
-:host {
+.card {
   margin-left: 100px;
+}
+
+button {
+  margin-bottom: .25rem;
+  width: 100%;
+  /deep/ span {
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  &:focus {
+    outline: none;
+  }
 }

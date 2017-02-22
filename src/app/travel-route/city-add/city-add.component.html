@@ -17,12 +17,12 @@
     </div>
     <div class="form-group row"
          [class.has-danger]="formErrors.title"
-         [class.has-success]="!formErrors.title && !cityForm.get('title').pristine">
+         [class.has-success]="!formErrors.title && cityForm.get('title').valid && !cityForm.get('title').pristine">
       <label class="col-2 col-form-label">Title:</label>
       <div class="col-10">
         <input class="form-control"
                [class.form-control-danger]="formErrors.title"
-               [class.form-control-success]="!formErrors.title && !cityForm.get('title').pristine"
+               [class.form-control-success]="!formErrors.title && cityForm.get('title').valid && !cityForm.get('title').pristine"
                type="text" formControlName="title" placeholder="Enter Title">
         <div *ngIf="formErrors.title" class="form-control-feedback">{{formErrors.title}}</div>
       </div>

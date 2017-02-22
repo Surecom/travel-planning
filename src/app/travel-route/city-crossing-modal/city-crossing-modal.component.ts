@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MdDialogRef } from '@angular/material';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'city-crossing-modal',
@@ -8,9 +9,64 @@ import { MdDialogRef } from '@angular/material';
 })
 export class CityCrossingModalComponent implements OnInit {
 
-  constructor(public dialogRef: MdDialogRef<CityCrossingModalComponent>) { }
+  public transferForm: FormGroup;
+
+  public formErrors = {
+    way: '',
+    from: '',
+    to: ''
+  };
+
+  private validationMessages = {
+    to: {
+      required: 'Field is required'
+    },
+    from: {
+      required: 'Field is required'
+    },
+    way: {
+      required: 'Field is required',
+      minlength: 'Minimum length is 5 symbols',
+      maxlength: 'Maximum length is 100 symbols'
+    }
+  };
+
+  constructor(private dialogRef: MdDialogRef<CityCrossingModalComponent>, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.transferForm = this.formBuilder.group({
+      to: ['', Validators.required],
+      from: ['', Validators.required],
+      cityId: [''],
+      way: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
+      info: ['']
+    });
+    this.transferForm.valueChanges.subscribe(this.validateForm.bind(this, this.transferForm));
+  }
+
+  addTransfer() {
+    this.dialogRef.close(this.transferForm.value);
+  }
+
+  cancel() {
+    this.dialogRef.close();
+  }
+
+  private validateForm(form: FormGroup) {
+    for (const field in this.formErrors) {
+      if (this.formErrors.hasOwnProperty(field)) {
+        this.formErrors[field] = '';
+        const control = form.get(field);
+        if (control && control.dirty && !control.valid) {
+          const message = this.validationMessages[field];
+          for (const error in control.errors) {
+            if (control.errors.hasOwnProperty(error)) {
+              this.formErrors[field] += `${message[error]} `;
+            }
+          }
+        }
+      }
+    }
   }
 
 }

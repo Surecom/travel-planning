@@ -1,0 +1,11 @@
+@import '../common/variables';
+
+button {
+  &:focus {
+    outline: none;
+  }
+}
+
+hr {
+  background: $blue;
+}

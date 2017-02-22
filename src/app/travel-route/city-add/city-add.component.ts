@@ -13,11 +13,12 @@ import { addCity } from '../travel-route.actions';
 export class CityAddComponent implements OnInit, AfterViewInit {
 
   public cityForm: FormGroup;
-  private formErrors = {
+  public formErrors = {
     title: '',
     from: '',
     to: ''
   };
+
   private validationMessages = {
     to: {
       required: 'Field is required'
@@ -53,13 +54,17 @@ export class CityAddComponent implements OnInit, AfterViewInit {
 
   private validateForm() {
     const form = this.cityForm;
-    for(let field in this.formErrors){
-      this.formErrors[field] = '';
-      const control = form.get(field);
-      if (control && control.touched && !control.valid) {
-        const message = this.validationMessages[field];
-        for (let error in control.errors) {
-          this.formErrors[field] += `${message[error]} `;
+    for (const field in this.formErrors) {
+      if (this.formErrors.hasOwnProperty(field)) {
+        this.formErrors[field] = '';
+        const control = form.get(field);
+        if (control && control.dirty && !control.valid) {
+          const message = this.validationMessages[field];
+          for (const error in control.errors) {
+            if (control.errors.hasOwnProperty(error)) {
+              this.formErrors[field] += `${message[error]} `;
+            }
+          }
         }
       }
     }

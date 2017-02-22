@@ -1,9 +1,4 @@
-<div class="card city-crossing-card">
-  <div class="ml-auto p-2">
-    <button type="button" class="close" aria-label="Close" (click)="removeTransfer()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
+<div *ngIf="transfer" class="card city-crossing-card">
   <img class="card-img" src="../../../assets/city-crossing-img.svg" alt="Card image">
   <div class="card-img-overlay">
     <h4 class="card-title">By what city crossing way</h4>
@@ -12,3 +7,4 @@
     <p class="card-text">Total time (+estimated arriving time)</p>
   </div>
 </div>
+<button md-button (click)="showAddCityTransferModal()">Add city transfer</button>

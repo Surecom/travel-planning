@@ -3,8 +3,7 @@
   <div *ngFor="let city of (cities$ | async); let isLast = last;">
     <div city-point [city]="city"></div>
     <div *ngIf="!isLast">
-      <button type="button" class="btn btn-primary btn-sm btn-block" (click)="showAddCityTransferModal()">Add city transfer</button>
-      <div city-crossing></div>
+      <div city-crossing [city]="city" [cities]="(cities$ | async)"></div>
     </div>
   </div>
 </div>

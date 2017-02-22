@@ -3,27 +3,29 @@
  */
 import {Model} from './model';
 
-export interface ITransfer {
+export interface ICityTransferModel {
+  id: string;
+  cityId: string;
   way: string;
   info: string;
   from: string;
   to: string;
 }
 
-export interface ICityTransferModel {
-  id: string;
-  cityId: string;
-  transfer: ITransfer;
-}
-
 export class CityTransferModel extends Model {
 
   public cityId: string;
-  public transfer: ITransfer;
+  public way: string;
+  public info: string;
+  public from: string;
+  public to: string;
 
   constructor(model: ICityTransferModel) {
     super();
     this.cityId = model.cityId;
-    this.transfer = model.transfer;
+    this.way = model.way;
+    this.info = model.info;
+    this.from = model.from;
+    this.to = model.to;
   }
 }
