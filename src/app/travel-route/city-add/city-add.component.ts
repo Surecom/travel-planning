@@ -14,9 +14,17 @@ export class CityAddComponent implements OnInit, AfterViewInit {
 
   public cityForm: FormGroup;
   private formErrors = {
-    title: ''
+    title: '',
+    from: '',
+    to: ''
   };
   private validationMessages = {
+    to: {
+      required: 'Field is required'
+    },
+    from: {
+      required: 'Field is required'
+    },
     title: {
       required: 'Field is required',
       minlength: 'Minimum length is 5 chars',
@@ -33,6 +41,7 @@ export class CityAddComponent implements OnInit, AfterViewInit {
       title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
       description: ['']
     });
+    this.cityForm.valueChanges.subscribe(this.validateForm.bind(this));
   }
 
   ngAfterViewInit() {
@@ -40,6 +49,20 @@ export class CityAddComponent implements OnInit, AfterViewInit {
 
   onAdd(cityForm: FormGroup) {
     this.store.dispatch(addCity(new CityModel(cityForm.value)));
+  }
+
+  private validateForm() {
+    const form = this.cityForm;
+    for(let field in this.formErrors){
+      this.formErrors[field] = '';
+      const control = form.get(field);
+      if (control && control.touched && !control.valid) {
+        const message = this.validationMessages[field];
+        for (let error in control.errors) {
+          this.formErrors[field] += `${message[error]} `;
+        }
+      }
+    }
   }
 
 }
