@@ -13,9 +13,11 @@ export class CityCrossingComponent implements OnInit {
   }
 
   showModal() {
-    if (!this.show) {
-      this.show = true;
-    }
+     this.show = true;
+  }
+
+  hideModal() {
+    this.show = false;
   }
 
 }
