@@ -1,10 +1,15 @@
-<div *ngIf="transfer" class="card city-crossing-card">
+<div *ngFor="let transfer of (transfers$ | async)" class="card city-crossing-card">
   <img class="card-img" src="../../../assets/city-crossing-img.svg" alt="Card image">
   <div class="card-img-overlay">
-    <h4 class="card-title">By what city crossing way</h4>
-    <p class="card-text">Info about time</p>
-    <p class="card-text">Additional info</p>
-    <p class="card-text">Total time (+estimated arriving time)</p>
+    <h4 class="card-title">{{transfer.way}}</h4>
+    <p class="card-text">
+      <small class="text-muted">From:</small>
+      {{transfer.from}}
+      <small class="text-muted">To:</small>
+      {{transfer.to}}
+    </p>
+    <p class="card-text">{{transfer.info}}</p>
+    <p class="card-text">{{getTotalTimeWithEstimated(transfer)}}</p>
   </div>
 </div>
 <button md-button (click)="showAddCityTransferModal()">Add city transfer</button>

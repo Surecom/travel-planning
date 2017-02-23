@@ -1,9 +1,9 @@
 /**
  * Created by Surecom-npm on 2/19/2017.
  */
-import { CityModel } from '../models/city-model';
+import { CityModel } from '../models/city.model';
 import { Action } from '@ngrx/store';
-import { ActionTypes } from '../travel-route.actions';
+import { ActionTypes } from '../actions/city.actions';
 import * as moment from 'moment';
 import { sortBy, unionBy } from 'lodash';
 import { TravelRoute } from '../common/constants';
@@ -37,7 +37,7 @@ export function reducer(state: CityState = initialState, action: Action): CitySt
         loading: false,
         cities: sortBy(
           [...state.cities, action.payload],
-          (city: CityModel) => moment(city.from, TravelRoute.DATE_FORMAT).valueOf()
+          (city: CityModel) => +moment(city.from, TravelRoute.DATE_FORMAT)
         )
       };
     }
@@ -56,7 +56,7 @@ export function reducer(state: CityState = initialState, action: Action): CitySt
     case ActionTypes.UPDATE_CITIES_DATES_SUCCESS: {
       const tmp = sortBy(
         unionBy(action.payload, state.cities, 'id'),
-        (city: CityModel) => moment(city.from, TravelRoute.DATE_FORMAT).valueOf()
+        (city: CityModel) => +moment(city.from, TravelRoute.DATE_FORMAT)
       );
       return {
         loading: false,

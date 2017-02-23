@@ -2,8 +2,9 @@
  * Created by Aliaksandr_Hladchank on 22-Feb-17.
  */
 import {Model} from './model';
+import * as moment from 'moment';
 
-export interface ICityTransferModel {
+export interface ITransferModel {
   id: string;
   cityId: string;
   way: string;
@@ -12,7 +13,7 @@ export interface ICityTransferModel {
   to: string;
 }
 
-export class CityTransferModel extends Model {
+export class TransferModel extends Model {
 
   public cityId: string;
   public way: string;
@@ -20,12 +21,24 @@ export class CityTransferModel extends Model {
   public from: string;
   public to: string;
 
-  constructor(model: ICityTransferModel) {
+  constructor(model: ITransferModel) {
     super();
+    this.id = (+moment()).toString();
     this.cityId = model.cityId;
     this.way = model.way;
     this.info = model.info;
     this.from = model.from;
     this.to = model.to;
+  }
+
+  public toModel(): ITransferModel {
+    return {
+      id: this.id,
+      cityId: this.cityId,
+      way: this.way,
+      info: this.info,
+      from: this.from,
+      to: this.to
+    };
   }
 }

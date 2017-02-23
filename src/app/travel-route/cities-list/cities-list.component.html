@@ -3,7 +3,7 @@
   <div *ngFor="let city of (cities$ | async); let isLast = last;">
     <div city-point [city]="city"></div>
     <div *ngIf="!isLast">
-      <div city-crossing [city]="city" [cities]="(cities$ | async)"></div>
+      <div city-crossing [city]="city"></div>
     </div>
   </div>
 </div>

@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, QueryList } from '@angular/core';
-import { CityModel } from '../models/city-model';
+import { CityModel } from '../models/city.model';
 import { TravelRoute } from '../common/constants';
 import * as moment from 'moment';
 

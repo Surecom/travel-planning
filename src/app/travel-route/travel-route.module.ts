@@ -10,8 +10,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CitiesListComponent } from './cities-list/cities-list.component';
 import { StoreModule } from '@ngrx/store';
 import { reducer as CityReducer } from './reducers/city.reducer';
+import { reducer as TransferReducer } from './reducers/transfer.reducer';
 import { EffectsModule } from '@ngrx/effects';
-import { TravelEffectsService } from './effects/travel-effects.service';
+import { CityEffectsService } from './effects/city-effects.service';
 import { schema } from './db';
 import { DBModule } from '@ngrx/db';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -19,6 +20,7 @@ import { MaterialModule } from '@angular/material';
 import { TotalDaysComponent } from './total-days/total-days.component';
 import { CityCrossingComponent } from './city-crossing/city-crossing.component';
 import { CityCrossingModalComponent } from './city-crossing-modal/city-crossing-modal.component';
+import { TransferEffectsService } from './effects/transfer-effects.service';
 
 @NgModule({
   imports: [
@@ -26,9 +28,11 @@ import { CityCrossingModalComponent } from './city-crossing-modal/city-crossing-
     TravelRouteRoutingModule,
     ReactiveFormsModule,
     StoreModule.provideStore({
-      cities: CityReducer
+      cities: CityReducer,
+      transfers: TransferReducer
     }),
-    EffectsModule.run(TravelEffectsService),
+    EffectsModule.run(CityEffectsService),
+    EffectsModule.run(TransferEffectsService),
     DBModule.provideDB(schema),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
     MaterialModule

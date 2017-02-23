@@ -8,7 +8,7 @@ import { SliderService } from '../services/slider.service';
 import * as noUiSlider from 'nouislider';
 import { assign, difference } from 'lodash';
 import * as moment from 'moment';
-import { CityModel } from '../models/city-model';
+import { CityModel } from '../models/city.model';
 import { TravelRoute } from '../common/constants';
 import { CityDateUpdate } from '../models/city-date-update';
 
@@ -66,9 +66,9 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
 
     for (let i = 0; i < this.cities.length; i++) {
       if (i === 0) {
-        start[i] = moment(this.cities[i].from, TravelRoute.DATE_FORMAT).add(start[i], 'days').valueOf();
+        start[i] = +moment(this.cities[i].from, TravelRoute.DATE_FORMAT).add(start[i], 'days');
       }
-      start[i + 1] = moment(this.cities[i].from, TravelRoute.DATE_FORMAT).add(start[i + 1], 'days').valueOf();
+      start[i + 1] = +moment(this.cities[i].from, TravelRoute.DATE_FORMAT).add(start[i + 1], 'days');
     }
 
     if (this.slider.nativeElement.noUiSlider) {
@@ -86,8 +86,8 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
           ...range
         ],
         range: {
-          min: moment(range[0]).add(-softLimit, 'days').valueOf(),
-          max: moment(range[range.length - 1]).add(softLimit, 'days').valueOf()
+          min: +moment(range[0]).add(-softLimit, 'days'),
+          max: +moment(range[range.length - 1]).add(softLimit, 'days')
         },
         pips: {
           mode: 'count',

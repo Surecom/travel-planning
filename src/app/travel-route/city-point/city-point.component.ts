@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { CityModel } from '../models/city-model';
+import { CityModel } from '../models/city.model';
 import { Store } from '@ngrx/store';
-import { removeCity } from '../travel-route.actions';
+import { removeCity } from '../actions/city.actions';
 
 @Component({
   selector: '[city-point]',

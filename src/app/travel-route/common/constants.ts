@@ -3,5 +3,5 @@
  */
 export const TravelRoute = {
   DATE_FORMAT: 'Do MMM YY',
-  DATE_TIME_FORMAT: 'Do MMM YY HH:mm'
+  TIME_FORMAT: 'HH:mm'
 };

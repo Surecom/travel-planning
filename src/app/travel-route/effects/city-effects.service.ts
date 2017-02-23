@@ -4,9 +4,13 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/toArray';
 import { Action } from '@ngrx/store';
-import { ActionTypes, loadCitiesSuccess, addCitySuccess, removeCitySuccess, updateCitiesDateSuccess } from '../travel-route.actions';
+import { ActionTypes,
+  loadCitiesSuccess,
+  addCitySuccess,
+  removeCitySuccess,
+  updateCitiesDateSuccess } from '../actions/city.actions';
 import { Database } from '@ngrx/db';
-import { CityModel, ICityModel } from '../models/city-model';
+import { CityModel, ICityModel } from '../models/city.model';
 import { defer } from 'rxjs/observable/defer';
 import { MdSnackBar } from '@angular/material';
 
@@ -16,7 +20,7 @@ import { ICityDateUpdate } from '../models/city-date-update';
 import { TravelRoute } from '../common/constants';
 
 @Injectable()
-export class TravelEffectsService {
+export class CityEffectsService {
 
   @Effect({ dispatch: false })
   openDB$: Observable<any> = defer(() => {
@@ -31,7 +35,7 @@ export class TravelEffectsService {
         this.db.query('cities')
           .toArray()
           .map((cities: CityModel[]) => loadCitiesSuccess(
-            sortBy(cities, (city: CityModel) => moment(city.from, TravelRoute.DATE_FORMAT).valueOf())
+            sortBy(cities, (city: CityModel) => +moment(city.from, TravelRoute.DATE_FORMAT))
           )));
 
   @Effect()

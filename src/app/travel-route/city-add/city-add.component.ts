@@ -1,8 +1,8 @@
 import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CityModel } from '../models/city-model';
+import { CityModel } from '../models/city.model';
 import { Store } from '@ngrx/store';
-import { addCity } from '../travel-route.actions';
+import { addCity } from '../actions/city.actions';
 
 @Component({
   selector: 'app-city-add',

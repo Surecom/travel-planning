@@ -4,7 +4,7 @@
 import { DBSchema } from '@ngrx/db';
 
 export const schema: DBSchema = {
-  version: 1,
+  version: 2,
   name: 'travel-planning',
   stores: {
     cities: {

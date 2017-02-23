@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { CityModel } from '../models/city-model';
+import { CityModel } from '../models/city.model';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { CityState } from '../reducers/city.reducer';
@@ -21,5 +21,4 @@ export class CitiesListComponent implements OnInit {
     this.cities$ = this.store.select('cities').map((state: CityState) => state.cities);
     this.citiesLoading$ = this.store.select('cities').map((state: CityState) => state.loading);
   }
-
 }
