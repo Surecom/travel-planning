@@ -1,11 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MdDialogRef } from '@angular/material';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'city-crossing-modal',
   templateUrl: './city-crossing-modal.component.html',
-  styleUrls: ['./city-crossing-modal.component.scss']
+  styleUrls: ['./city-crossing-modal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CityCrossingModalComponent implements OnInit {
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, QueryList } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
 import { TransferModel, ITransferModel } from '../models/transfer.model';
 import { CityModel } from '../models/city.model';
 import { CityCrossingModalComponent } from '../city-crossing-modal/city-crossing-modal.component';
@@ -14,7 +14,8 @@ import { TravelRoute } from '../common/constants';
 @Component({
   selector: '[city-crossing]',
   templateUrl: './city-crossing.component.html',
-  styleUrls: ['./city-crossing.component.scss']
+  styleUrls: ['./city-crossing.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CityCrossingComponent implements OnInit {
 
