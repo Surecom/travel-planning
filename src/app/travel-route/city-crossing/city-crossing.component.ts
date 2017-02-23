@@ -1,14 +1,15 @@
 import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
-import { TransferModel, ITransferModel } from '../models/transfer.model';
-import { CityModel } from '../models/city.model';
-import { CityCrossingModalComponent } from '../city-crossing-modal/city-crossing-modal.component';
-import { MdDialog } from '@angular/material';
-import { Store } from '@ngrx/store';
+import { MdDialog } from '@angular/material/dialog/dialog';
 import { Observable } from 'rxjs/Observable';
-import { TransferState } from '../reducers/transfer.reducer';
-import { addTransfer } from '../actions/transfer.action';
-
+import { Store } from '@ngrx/store';
+import 'rxjs/add/operator/map';
 import * as moment from 'moment';
+
+import { TransferState } from '../reducers/transfer.reducer';
+import { CityCrossingModalComponent } from '../city-crossing-modal/city-crossing-modal.component';
+import { CityModel } from '../models/city.model';
+import { TransferModel, ITransferModel } from '../models/transfer.model';
+import { addTransfer } from '../actions/transfer.action';
 import { TravelRoute } from '../common/constants';
 
 @Component({

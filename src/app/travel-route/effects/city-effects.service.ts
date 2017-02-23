@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
+import { MdSnackBar } from '@angular/material/snack-bar/snack-bar';
+import { Database } from '@ngrx/db';
+import { Action } from '@ngrx/store';
 import { Effect, Actions } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
+import { defer } from 'rxjs/observable/defer';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/toArray';
-import { Action } from '@ngrx/store';
+import { sortBy, filter, find } from 'lodash';
+import * as moment from 'moment';
+
 import { ActionTypes,
   loadCitiesSuccess,
   addCitySuccess,
   removeCitySuccess,
   updateCitiesDateSuccess } from '../actions/city.actions';
-import { Database } from '@ngrx/db';
 import { CityModel, ICityModel } from '../models/city.model';
-import { defer } from 'rxjs/observable/defer';
-import { MdSnackBar } from '@angular/material';
-
-import { sortBy, filter, find } from 'lodash';
-import * as moment from 'moment';
 import { ICityDateUpdate } from '../models/city-date-update';
 import { TravelRoute } from '../common/constants';
 

@@ -1,11 +1,12 @@
 /**
  * Created by Surecom-npm on 2/19/2017.
  */
-import { CityModel } from '../models/city.model';
 import { Action } from '@ngrx/store';
-import { ActionTypes } from '../actions/city.actions';
 import * as moment from 'moment';
 import { sortBy, unionBy } from 'lodash';
+
+import { CityModel } from '../models/city.model';
+import { ActionTypes } from '../actions/city.actions';
 import { TravelRoute } from '../common/constants';
 
 export interface CityState {

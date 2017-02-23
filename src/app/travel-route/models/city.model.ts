@@ -2,8 +2,9 @@
  * Created by Surecom-npm on 2/19/2017.
  */
 import * as moment from 'moment';
+
 import { TravelRoute } from '../common/constants';
-import {Model} from './model';
+import { Model } from './model';
 
 export interface ICityModel {
   id: string;

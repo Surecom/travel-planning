@@ -3,6 +3,7 @@
  */
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+
 import { CityModel } from '../models/city.model';
 import { ICityDateUpdate } from '../models/city-date-update';
 

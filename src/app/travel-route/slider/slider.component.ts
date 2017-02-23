@@ -3,13 +3,14 @@ import {
   OnDestroy, ChangeDetectionStrategy, OnChanges, QueryList, Output, EventEmitter
 } from '@angular/core';
 
-import { SliderService } from '../services/slider.service';
 
-import * as noUiSlider from 'nouislider';
 import { assign, difference } from 'lodash';
+import * as noUiSlider from 'nouislider';
 import * as moment from 'moment';
+
 import { CityModel } from '../models/city.model';
 import { TravelRoute } from '../common/constants';
+import { SliderService } from '../services/slider.service';
 import { CityDateUpdate } from '../models/city-date-update';
 
 @Component({

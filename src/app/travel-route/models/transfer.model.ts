@@ -1,8 +1,9 @@
 /**
  * Created by Aliaksandr_Hladchank on 22-Feb-17.
  */
-import {Model} from './model';
 import * as moment from 'moment';
+
+import { Model } from './model';
 
 export interface ITransferModel {
   id: string;

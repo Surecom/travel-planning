@@ -1,7 +1,8 @@
 import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CityModel } from '../models/city.model';
 import { Store } from '@ngrx/store';
+
+import { CityModel } from '../models/city.model';
 import { addCity } from '../actions/city.actions';
 
 @Component({

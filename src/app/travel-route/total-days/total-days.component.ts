@@ -1,7 +1,8 @@
 import { Component, Input, OnChanges, QueryList } from '@angular/core';
+import * as moment from 'moment';
+
 import { CityModel } from '../models/city.model';
 import { TravelRoute } from '../common/constants';
-import * as moment from 'moment';
 
 @Component({
   selector: '[total-days]',

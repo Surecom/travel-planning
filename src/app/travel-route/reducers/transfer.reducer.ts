@@ -1,10 +1,11 @@
 /**
  * Created by Surecom-npm on 2/22/2017.
  */
-import { TransferModel } from '../models/transfer.model';
 import { Action } from '@ngrx/store';
-import { ActionTypes } from '../actions/transfer.action';
 import { sortBy } from 'lodash';
+
+import { TransferModel } from '../models/transfer.model';
+import { ActionTypes } from '../actions/transfer.action';
 
 export interface TransferState {
   loading: boolean;

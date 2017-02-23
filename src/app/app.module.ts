@@ -1,9 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { AppRoutingModule } from './app-routing.module';
+import { CommonModule } from '@angular/common';
 
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TravelRouteModule } from './travel-route/travel-route.module';
 
@@ -12,9 +11,8 @@ import { TravelRouteModule } from './travel-route/travel-route.module';
     AppComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
-    ReactiveFormsModule,
-    HttpModule,
     AppRoutingModule,
     TravelRouteModule
   ],

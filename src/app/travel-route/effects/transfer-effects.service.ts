@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Action } from '@ngrx/store';
 import { Database } from '@ngrx/db';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
-import { Action } from '@ngrx/store';
+import { defer } from 'rxjs/observable/defer';
+
 import { ActionTypes, loadTransfersSuccess, addTransferSuccess } from '../actions/transfer.action';
 import { TransferModel, ITransferModel } from '../models/transfer.model';
-import { defer } from 'rxjs/observable/defer';
 
 @Injectable()
 export class TransferEffectsService {

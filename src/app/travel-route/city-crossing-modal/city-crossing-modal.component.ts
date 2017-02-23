@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { MdDialogRef } from '@angular/material';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { MdDialogRef } from '@angular/material/dialog/dialog-ref';
 
 @Component({
   selector: 'city-crossing-modal',

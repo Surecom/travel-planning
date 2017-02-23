@@ -2,8 +2,10 @@
  * Created by Surecom-npm on 2/22/2017.
  */
 import { Action } from '@ngrx/store';
-import { TransferModel, ITransferModel } from '../models/transfer.model';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/switchMap';
+
+import { TransferModel, ITransferModel } from '../models/transfer.model';
 
 export const ActionTypes = {
   LOAD_TRANSFERS: '[TRANSFER] LOAD_TRANSFERS',

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { CityModel } from './models/city.model';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+
+import { CityModel } from './models/city.model';
 import { loadCities, updateCitiesDate } from './actions/city.actions';
 import { CityState } from './reducers/city.reducer';
-import { Observable } from 'rxjs/Observable';
 import { CityDateUpdate } from './models/city-date-update';
 import { TransferModel } from './models/transfer.model';
 import { loadTransfers } from './actions/transfer.action';
@@ -11,7 +12,8 @@ import { loadTransfers } from './actions/transfer.action';
 @Component({
   selector: '[travel-route]',
   templateUrl: './travel-route.component.html',
-  styleUrls: ['./travel-route.component.scss']
+  styleUrls: ['./travel-route.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TravelRouteComponent implements OnInit {
 
