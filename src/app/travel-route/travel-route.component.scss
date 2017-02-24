@@ -3,3 +3,14 @@
 .tab-travel {
   margin-bottom: 1rem;
 }
+
+.mat-sidenav-container {
+  background-color: white;
+  .mat-sidenav.mat-sidenav-opened {
+    box-shadow: 0 0 20px;
+    transition: box-shadow .1s linear;
+  }
+  /deep/ .mat-sidenav-backdrop.mat-sidenav-shown {
+    background-color: transparent;
+  }
+}
