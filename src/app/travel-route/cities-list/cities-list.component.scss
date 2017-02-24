@@ -7,6 +7,14 @@
       &:hover {
         background-color: lighten(nth($colors, $i), 35%);
       }
+      button[md-button] /deep/ {
+        .mat-ripple-element {
+          background-color: rgba(nth($colors, $i), .1);
+        }
+        .mat-button-focus-overlay {
+          background-color: rgba(nth($colors, $i), .12);
+        }
+      }
     }
   }
 }

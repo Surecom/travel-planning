@@ -1,8 +1,9 @@
 import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CityModel } from '../models/city-model';
 import { Store } from '@ngrx/store';
-import { addCity } from '../travel-route.actions';
+
+import { CityModel } from '../models/city.model';
+import { addCity } from '../actions/city.actions';
 
 @Component({
   selector: 'app-city-add',
@@ -13,13 +14,22 @@ import { addCity } from '../travel-route.actions';
 export class CityAddComponent implements OnInit, AfterViewInit {
 
   public cityForm: FormGroup;
-  private formErrors = {
-    title: ''
+  public formErrors = {
+    title: '',
+    from: '',
+    to: ''
   };
+
   private validationMessages = {
+    to: {
+      required: 'Field is required'
+    },
+    from: {
+      required: 'Field is required'
+    },
     title: {
       required: 'Field is required',
-      minlength: 'Minimum length is 5 chars',
+      minlength: 'Minimum length is 3 chars',
       maxlength: 'Maximum length is 50 chars'
     }
   };
@@ -30,9 +40,10 @@ export class CityAddComponent implements OnInit, AfterViewInit {
     this.cityForm = this.formBuilder.group({
       to: ['', Validators.required],
       from: ['', Validators.required],
-      title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
+      title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       description: ['']
     });
+    this.cityForm.valueChanges.subscribe(this.validateForm.bind(this));
   }
 
   ngAfterViewInit() {
@@ -40,6 +51,24 @@ export class CityAddComponent implements OnInit, AfterViewInit {
 
   onAdd(cityForm: FormGroup) {
     this.store.dispatch(addCity(new CityModel(cityForm.value)));
+  }
+
+  private validateForm() {
+    const form = this.cityForm;
+    for (const field in this.formErrors) {
+      if (this.formErrors.hasOwnProperty(field)) {
+        this.formErrors[field] = '';
+        const control = form.get(field);
+        if (control && control.dirty && !control.valid) {
+          const message = this.validationMessages[field];
+          for (const error in control.errors) {
+            if (control.errors.hasOwnProperty(error)) {
+              this.formErrors[field] += `${message[error]} `;
+            }
+          }
+        }
+      }
+    }
   }
 
 }

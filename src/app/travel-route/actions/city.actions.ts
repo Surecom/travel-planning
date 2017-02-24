@@ -3,20 +3,22 @@
  */
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { CityModel } from './models/city-model';
-import { IUpdateModel } from './models/update-model';
+
+import { CityModel, ICityModel } from '../models/city.model';
+import { ICityDateUpdate } from '../models/city-date-update';
 
 export const ActionTypes = {
-  LOAD_CITIES: 'LOAD_CITIES',
-  LOAD_CITIES_SUCCESS: 'LOAD_CITIES_SUCCESS',
-  ADD_CITY: 'ADD_CITY',
-  ADD_CITY_SUCCESS: 'ADD_CITY_SUCCESS',
-  REMOVE_CITY: 'REMOVE_CITY',
-  REMOVE_CITY_SUCCESS: 'REMOVE_CITY_SUCCESS',
-  UPDATE_CITIES_DATES: 'UPDATE_CITIES_DATES',
-  UPDATE_CITIES_DATES_SUCCESS: 'UPDATE_CITIES_DATES_SUCCESS'
+  LOAD_CITIES: '[CITY] LOAD_CITIES',
+  LOAD_CITIES_SUCCESS: '[CITY] LOAD_CITIES_SUCCESS',
+  ADD_CITY: '[CITY] ADD_CITY',
+  ADD_CITY_SUCCESS: '[CITY] ADD_CITY_SUCCESS',
+  REMOVE_CITY: '[CITY] REMOVE_CITY',
+  REMOVE_CITY_SUCCESS: '[CITY] REMOVE_CITY_SUCCESS',
+  UPDATE_CITIES_DATES: '[CITY] UPDATE_CITIES_DATES',
+  UPDATE_CITIES_DATES_SUCCESS: '[CITY] UPDATE_CITIES_DATES_SUCCESS',
+  UPDATE_CITY: '[CITY] UPDATE_CITY',
+  UPDATE_CITY_SUCCESS: '[CITY] UPDATE_CITY_SUCCESS'
 };
-
 
 const loadCities: Function = (): Action => {
   return {
@@ -46,17 +48,31 @@ const addCitySuccess: Function = (city: CityModel): Action => {
   };
 };
 
-const updateCitiesDate: Function = (citiesDate: IUpdateModel[]): Action => {
+const updateCitiesDate: Function = (citiesDate: ICityDateUpdate[]): Action => {
   return {
     type: ActionTypes.UPDATE_CITIES_DATES,
     payload: citiesDate
   };
 };
 
-const updateCitiesDateSuccess: Function = (citiesDate: IUpdateModel[]): Action => {
+const updateCitiesDateSuccess: Function = (citiesDate: ICityDateUpdate[]): Action => {
   return {
     type: ActionTypes.UPDATE_CITIES_DATES_SUCCESS,
     payload: citiesDate
+  };
+};
+
+const updateCity: Function = (city: ICityModel): Action => {
+  return {
+    type: ActionTypes.UPDATE_CITY,
+    payload: city
+  };
+};
+
+const updateCitySuccess: Function = (city: ICityModel): Action => {
+  return {
+    type: ActionTypes.UPDATE_CITY_SUCCESS,
+    payload: city
   };
 };
 
@@ -79,6 +95,8 @@ export {
   loadCitiesSuccess,
   updateCitiesDate,
   updateCitiesDateSuccess,
+  updateCity,
+  updateCitySuccess,
   addCity,
   addCitySuccess,
   removeCity,

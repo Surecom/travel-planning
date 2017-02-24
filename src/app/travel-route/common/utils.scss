@@ -1,0 +1,9 @@
+@mixin btn-control() {
+  /deep/ span {
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  &:focus {
+    outline: none;
+  }
+}

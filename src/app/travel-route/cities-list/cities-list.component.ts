@@ -1,7 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { CityModel } from '../models/city-model';
-import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+
+import { CityModel } from '../models/city.model';
 import { CityState } from '../reducers/city.reducer';
 
 @Component({

@@ -1,7 +1,9 @@
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { CityModel } from '../models/city-model';
 import { Store } from '@ngrx/store';
-import { removeCity } from '../travel-route.actions';
+
+import { CityModel } from '../models/city.model';
+import { removeCity, updateCity } from '../actions/city.actions';
 
 @Component({
   selector: '[city-point]',
@@ -14,13 +16,73 @@ export class CityPointComponent implements OnInit {
   @Input()
   public city: CityModel;
 
-  constructor(private store: Store<CityModel>) { }
+  private updateMark = false;
+
+  public cityUpdateForm: FormGroup;
+
+  public formErrors = {
+    title: '',
+    description: ''
+  };
+
+  private validationMessages = {
+    title: {
+      required: 'Field is required',
+      minlength: 'Minimum length is 3 symbols',
+      maxlength: 'Maximum length is 100 symbols'
+    }
+  };
+
+  constructor(private store: Store<CityModel>, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.cityUpdateForm = this.formBuilder.group({
+      id: [''],
+      to: [''],
+      from: [''],
+      title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      description: ['']
+    });
+    this.cityUpdateForm.valueChanges.subscribe(this.validateForm.bind(this, this.cityUpdateForm));
+  }
+
+  editCity(city: CityModel) {
+    this.updateMark = true;
+    this.cityUpdateForm.get('id').setValue(city.id);
+    this.cityUpdateForm.get('to').setValue(city.to);
+    this.cityUpdateForm.get('from').setValue(city.from);
+    this.cityUpdateForm.get('title').setValue(city.title);
+    this.cityUpdateForm.get('description').setValue(city.description);
+  }
+
+  updateCity() {
+    this.store.dispatch(updateCity(this.cityUpdateForm.value));
+    this.updateMark = false;
+  }
+
+  cancelUpdateCity() {
+    this.updateMark = false;
   }
 
   removeCity() {
     this.store.dispatch(removeCity(this.city));
+  }
+
+  private validateForm(form: FormGroup) {
+    for (const field in this.formErrors) {
+      if (this.formErrors.hasOwnProperty(field)) {
+        this.formErrors[field] = '';
+        const control = form.get(field);
+        if (control && control.dirty && !control.valid) {
+          const message = this.validationMessages[field];
+          for (const error in control.errors) {
+            if (control.errors.hasOwnProperty(error)) {
+              this.formErrors[field] += `${message[error]} `;
+            }
+          }
+        }
+      }
+    }
   }
 
 }

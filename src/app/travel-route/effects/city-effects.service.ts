@@ -1,22 +1,29 @@
 import { Injectable } from '@angular/core';
+import { MdSnackBar } from '@angular/material/snack-bar/snack-bar';
+import { Database } from '@ngrx/db';
+import { Action } from '@ngrx/store';
 import { Effect, Actions } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
+import { defer } from 'rxjs/observable/defer';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/toArray';
-import { Action } from '@ngrx/store';
-import { ActionTypes, loadCitiesSuccess, addCitySuccess, removeCitySuccess, updateCitiesDateSuccess } from '../travel-route.actions';
-import { Database } from '@ngrx/db';
-import { CityModel, ICityModel } from '../models/city-model';
-import { defer } from 'rxjs/observable/defer';
-import { MdSnackBar } from '@angular/material';
-
-import * as _ from 'lodash';
+import { sortBy, filter, find } from 'lodash';
 import * as moment from 'moment';
-import { IUpdateModel } from '../models/update-model';
+
+import {
+  ActionTypes,
+  loadCitiesSuccess,
+  addCitySuccess,
+  removeCitySuccess,
+  updateCitiesDateSuccess,
+  updateCitySuccess
+} from '../actions/city.actions';
+import { CityModel, ICityModel } from '../models/city.model';
+import { ICityDateUpdate } from '../models/city-date-update';
 import { TravelRoute } from '../common/constants';
 
 @Injectable()
-export class TravelEffectsService {
+export class CityEffectsService {
 
   @Effect({ dispatch: false })
   openDB$: Observable<any> = defer(() => {
@@ -31,7 +38,7 @@ export class TravelEffectsService {
         this.db.query('cities')
           .toArray()
           .map((cities: CityModel[]) => loadCitiesSuccess(
-            _.sortBy(cities, (city: CityModel) => moment(city.from, TravelRoute.DATE_FORMAT).valueOf())
+            sortBy(cities, (city: CityModel) => +moment(city.from, TravelRoute.DATE_FORMAT))
           )));
 
   @Effect()
@@ -51,13 +58,13 @@ export class TravelEffectsService {
   updateCityDate$: Observable<Action> = this.actions$
     .ofType(ActionTypes.UPDATE_CITIES_DATES)
     .map((cityUpdateAction: Action) => cityUpdateAction.payload)
-    .mergeMap((cityUpdateModels: IUpdateModel[]) =>
+    .mergeMap((cityUpdateModels: ICityDateUpdate[]) =>
       this.db.query('cities')
         .toArray()
         .map((cities: CityModel[]) =>
-          _.filter(cities, (city: CityModel) => {
-            const newTo = _.find(cityUpdateModels, (model: IUpdateModel) => city.to === model.oldDate);
-            const newFrom = _.find(cityUpdateModels, (model: IUpdateModel) => city.from === model.oldDate);
+          filter(cities, (city: CityModel) => {
+            const newTo = find(cityUpdateModels, (model: ICityDateUpdate) => city.to === model.oldDate);
+            const newFrom = find(cityUpdateModels, (model: ICityDateUpdate) => city.from === model.oldDate);
             if (newTo) {
               city.to = newTo.newDate;
             }
@@ -87,6 +94,15 @@ export class TravelEffectsService {
           this.snackBar.open(`City ${city.title} removed successfully!`, null, {duration: 3000});
           return removeCitySuccess(city);
         })
+    );
+
+  @Effect()
+  updateCity$: Observable<Action> = this.actions$
+    .ofType(ActionTypes.UPDATE_CITY)
+    .map((city: Action) => city.payload)
+    .mergeMap((cities: ICityModel) =>
+      this.db.insert('cities', [cities])
+        .map(() => updateCitySuccess(cities))
     );
 
   constructor(private actions$: Actions,

@@ -4,10 +4,14 @@
 import { DBSchema } from '@ngrx/db';
 
 export const schema: DBSchema = {
-  version: 1,
+  version: 2,
   name: 'travel-planning',
   stores: {
     cities: {
+      autoIncrement: true,
+      primaryKey: 'id'
+    },
+    transfers: {
       autoIncrement: true,
       primaryKey: 'id'
     }

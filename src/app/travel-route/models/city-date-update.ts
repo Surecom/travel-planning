@@ -1,21 +1,21 @@
 /**
  * Created by Andrei_Furs on 2/21/2017.
  */
-export interface IUpdateModel {
+export interface ICityDateUpdate {
   oldDate: string;
   newDate: string;
 }
 
-export class UpdateModel {
+export class CityDateUpdate {
   public oldDate: string;
   public newDate: string;
 
-  constructor(model: IUpdateModel) {
+  constructor(model: ICityDateUpdate) {
     this.oldDate = model.oldDate;
     this.newDate = model.newDate;
   }
 
-  public toModel(): IUpdateModel {
+  public toModel(): ICityDateUpdate {
     return {
       oldDate: this.oldDate,
       newDate: this.newDate

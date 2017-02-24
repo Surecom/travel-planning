@@ -3,14 +3,15 @@ import {
   OnDestroy, ChangeDetectionStrategy, OnChanges, QueryList, Output, EventEmitter
 } from '@angular/core';
 
-import { SliderService } from '../services/slider.service';
 
+import { assign, difference } from 'lodash';
 import * as noUiSlider from 'nouislider';
-import * as _ from 'lodash';
 import * as moment from 'moment';
-import { CityModel } from '../models/city-model';
+
+import { CityModel } from '../models/city.model';
 import { TravelRoute } from '../common/constants';
-import { UpdateModel } from '../models/update-model';
+import { SliderService } from '../services/slider.service';
+import { CityDateUpdate } from '../models/city-date-update';
 
 @Component({
   selector: '[slider]',
@@ -30,7 +31,7 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
   private slider: ElementRef;
 
   @Output()
-  private updateCities: EventEmitter<UpdateModel[]> = new EventEmitter();
+  private updateCities: EventEmitter<CityDateUpdate[]> = new EventEmitter();
 
   private days = 0;
   private oldValueDates: string[];
@@ -66,9 +67,9 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
 
     for (let i = 0; i < this.cities.length; i++) {
       if (i === 0) {
-        start[i] = moment(this.cities[i].from, TravelRoute.DATE_FORMAT).add(start[i], 'days').valueOf();
+        start[i] = +moment(this.cities[i].from, TravelRoute.DATE_FORMAT).add(start[i], 'days');
       }
-      start[i + 1] = moment(this.cities[i].from, TravelRoute.DATE_FORMAT).add(start[i + 1], 'days').valueOf();
+      start[i + 1] = +moment(this.cities[i].from, TravelRoute.DATE_FORMAT).add(start[i + 1], 'days');
     }
 
     if (this.slider.nativeElement.noUiSlider) {
@@ -81,13 +82,13 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
 
   private createSlider(root: any, range: number[], totalDays: number, softLimit: number): void {
     noUiSlider.create(root,
-      this.sliderService.currentOptions = _.assign(this.sliderService.defaultOptions, {
+      this.sliderService.currentOptions = assign(this.sliderService.defaultOptions, {
         start: [
           ...range
         ],
         range: {
-          min: moment(range[0]).add(-softLimit, 'days').valueOf(),
-          max: moment(range[range.length - 1]).add(softLimit, 'days').valueOf()
+          min: +moment(range[0]).add(-softLimit, 'days'),
+          max: +moment(range[range.length - 1]).add(softLimit, 'days')
         },
         pips: {
           mode: 'count',
@@ -98,11 +99,11 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
     );
 
     root.noUiSlider.on('end', values => {
-      if (_.difference(this.oldValueDates, values).length !== 0) {
-        const updateModels: UpdateModel[] = [];
+      if (difference(this.oldValueDates, values).length !== 0) {
+        const updateModels: CityDateUpdate[] = [];
         for (let i = 0; i < values.length; i++) {
           if (values[i] !== this.oldValueDates[i]) {
-            updateModels.push(new UpdateModel({
+            updateModels.push(new CityDateUpdate({
               newDate: values[i],
               oldDate: this.oldValueDates[i]
             }));
