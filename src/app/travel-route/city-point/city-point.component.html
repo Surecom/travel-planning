@@ -1,55 +1,6 @@
-<div class="city-point d-flex justify-content-end align-content-stretch flex-wrap" *ngIf="!updateMark">
-  <div class="city-point-info">
-    <h4>
-      <small class="text-muted">From:</small>
-      {{city.from}}
-      <small class="text-muted">To:</small>
-      {{city.to}}
-    </h4>
-    <h1 class="display-3">{{city.title}}</h1>
-    <p>
-      {{city.description}}
-    </p>
-  </div>
-  <div class="controls d-flex align-items-start flex-column">
-    <button class="control" md-button (click)="editCity(city)">Update</button>
-    <button class="control" md-button (click)="removeCity()">Delete</button>
-  </div>
-</div>
-<div class="city-point d-flex justify-content-end align-content-stretch flex-wrap" *ngIf="updateMark">
-  <div class="city-point-info">
-    <h4>
-      <small class="text-muted">From:</small>
-      {{city.from}}
-      <small class="text-muted">To:</small>
-      {{city.to}}
-    </h4>
-    <form [formGroup]="cityUpdateForm" novalidate>
-      <div [class.has-danger]="formErrors.title"
-           [class.has-success]="!formErrors.title && cityUpdateForm.get('title').valid && !cityUpdateForm.get('title').pristine">
-        <div class="input-group">
-          <span class="input-group-addon">Chosen City</span>
-          <input type="text" class="form-control"
-                 [class.form-control-danger]="formErrors.title"
-                 [class.form-control-success]="!formErrors.title &&
-                                               cityUpdateForm.get('title').valid &&
-                                               !cityUpdateForm.get('title').pristine"
-                 placeholder="Enter the City you chosen" formControlName="title">
-        </div>
-        <div class="form-control-feedback">{{formErrors.title}}</div>
-      </div>
-      <br />
-      <div class="input-group">
-        <span class="input-group-addon">Description</span>
-        <input type="text"
-               class="form-control"
-               placeholder="Optional parameter"
-               formControlName="description">
-      </div>
-    </form>
-  </div>
-  <div class="controls d-flex align-items-start flex-column">
-    <button class="control" md-button (click)="updateCity()">Save</button>
-    <button class="control" md-button (click)="cancelUpdateCity()">Cancel</button>
-  </div>
-</div>
+<div city-view [city]="city"
+     (edit)="editCity($event)" (remove)="removeCity($event)"
+     *ngIf="!updateMark"></div>
+<div city-update [city]="city" [form]="cityUpdateForm" [formErrors]="formErrors"
+     (update)="updateCity($event)" (cancel)="cancelUpdateCity()"
+     *ngIf="updateMark"></div>

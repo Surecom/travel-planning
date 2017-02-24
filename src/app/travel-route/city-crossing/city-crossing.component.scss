@@ -33,8 +33,9 @@
   }
   .controls {
     z-index: 2;
+    padding: 1.25rem;
     button.control {
-      margin: 5px;
+      margin-bottom: .25rem;
       @include btn-control();
     }
   }

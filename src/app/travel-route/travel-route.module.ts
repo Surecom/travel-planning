@@ -28,6 +28,8 @@ import { CityCrossingComponent } from './city-crossing/city-crossing.component';
 import { CityCrossingModalComponent } from './city-crossing-modal/city-crossing-modal.component';
 import { TransferEffectsService } from './effects/transfer-effects.service';
 import { TotalDaysComponent } from './total-days/total-days.component';
+import { CityViewComponent } from './city-view/city-view.component';
+import { CityUpdateComponent } from './city-update/city-update.component';
 
 @NgModule({
   imports: [
@@ -60,7 +62,9 @@ import { TotalDaysComponent } from './total-days/total-days.component';
     CitiesListComponent,
     CityCrossingComponent,
     CityCrossingModalComponent,
-    TotalDaysComponent
+    TotalDaysComponent,
+    CityViewComponent,
+    CityUpdateComponent
   ],
   exports: [TravelRouteComponent],
   providers: [SliderService]
