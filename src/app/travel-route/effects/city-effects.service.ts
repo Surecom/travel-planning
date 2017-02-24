@@ -10,11 +10,14 @@ import 'rxjs/add/operator/toArray';
 import { sortBy, filter, find } from 'lodash';
 import * as moment from 'moment';
 
-import { ActionTypes,
+import {
+  ActionTypes,
   loadCitiesSuccess,
   addCitySuccess,
   removeCitySuccess,
-  updateCitiesDateSuccess } from '../actions/city.actions';
+  updateCitiesDateSuccess,
+  updateCitySuccess
+} from '../actions/city.actions';
 import { CityModel, ICityModel } from '../models/city.model';
 import { ICityDateUpdate } from '../models/city-date-update';
 import { TravelRoute } from '../common/constants';
@@ -91,6 +94,15 @@ export class CityEffectsService {
           this.snackBar.open(`City ${city.title} removed successfully!`, null, {duration: 3000});
           return removeCitySuccess(city);
         })
+    );
+
+  @Effect()
+  updateCity$: Observable<Action> = this.actions$
+    .ofType(ActionTypes.UPDATE_CITY)
+    .map((city: Action) => city.payload)
+    .mergeMap((cities: ICityModel) =>
+      this.db.insert('cities', [cities])
+        .map(() => updateCitySuccess(cities))
     );
 
   constructor(private actions$: Actions,

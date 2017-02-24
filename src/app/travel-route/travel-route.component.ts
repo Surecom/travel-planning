@@ -7,7 +7,7 @@ import { loadCities, updateCitiesDate } from './actions/city.actions';
 import { CityState } from './reducers/city.reducer';
 import { CityDateUpdate } from './models/city-date-update';
 import { TransferModel } from './models/transfer.model';
-import { loadTransfers } from './actions/transfer.action';
+import { LoadTransfers } from './actions/transfer.action';
 
 @Component({
   selector: '[travel-route]',
@@ -23,7 +23,7 @@ export class TravelRouteComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(loadCities());
-    this.store.dispatch(loadTransfers());
+    this.store.dispatch(new LoadTransfers());
     this.cities$ = this.store.select('cities').map((state: CityState) => state.cities);
   }
 

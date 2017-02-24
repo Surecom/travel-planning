@@ -4,7 +4,7 @@
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { CityModel } from '../models/city.model';
+import { CityModel, ICityModel } from '../models/city.model';
 import { ICityDateUpdate } from '../models/city-date-update';
 
 export const ActionTypes = {
@@ -15,7 +15,9 @@ export const ActionTypes = {
   REMOVE_CITY: '[CITY] REMOVE_CITY',
   REMOVE_CITY_SUCCESS: '[CITY] REMOVE_CITY_SUCCESS',
   UPDATE_CITIES_DATES: '[CITY] UPDATE_CITIES_DATES',
-  UPDATE_CITIES_DATES_SUCCESS: '[CITY] UPDATE_CITIES_DATES_SUCCESS'
+  UPDATE_CITIES_DATES_SUCCESS: '[CITY] UPDATE_CITIES_DATES_SUCCESS',
+  UPDATE_CITY: '[CITY] UPDATE_CITY',
+  UPDATE_CITY_SUCCESS: '[CITY] UPDATE_CITY_SUCCESS'
 };
 
 const loadCities: Function = (): Action => {
@@ -60,6 +62,20 @@ const updateCitiesDateSuccess: Function = (citiesDate: ICityDateUpdate[]): Actio
   };
 };
 
+const updateCity: Function = (city: ICityModel): Action => {
+  return {
+    type: ActionTypes.UPDATE_CITY,
+    payload: city
+  };
+};
+
+const updateCitySuccess: Function = (city: ICityModel): Action => {
+  return {
+    type: ActionTypes.UPDATE_CITY_SUCCESS,
+    payload: city
+  };
+};
+
 const removeCity: Function = (city: CityModel): Action => {
   return {
     type: ActionTypes.REMOVE_CITY,
@@ -79,6 +95,8 @@ export {
   loadCitiesSuccess,
   updateCitiesDate,
   updateCitiesDateSuccess,
+  updateCity,
+  updateCitySuccess,
   addCity,
   addCitySuccess,
   removeCity,

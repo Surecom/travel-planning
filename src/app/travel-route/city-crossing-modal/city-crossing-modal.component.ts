@@ -27,7 +27,7 @@ export class CityCrossingModalComponent implements OnInit {
     },
     way: {
       required: 'Field is required',
-      minlength: 'Minimum length is 5 symbols',
+      minlength: 'Minimum length is 3 symbols',
       maxlength: 'Maximum length is 100 symbols'
     }
   };
@@ -39,7 +39,7 @@ export class CityCrossingModalComponent implements OnInit {
       to: ['', Validators.required],
       from: ['', Validators.required],
       cityId: [''],
-      way: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
+      way: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       info: ['']
     });
     this.transferForm.valueChanges.subscribe(this.validateForm.bind(this, this.transferForm));

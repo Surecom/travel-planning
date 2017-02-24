@@ -29,7 +29,7 @@ export class CityAddComponent implements OnInit, AfterViewInit {
     },
     title: {
       required: 'Field is required',
-      minlength: 'Minimum length is 5 chars',
+      minlength: 'Minimum length is 3 chars',
       maxlength: 'Maximum length is 50 chars'
     }
   };
@@ -40,7 +40,7 @@ export class CityAddComponent implements OnInit, AfterViewInit {
     this.cityForm = this.formBuilder.group({
       to: ['', Validators.required],
       from: ['', Validators.required],
-      title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
+      title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       description: ['']
     });
     this.cityForm.valueChanges.subscribe(this.validateForm.bind(this));

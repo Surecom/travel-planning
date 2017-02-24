@@ -2,7 +2,6 @@
  * Created by Surecom-npm on 2/22/2017.
  */
 import { Action } from '@ngrx/store';
-import { sortBy } from 'lodash';
 
 import { TransferModel } from '../models/transfer.model';
 import { ActionTypes } from '../actions/transfer.action';
@@ -31,13 +30,38 @@ export function reducer(state: TransferState = initialState, action: Action): Tr
         transfers: action.payload
       };
     }
+    case ActionTypes.UPDATE_TRANSFER: {
+      return {
+        loading: true,
+        transfers: state.transfers
+      };
+    }
+    case ActionTypes.UPDATE_TRANSFER_SUCCESS: {
+      const tmp = [];
+      for (let i = 0; i < state.transfers.length; i++) {
+        tmp.push(state.transfers[i].id === action.payload.id ? action.payload : state.transfers[i]);
+      }
+      return {
+        loading: false,
+        transfers: tmp
+      };
+    }
+    case ActionTypes.ADD_TRANSFER: {
+      return {
+        loading: true,
+        transfers: state.transfers
+      };
+    }
     case ActionTypes.ADD_TRANSFER_SUCCESS: {
       return {
         loading: false,
-        transfers: sortBy(
-          [...state.transfers, action.payload],
-          (transfer: TransferModel) => transfer.id
-        )
+        transfers: [...state.transfers, action.payload]
+      };
+    }
+    case ActionTypes.REMOVE_TRANSFER_SUCCESS: {
+      return {
+        loading: false,
+        transfers: state.transfers.filter((transfer: TransferModel) => transfer.id !== action.payload.id)
       };
     }
     default: {

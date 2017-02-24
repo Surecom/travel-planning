@@ -2,9 +2,6 @@
  * Created by Surecom-npm on 2/22/2017.
  */
 import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/switchMap';
-
 import { TransferModel, ITransferModel } from '../models/transfer.model';
 
 export const ActionTypes = {
@@ -14,75 +11,64 @@ export const ActionTypes = {
   ADD_TRANSFER_SUCCESS: '[TRANSFER] ADD_TRANSFER_SUCCESS',
   REMOVE_TRANSFER: '[TRANSFER] REMOVE_TRANSFER',
   REMOVE_TRANSFER_SUCCESS: '[TRANSFER] REMOVE_TRANSFER_SUCCESS',
-  UPDATE_TRANSFERS_DATES: '[TRANSFER] UPDATE_TRANSFERS_DATES',
-  UPDATE_TRANSFERS_DATES_SUCCESS: '[TRANSFER] UPDATE_TRANSFERS_DATES_SUCCESS'
+  UPDATE_TRANSFER: '[TRANSFER] UPDATE_TRANSFER',
+  UPDATE_TRANSFER_SUCCESS: '[TRANSFER] UPDATE_TRANSFER_SUCCESS'
 };
 
+class LoadTransfers implements Action {
+  type = ActionTypes.LOAD_TRANSFERS;
+}
 
-const loadTransfers: Function = (): Action => {
-  return {
-    type: ActionTypes.LOAD_TRANSFERS,
-    payload: {}
-  };
-};
+class LoadTransfersSuccess implements Action {
+  type = ActionTypes.LOAD_TRANSFERS_SUCCESS;
 
-const loadTransfersSuccess: Function = (cities: Observable<TransferModel[]>): Action => {
-  return {
-    type: ActionTypes.LOAD_TRANSFERS_SUCCESS,
-    payload: cities
-  };
-};
+  constructor(public payload: TransferModel[]) { }
+}
 
-const addTransfer: Function = (city: TransferModel): Action => {
-  return {
-    type: ActionTypes.ADD_TRANSFER,
-    payload: city
-  };
-};
+class AddTransfer implements Action {
+  type = ActionTypes.ADD_TRANSFER;
 
-const addTransferSuccess: Function = (city: TransferModel): Action => {
-  return {
-    type: ActionTypes.ADD_TRANSFER_SUCCESS,
-    payload: city
-  };
-};
+  constructor(public payload: TransferModel) { }
+}
 
-const updateTransfersDate: Function = (citiesDate: ITransferModel[]): Action => {
-  return {
-    type: ActionTypes.UPDATE_TRANSFERS_DATES,
-    payload: citiesDate
-  };
-};
+class AddTransferSuccess implements Action {
+  type = ActionTypes.ADD_TRANSFER_SUCCESS;
 
-const updateTransfersDateSuccess: Function = (citiesDate: ITransferModel[]): Action => {
-  return {
-    type: ActionTypes.UPDATE_TRANSFERS_DATES_SUCCESS,
-    payload: citiesDate
-  };
-};
+  constructor(public payload: ITransferModel) { }
+}
 
-const removeTransfer: Function = (city: TransferModel): Action => {
-  return {
-    type: ActionTypes.REMOVE_TRANSFER,
-    payload: city
-  };
-};
+class UpdateTransfer implements Action {
+  type = ActionTypes.UPDATE_TRANSFER;
 
-const removeTransferSuccess: Function = (city: TransferModel): Action => {
-  return {
-    type: ActionTypes.REMOVE_TRANSFER_SUCCESS,
-    payload: city
-  };
-};
+  constructor(public payload: ITransferModel) { }
+}
+
+class UpdateTransferSuccess implements Action {
+  type = ActionTypes.UPDATE_TRANSFER_SUCCESS;
+
+  constructor(public payload: ITransferModel) { }
+}
+
+class RemoveTransfer implements Action {
+  type = ActionTypes.REMOVE_TRANSFER;
+
+  constructor(public payload: TransferModel) { }
+}
+
+class RemoveTransferSuccess implements Action {
+  type = ActionTypes.REMOVE_TRANSFER_SUCCESS;
+
+  constructor(public payload: ITransferModel) { }
+}
 
 export {
-  loadTransfers,
-  loadTransfersSuccess,
-  updateTransfersDate,
-  updateTransfersDateSuccess,
-  addTransfer,
-  addTransferSuccess,
-  removeTransfer,
-  removeTransferSuccess
+  LoadTransfers,
+  LoadTransfersSuccess,
+  UpdateTransfer,
+  UpdateTransferSuccess,
+  AddTransfer,
+  AddTransferSuccess,
+  RemoveTransfer,
+  RemoveTransferSuccess
 };
 

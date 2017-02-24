@@ -54,6 +54,16 @@ export function reducer(state: CityState = initialState, action: Action): CitySt
         cities: state.cities
       };
     }
+    case ActionTypes.UPDATE_CITY_SUCCESS: {
+      const tmp = [];
+      for (let i = 0; i < state.cities.length; i++) {
+        tmp.push(state.cities[i].id === action.payload.id ? action.payload : state.cities[i]);
+      }
+      return {
+        loading: false,
+        cities: tmp
+      };
+    }
     case ActionTypes.UPDATE_CITIES_DATES_SUCCESS: {
       const tmp = sortBy(
         unionBy(action.payload, state.cities, 'id'),
