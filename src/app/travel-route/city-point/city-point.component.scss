@@ -1,0 +1,23 @@
+@import "../common/utils";
+
+.city-point {
+  padding: 1.25rem;
+  margin-top: 1.25rem;
+  margin-bottom: .25rem;
+  border: 1px solid #eee;
+  border-left-width: .25rem;
+  border-radius: .25rem;
+  .city-point-info {
+    position: relative;
+    flex-grow: 1;
+  }
+}
+
+.controls {
+  z-index: 2;
+  margin-left: 1rem;
+  button.control {
+    margin-bottom: .25rem;
+    @include btn-control();
+  }
+}
