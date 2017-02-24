@@ -2,7 +2,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { CityModel } from '../models/city.model';
+import { CityModel, ICityModel } from '../models/city.model';
 import { removeCity, updateCity } from '../actions/city.actions';
 
 @Component({
@@ -55,8 +55,8 @@ export class CityPointComponent implements OnInit {
     this.cityUpdateForm.get('description').setValue(city.description);
   }
 
-  updateCity() {
-    this.store.dispatch(updateCity(this.cityUpdateForm.value));
+  updateCity(city: ICityModel) {
+    this.store.dispatch(updateCity(city));
     this.updateMark = false;
   }
 
@@ -64,8 +64,8 @@ export class CityPointComponent implements OnInit {
     this.updateMark = false;
   }
 
-  removeCity() {
-    this.store.dispatch(removeCity(this.city));
+  removeCity(city: CityModel) {
+    this.store.dispatch(removeCity(city));
   }
 
   private validateForm(form: FormGroup) {

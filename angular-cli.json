@@ -23,7 +23,8 @@
       ],
       "scripts": [
         "../node_modules/wnumb/wNumb.js",
-        "../node_modules/nouislider/distribute/nouislider.js"
+        "../node_modules/nouislider/distribute/nouislider.js",
+        "../node_modules/medium-editor/dist/js/medium-editor.js"
       ],
       "environments": {
         "source": "environments/environment.ts",

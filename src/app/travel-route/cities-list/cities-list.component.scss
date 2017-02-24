@@ -6,6 +6,9 @@
       border-left-color: nth($colors, $i);
       &:hover {
         background-color: lighten(nth($colors, $i), 35%);
+        table.medium-editor-table, table.medium-editor-table td {
+          border: 1px dashed $gray-light;
+        }
       }
       button[md-button] /deep/ {
         .mat-ripple-element {

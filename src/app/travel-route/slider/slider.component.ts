@@ -3,7 +3,6 @@ import {
   OnDestroy, ChangeDetectionStrategy, OnChanges, QueryList, Output, EventEmitter
 } from '@angular/core';
 
-
 import { assign, difference } from 'lodash';
 import * as noUiSlider from 'nouislider';
 import * as moment from 'moment';

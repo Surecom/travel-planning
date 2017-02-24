@@ -1,0 +1,18 @@
+<div class="city-point d-flex justify-content-end align-content-stretch flex-wrap">
+  <div class="city-point-info">
+    <h4>
+      <small class="text-muted">From:</small>
+      {{city.from}}
+      <small class="text-muted">To:</small>
+      {{city.to}}
+    </h4>
+    <h1 class="display-3">{{city.title}}</h1>
+    <hr *ngIf="city.description"/>
+    <div [innerHtml]="city.description">
+    </div>
+  </div>
+  <div class="controls d-flex align-items-start flex-column">
+    <button class="control" md-button (click)="edit.emit(city)">Update</button>
+    <button class="control" md-button (click)="remove.emit(city)">Delete</button>
+  </div>
+</div>
