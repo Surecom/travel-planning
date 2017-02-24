@@ -7,9 +7,9 @@
       {{city.to}}
     </h4>
     <h1 class="display-3">{{city.title}}</h1>
-    <p>
-      {{city.description}}
-    </p>
+    <hr *ngIf="city.description"/>
+    <div [innerHtml]="city.description">
+    </div>
   </div>
   <div class="controls d-flex align-items-start flex-column">
     <button class="control" md-button (click)="edit.emit(city)">Update</button>

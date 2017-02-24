@@ -9,7 +9,7 @@
     <form [formGroup]="form" novalidate>
       <div [class.has-danger]="formErrors.title"
            [class.has-success]="!formErrors.title && form.get('title').valid && !form.get('title').pristine">
-        <div class="input-group">
+        <div class="input-group input-group-lg">
           <span class="input-group-addon">Chosen City</span>
           <input type="text" class="form-control"
                  [class.form-control-danger]="formErrors.title"
@@ -21,17 +21,12 @@
         <div class="form-control-feedback">{{formErrors.title}}</div>
       </div>
       <br />
-      <div class="input-group">
-        <span class="input-group-addon">Description</span>
-        <input type="text"
-               class="form-control"
-               placeholder="Optional parameter"
-               formControlName="description">
-      </div>
+      <div text-editor [title]="'Description'"
+           [text]="form.get('description').value" (onChange)="onChangeHandler($event)"></div>
     </form>
   </div>
   <div class="controls d-flex align-items-start flex-column">
     <button class="control" md-button (click)="cancel.emit()">Cancel</button>
-    <button class="control" md-button (click)="update.emit(form.value)">Save</button>
+    <button class="control" md-button (click)="updateAction()">Save</button>
   </div>
 </div>

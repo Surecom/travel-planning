@@ -30,6 +30,7 @@ import { TransferEffectsService } from './effects/transfer-effects.service';
 import { TotalDaysComponent } from './total-days/total-days.component';
 import { CityViewComponent } from './city-view/city-view.component';
 import { CityUpdateComponent } from './city-update/city-update.component';
+import { TextEditorComponent } from './text-editor/text-editor.component';
 
 @NgModule({
   imports: [
@@ -64,7 +65,8 @@ import { CityUpdateComponent } from './city-update/city-update.component';
     CityCrossingModalComponent,
     TotalDaysComponent,
     CityViewComponent,
-    CityUpdateComponent
+    CityUpdateComponent,
+    TextEditorComponent
   ],
   exports: [TravelRouteComponent],
   providers: [SliderService]

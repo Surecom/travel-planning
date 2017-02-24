@@ -24,9 +24,20 @@ export class CityUpdateComponent implements OnInit {
   @Output()
   public cancel: EventEmitter<{}> = new EventEmitter();
 
+  private text: string;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  updateAction() {
+    this.form.get('description').setValue(this.text);
+    this.update.emit(this.form.value);
+  }
+
+  onChangeHandler(text: string) {
+    this.text = text;
   }
 
 }

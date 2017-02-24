@@ -1,7 +1,42 @@
 /* You can add global styles to this file, and also import other style files */
 // @import "~@angular/material/core/theming/prebuilt/deeppurple-amber.css";
+@import "~font-awesome/css/font-awesome.css";
 @import "~nouislider/distribute/nouislider.css";
 @import "~bootstrap/scss/bootstrap.scss";
 @import "~@angular/material/core/theming/prebuilt/indigo-pink";
 @import "~medium-editor/dist/css/medium-editor.css";
 @import "~medium-editor/dist/css/themes/bootstrap.css";
+
+blockquote {
+  background: rgba(#f9f9f9, .5);
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+  p {
+    display: inline;
+  }
+  &::before, &::after {
+    display: block;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.5);
+    font-size: 0.6rem;
+    letter-spacing: 0.05rem;
+  }
+  &::before {
+    color: #ccc;
+    content: open-quote;
+    font-size: 4em;
+    line-height: .1em;
+    margin-right: .25em;
+    vertical-align: -.4em;
+    display: block;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.5);
+    letter-spacing: 0.05rem;
+  }
+  &::after {
+    content: "</blockquote>";
+    margin: 6px 0 0 0;
+  }
+}
