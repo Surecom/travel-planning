@@ -14,3 +14,13 @@
     background-color: transparent;
   }
 }
+
+md-tab-group {
+  /deep/ md-tab-header {
+    .mat-tab-label-container .mat-tab-list {
+      .mat-tab-labels .mat-tab-label {
+        font-weight: bold;
+      }
+    }
+  }
+}

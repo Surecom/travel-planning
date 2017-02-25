@@ -2,7 +2,7 @@
 @import "../common/utils";
 
 @for $i from 1 through length($colors) {
-  :host-context(.tab-content > div:nth-child(#{length($colors)}n+#{$i})) {
+  :host-context([cities-list] > div:nth-child(#{length($colors)}n+#{$i})) {
     &[city-crossing] button[md-button] /deep/ {
       .mat-ripple-element {
         background-color: rgba(nth($colors, $i), .1);

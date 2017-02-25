@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy, Input, QueryList, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
@@ -6,13 +6,17 @@ import { CityModel } from '../models/city.model';
 import { addCity } from '../actions/city.actions';
 
 @Component({
-  selector: 'app-city-add',
+  selector: '[city-add]',
   templateUrl: './city-add.component.html',
   styleUrls: ['./city-add.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CityAddComponent implements OnInit, AfterViewInit {
+export class CityAddComponent implements OnInit, AfterViewInit, OnChanges {
 
+  @Input()
+  private cities: QueryList<CityModel[]>;
+
+  public fromLimit: string;
   public cityForm: FormGroup;
   public formErrors = {
     title: '',
@@ -46,11 +50,27 @@ export class CityAddComponent implements OnInit, AfterViewInit {
     this.cityForm.valueChanges.subscribe(this.validateForm.bind(this));
   }
 
+  ngOnChanges(): void {
+    if (this.cityForm) {
+      if (this.cities.length > 0) {
+        this.cityForm.get('to').setValue(this.cities[this.cities.length - 1].to);
+        this.cityForm.get('from').setValue(this.fromLimit = this.cities[this.cities.length - 1].to);
+        this.cityForm.get('from').disable();
+      } else if (this.cities.length === 0) {
+        this.cityForm.get('from').enable();
+        this.cityForm.reset();
+        this.fromLimit = null;
+      }
+    }
+  }
+
   ngAfterViewInit() {
   }
 
   onAdd(cityForm: FormGroup) {
+    this.cityForm.get('from').enable();
     this.store.dispatch(addCity(new CityModel(cityForm.value)));
+    this.cityForm.reset();
   }
 
   private validateForm() {
@@ -59,7 +79,7 @@ export class CityAddComponent implements OnInit, AfterViewInit {
       if (this.formErrors.hasOwnProperty(field)) {
         this.formErrors[field] = '';
         const control = form.get(field);
-        if (control && control.dirty && !control.valid) {
+        if (control && control.dirty && !control.pristine && !control.valid) {
           const message = this.validationMessages[field];
           for (const error in control.errors) {
             if (control.errors.hasOwnProperty(error)) {

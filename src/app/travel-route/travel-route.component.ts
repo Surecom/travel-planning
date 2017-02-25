@@ -18,13 +18,16 @@ import { LoadTransfers } from './actions/transfer.action';
 export class TravelRouteComponent implements OnInit {
 
   public cities$: Observable<CityModel[]>;
+  public citiesLoading$: Observable<boolean>;
 
   constructor(private store: Store<CityModel | TransferModel>) { }
 
   ngOnInit() {
     this.store.dispatch(loadCities());
     this.store.dispatch(new LoadTransfers());
+
     this.cities$ = this.store.select('cities').map((state: CityState) => state.cities);
+    this.citiesLoading$ = this.store.select('cities').map((state: CityState) => state.loading);
   }
 
   updateCities(dates: CityDateUpdate[]) {

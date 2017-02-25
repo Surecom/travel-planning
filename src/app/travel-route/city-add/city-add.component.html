@@ -1,17 +1,20 @@
-<div class="tab-content">
+<div class="mt-4">
   <form novalidate [formGroup]="cityForm" (ngSubmit)="onAdd(cityForm)">
     <div class="form-group row"
          [class.has-danger]="formErrors.from || formErrors.to">
       <label class="col-sm-2 col-form-label">From:</label>
       <div class="col-sm-3">
-        <input class="form-control" [class.form-control-danger]="formErrors.from"
-               type="date" formControlName="from">
+        <input class="flatpickr form-control" [class.form-control-danger]="formErrors.from"
+               [maxDate]="toInput.value" #fromInput
+               [currentValue]="fromLimit"
+               date-picker type="text" formControlName="from" >
         <div *ngIf="formErrors.from" class="form-control-feedback">{{formErrors.from}}</div>
       </div>
       <label class="col-sm-1 col-form-label">To:</label>
       <div class="col-sm-3">
-        <input class="form-control" [class.form-control-danger]="formErrors.to"
-               type="date" formControlName="to">
+        <input class="flatpickr form-control" [class.form-control-danger]="formErrors.to"
+               [minDate]="fromInput.value" #toInput
+               date-picker type="text" formControlName="to">
         <div *ngIf="formErrors.to" class="form-control-feedback">{{formErrors.to}}</div>
       </div>
     </div>

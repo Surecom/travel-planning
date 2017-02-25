@@ -11,6 +11,7 @@ import { MdButtonModule } from '@angular/material/button';
 import { MdProgressCircleModule } from '@angular/material/progress-spinner';
 import { MdSnackBarModule } from '@angular/material/snack-bar';
 import { MdSidenavModule } from '@angular/material/sidenav/sidenav';
+import { MdTabsModule } from '@angular/material/tabs/tab-group';
 
 import { schema } from './db';
 
@@ -32,6 +33,7 @@ import { TotalDaysComponent } from './total-days/total-days.component';
 import { CityViewComponent } from './city-view/city-view.component';
 import { CityUpdateComponent } from './city-update/city-update.component';
 import { TextEditorComponent } from './text-editor/text-editor.component';
+import { DatePickerDirective } from './date-picker.directive';
 
 @NgModule({
   imports: [
@@ -52,7 +54,8 @@ import { TextEditorComponent } from './text-editor/text-editor.component';
     MdButtonModule,
     MdProgressCircleModule,
     MdSnackBarModule,
-    MdSidenavModule
+    MdSidenavModule,
+    MdTabsModule
   ],
   entryComponents: [
     CityCrossingModalComponent
@@ -68,7 +71,8 @@ import { TextEditorComponent } from './text-editor/text-editor.component';
     TotalDaysComponent,
     CityViewComponent,
     CityUpdateComponent,
-    TextEditorComponent
+    TextEditorComponent,
+    DatePickerDirective
   ],
   exports: [TravelRouteComponent],
   providers: [SliderService]

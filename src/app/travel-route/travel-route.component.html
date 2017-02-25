@@ -1,17 +1,17 @@
 <md-sidenav-container>
   <md-sidenav [mode]="'side'" #sidenav>
   </md-sidenav>
+
   <h3><span class="badge badge-success" (click)="sidenav.toggle()"><i class="fa fa-bars" aria-hidden="true"></i></span></h3>
 
   <div total-days [cities]="(cities$ | async)"></div>
   <div slider [cities]="(cities$ | async)" (updateCities)="updateCities($event)"></div>
-  <ul class="nav nav-tabs tab-travel" role="tablist">
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" routerLink="/travel/city-list" routerLinkActive="active" role="tab">City List</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" routerLink="/travel/city-add" routerLinkActive="active" role="tab">Add City</a>
-    </li>
-  </ul>
-  <router-outlet></router-outlet>
+  <md-tab-group>
+    <md-tab [label]="'City List'">
+      <div cities-list [cities]="(cities$ | async)" [citiesLoading]="(citiesLoading$ | async)"></div>
+    </md-tab>
+    <md-tab [label]="'Add City'">
+      <div city-add [cities]="(cities$ | async)"></div>
+    </md-tab>
+  </md-tab-group>
 </md-sidenav-container>

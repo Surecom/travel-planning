@@ -6,6 +6,8 @@
 @import "~@angular/material/core/theming/prebuilt/indigo-pink";
 @import "~medium-editor/dist/css/medium-editor.css";
 @import "~medium-editor/dist/css/themes/bootstrap.css";
+@import '~flatpickr/dist/flatpickr.css';
+@import '~flatpickr/dist/themes/airbnb.css';
 
 blockquote {
   background: rgba(#f9f9f9, .5);
