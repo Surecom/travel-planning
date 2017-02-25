@@ -1,9 +1,6 @@
 /**
  * Created by Surecom-npm on 2/19/2017.
  */
-import * as moment from 'moment';
-
-import { TravelRoute } from '../common/constants';
 import { Model } from './model';
 
 export interface ICityModel {
@@ -22,8 +19,8 @@ export class CityModel extends Model {
 
   constructor(cityModel: ICityModel) {
     super();
-    this.to = moment(cityModel.to).format(TravelRoute.DATE_FORMAT);
-    this.from = moment(cityModel.from).format(TravelRoute.DATE_FORMAT);
+    this.to = cityModel.to;
+    this.from = cityModel.from;
     this.title = cityModel.title;
     this.description = cityModel.description;
   }

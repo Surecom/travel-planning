@@ -1,9 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Component, OnInit, ChangeDetectionStrategy, Input, QueryList } from '@angular/core';
 
 import { CityModel } from '../models/city.model';
-import { CityState } from '../reducers/city.reducer';
 
 @Component({
   selector: '[cities-list]',
@@ -13,13 +10,14 @@ import { CityState } from '../reducers/city.reducer';
 })
 export class CitiesListComponent implements OnInit {
 
-  public cities$: Observable<CityModel[]>;
-  public citiesLoading$: Observable<boolean>;
+  @Input()
+  public cities: QueryList<CityModel[]>;
 
-  constructor(private store: Store<CityModel>) { }
+  @Input()
+  public citiesLoading: boolean;
+
+  constructor() { }
 
   ngOnInit() {
-    this.cities$ = this.store.select('cities').map((state: CityState) => state.cities);
-    this.citiesLoading$ = this.store.select('cities').map((state: CityState) => state.loading);
   }
 }
