@@ -9,3 +9,9 @@ button {
 hr {
   background: $blue;
 }
+
+input.flatpickr.form-control {
+  &[readonly]:not([disabled]) {
+    background-color: white;
+  }
+}

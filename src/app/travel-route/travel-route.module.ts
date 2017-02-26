@@ -33,7 +33,8 @@ import { TotalDaysComponent } from './total-days/total-days.component';
 import { CityViewComponent } from './city-view/city-view.component';
 import { CityUpdateComponent } from './city-update/city-update.component';
 import { TextEditorComponent } from './text-editor/text-editor.component';
-import { DatePickerDirective } from './date-picker.directive';
+import { DatePickerDirective } from './date-time-pickers/date-picker.directive';
+import { TimePickerDirective } from './date-time-pickers/time-picker.directive';
 
 @NgModule({
   imports: [
@@ -72,7 +73,8 @@ import { DatePickerDirective } from './date-picker.directive';
     CityViewComponent,
     CityUpdateComponent,
     TextEditorComponent,
-    DatePickerDirective
+    DatePickerDirective,
+    TimePickerDirective
   ],
   exports: [TravelRouteComponent],
   providers: [SliderService]

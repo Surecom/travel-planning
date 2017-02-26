@@ -9,6 +9,10 @@
 @import '~flatpickr/dist/flatpickr.css';
 @import '~flatpickr/dist/themes/airbnb.css';
 
+.flatpickr-calendar.hasTime {
+  z-index: 9999;
+}
+
 blockquote {
   background: rgba(#f9f9f9, .5);
   border-left: 10px solid #ccc;
