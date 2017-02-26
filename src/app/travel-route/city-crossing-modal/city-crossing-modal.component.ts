@@ -36,8 +36,8 @@ export class CityCrossingModalComponent implements OnInit {
 
   ngOnInit() {
     this.transferForm = this.formBuilder.group({
-      to: ['', Validators.required],
-      from: ['', Validators.required],
+      to: ['01:00', Validators.required],
+      from: ['00:00', Validators.required],
       cityId: [''],
       way: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       info: ['']

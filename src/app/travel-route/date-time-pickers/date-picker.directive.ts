@@ -2,7 +2,7 @@ import { Directive, OnInit, ElementRef, OnDestroy, Input, OnChanges } from '@ang
 
 import * as Flatpickr from 'flatpickr';
 import * as moment from 'moment';
-import { TravelRoute } from './common/constants';
+import { TravelRoute } from '../common/constants';
 
 @Directive({
   selector: '[date-picker]'

@@ -71,11 +71,17 @@ export class CityCrossingComponent implements OnInit {
     this.transferUpdateForm.valueChanges.subscribe(this.validateForm.bind(this, this.transferUpdateForm));
   }
 
-  getTotalTimeWithEstimated(transfer: TransferModel): string {
-    const isNextDay = moment(transfer.from, TravelRoute.TIME_FORMAT)
-      .diff(moment(transfer.to, TravelRoute.TIME_FORMAT));
-    const totalTime = moment(Math.abs(isNextDay)).utc().format(TravelRoute.TIME_FORMAT);
-    return `Total transfer time is ${totalTime} ${isNextDay > 0 ? '(+1 day)' : ''}`;
+  getTotalTransferTime(transfer: TransferModel): string {
+    const tmpTo = +moment(transfer.to, TravelRoute.TIME_FORMAT);
+    const tmpFrom = +moment(transfer.from, TravelRoute.TIME_FORMAT);
+    let totalTime: string;
+    (<any>this).moment = moment;
+    if (tmpFrom > tmpTo) {
+      totalTime = moment(moment('24:00', TravelRoute.TIME_FORMAT).diff(moment(tmpFrom - tmpTo))).format(TravelRoute.TIME_FORMAT);
+    } else {
+      totalTime = moment(tmpTo - tmpFrom).utc().format(TravelRoute.TIME_FORMAT);
+    }
+    return `Total transfer time is ${totalTime}`;
   }
 
   removeTransfer(transfer: TransferModel) {

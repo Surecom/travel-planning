@@ -10,18 +10,18 @@
           {{transfer.to}}
         </p>
         <p class="card-text">{{transfer.info}}</p>
-        <p class="card-text">{{getTotalTimeWithEstimated(transfer)}}</p>
+        <p class="card-text">{{getTotalTransferTime(transfer)}}</p>
       </div>
       <div *ngIf="updateMark === transfer.id">
         <form [formGroup]="transferUpdateForm" novalidate>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">From:</label>
             <div class="col-sm-3">
-              <input class="form-control" type="time" formControlName="from">
+              <input type="text" time-picker class="flatpickr form-control" formControlName="from">
             </div>
             <label class="col-sm-1 col-form-label">To:</label>
             <div class="col-sm-3">
-              <input class="form-control" type="time" formControlName="to">
+              <input type="text" time-picker class="flatpickr form-control" formControlName="to">
             </div>
           </div>
           <div [class.has-danger]="formErrors.way"
