@@ -1,6 +1,6 @@
 <div city-view [city]="city"
      (edit)="editCity($event)" (remove)="removeCity($event)"
      *ngIf="!updateMark"></div>
-<div city-update [city]="city" [form]="cityUpdateForm" [formErrors]="formErrors"
+<div city-update [city]="city"
      (update)="updateCity($event)" (cancel)="cancelUpdateCity()"
      *ngIf="updateMark"></div>

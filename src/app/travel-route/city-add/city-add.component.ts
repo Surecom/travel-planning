@@ -23,6 +23,7 @@ export class CityAddComponent implements OnInit, AfterViewInit, OnChanges {
     from: '',
     to: ''
   };
+  private text: string;
 
   private validationMessages = {
     to: {
@@ -69,8 +70,13 @@ export class CityAddComponent implements OnInit, AfterViewInit, OnChanges {
 
   onAdd(cityForm: FormGroup) {
     this.cityForm.get('from').enable();
+    this.cityForm.get('description').setValue(this.text);
     this.store.dispatch(addCity(new CityModel(cityForm.value)));
     this.cityForm.reset();
+  }
+
+  onChangeHandler(text: string) {
+    this.text = text;
   }
 
   private validateForm() {

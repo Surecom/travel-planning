@@ -1,0 +1,6 @@
+<div transfer-view [transfer]="transfer"
+     (edit)="editTransfer($event)" (remove)="removeTransfer($event)"
+     *ngIf="!updateMark"></div>
+<div transfer-edit [transfer]="transfer"
+     (update)="updateTransfer($event)" (cancel)="cancelUpdateTransfer()"
+     *ngIf="updateMark"></div>

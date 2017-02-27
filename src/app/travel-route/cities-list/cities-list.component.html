@@ -2,6 +2,6 @@
 <div *ngFor="let city of cities; let isLast = last;">
   <div city-point [city]="city"></div>
   <div *ngIf="!isLast">
-    <div city-crossing [city]="city"></div>
+    <div transfer-list [city]="city"></div>
   </div>
 </div>

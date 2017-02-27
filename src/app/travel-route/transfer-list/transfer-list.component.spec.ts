@@ -1,21 +1,21 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CityCrossingComponent } from './city-crossing.component';
+import { TransferListComponent } from './transfer-list.component';
 
-describe('CityCrossingComponent', () => {
-  let component: CityCrossingComponent;
-  let fixture: ComponentFixture<CityCrossingComponent>;
+describe('TransferListComponent', () => {
+  let component: TransferListComponent;
+  let fixture: ComponentFixture<TransferListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CityCrossingComponent ]
+      declarations: [ TransferListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CityCrossingComponent);
+    fixture = TestBed.createComponent(TransferListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

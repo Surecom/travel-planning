@@ -1,0 +1,4 @@
+<div *ngFor="let transfer of (transfers$ | async)" class="card city-crossing-card">
+  <div transfer-point [transfer]="transfer"></div>
+</div>
+<button md-button class="add-transfer" (click)="showAddCityTransferModal()">Add city transfer</button>
