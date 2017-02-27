@@ -1,0 +1,24 @@
+@import "../common/utils";
+
+:host {
+  height: 100%;
+}
+.card-img-overlay {
+  position: relative;
+  flex-grow: 1;
+}
+.card-img {
+  min-height: 100%;
+  width: 400px;
+  opacity: .1;
+  background-image: url("../../../assets/city-crossing-img.svg");
+  background-size: cover;
+}
+.controls {
+  z-index: 2;
+  padding: 1.25rem;
+  button.control {
+    margin-bottom: .25rem;
+    @include btn-control();
+  }
+}

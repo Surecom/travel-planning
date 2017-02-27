@@ -1,0 +1,41 @@
+<div class="d-flex justify-content-end align-content-stretch flex-wrap">
+  <div class="card-img-overlay">
+    <form [formGroup]="transferUpdateForm" novalidate>
+      <div class="form-group row">
+        <div class="col-sm-2">
+          <div class="input-group">
+            <span class="input-group-addon">From:</span>
+            <input type="text" time-picker class="flatpickr form-control" formControlName="from">
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="input-group">
+            <span class="input-group-addon">To:</span>
+            <input type="text" time-picker class="flatpickr form-control" formControlName="to">
+          </div>
+        </div>
+      </div>
+      <div [class.has-danger]="formErrors.way"
+           [class.has-success]="!formErrors.way && transferUpdateForm.get('way').valid && !transferUpdateForm.get('way').pristine">
+        <div class="input-group">
+          <span class="input-group-addon">Chosen Way</span>
+          <input type="text" class="form-control"
+            [class.form-control-danger]="formErrors.way"
+            [class.form-control-success]="!formErrors.way &&
+            transferUpdateForm.get('way').valid &&
+            !transferUpdateForm.get('way').pristine"
+            placeholder="Enter the way you chosen" formControlName="way">
+        </div>
+        <div class="form-control-feedback">{{formErrors.way}}</div>
+      </div>
+      <br />
+      <div text-editor [title]="'Info'"
+         [text]="transferUpdateForm.get('info').value" (onChange)="onChangeHandler($event)"></div>
+    </form>
+  </div>
+  <div class="card-img"></div>
+  <div class="controls d-flex align-items-start flex-column">
+    <button class="control" md-button (click)="cancel.emit()">Cancel</button>
+    <button class="control" md-button (click)="updateAction()">Save</button>
+  </div>
+</div>

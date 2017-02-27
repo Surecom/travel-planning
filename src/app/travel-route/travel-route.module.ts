@@ -26,7 +26,7 @@ import { CityPointComponent } from './city-point/city-point.component';
 import { CityAddComponent } from './city-add/city-add.component';
 import { CityEffectsService } from './effects/city-effects.service';
 import { CitiesListComponent } from './cities-list/cities-list.component';
-import { CityCrossingComponent } from './city-crossing/city-crossing.component';
+import { TransferListComponent } from './transfer-list/transfer-list.component';
 import { CityCrossingModalComponent } from './city-crossing-modal/city-crossing-modal.component';
 import { TransferEffectsService } from './effects/transfer-effects.service';
 import { TotalDaysComponent } from './total-days/total-days.component';
@@ -35,6 +35,9 @@ import { CityUpdateComponent } from './city-update/city-update.component';
 import { TextEditorComponent } from './text-editor/text-editor.component';
 import { DatePickerDirective } from './date-time-pickers/date-picker.directive';
 import { TimePickerDirective } from './date-time-pickers/time-picker.directive';
+import { TransferViewComponent } from './transfer-view/transfer-view.component';
+import { TransferEditComponent } from './transfer-edit/transfer-edit.component';
+import { TransferPointComponent } from './transfer-point/transfer-point.component';
 
 @NgModule({
   imports: [
@@ -67,14 +70,17 @@ import { TimePickerDirective } from './date-time-pickers/time-picker.directive';
     CityPointComponent,
     CityAddComponent,
     CitiesListComponent,
-    CityCrossingComponent,
+    TransferListComponent,
     CityCrossingModalComponent,
     TotalDaysComponent,
     CityViewComponent,
     CityUpdateComponent,
     TextEditorComponent,
     DatePickerDirective,
-    TimePickerDirective
+    TimePickerDirective,
+    TransferViewComponent,
+    TransferEditComponent,
+    TransferPointComponent
   ],
   exports: [TravelRouteComponent],
   providers: [SliderService]
