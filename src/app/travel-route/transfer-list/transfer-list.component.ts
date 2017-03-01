@@ -10,6 +10,7 @@ import { CityModel } from '../models/city.model';
 import { AddTransfer } from '../actions/transfer.action';
 import { CityCrossingModalComponent } from '../city-crossing-modal/city-crossing-modal.component';
 import { TravelRoute } from '../common/constants';
+import { TransferCheck } from '../models/trasfer-check';
 
 @Component({
   selector: '[transfer-list]',
@@ -51,28 +52,30 @@ export class TransferListComponent implements OnInit {
   }
 
   validateTransfers(transfer: TransferModel, last: boolean) {
-    let resultClass: string = undefined;
+    const result = new TransferCheck();
     if (this.previousTransfer && this.previousTransfer.cityId === transfer.cityId) {
-      const timeBetweenTransfers = this.getTotalTransferTime(this.previousTransfer.to, transfer.from).minute();
-      const transferTime = this.getTotalTransferTime(transfer.from, transfer.to).minute();
+      const timeBetweenTransfers = moment.duration(+this.getTotalTransferTime(this.previousTransfer.to, transfer.from)).asMinutes();
+      const transferTime = moment.duration(+this.getTotalTransferTime(transfer.from, transfer.to)).asMinutes();
       this.totalHours += (timeBetweenTransfers + transferTime);
       this.previousTransfer = transfer;
-      if (this.totalHours > TravelRoute.TRANSFERS.OVERLOAD_TIME) {
-        resultClass = 'card-outline-danger';
-      } else if (timeBetweenTransfers < TravelRoute.TRANSFERS.MIN_TIME) {
-        resultClass = 'card-outline-warning';
-      } else if (timeBetweenTransfers > TravelRoute.TRANSFERS.MAX_TIME) {
-        resultClass = 'card-outline-danger';
+      if (result.danger = (
+            this.totalHours > TravelRoute.TRANSFERS.OVERLOAD_TIME ||
+            timeBetweenTransfers > TravelRoute.TRANSFERS.MAX_TIME
+          )
+      ) {
+        result.message = 'Time between transfers is more than 3 hours or total transfers time is more than 48 hours.';
+      } else if (result.warning = timeBetweenTransfers < TravelRoute.TRANSFERS.MIN_TIME) {
+        result.message = 'Time between transfers is less than 1 hour.';
       }
-      resultClass = resultClass || 'card-outline-success';
+      result.success = !(result.danger || result.warning);
     } else {
       this.previousTransfer = transfer;
-      resultClass = 'card-outline-success';
+      result.success = true;
     }
     if (last) {
       this.previousTransfer = null;
     }
-    return resultClass;
+    return result;
   }
 
   showAddCityTransferModal() {

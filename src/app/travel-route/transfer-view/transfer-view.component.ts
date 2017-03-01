@@ -14,6 +14,9 @@ export class TransferViewComponent implements OnInit {
   @Input()
   public transfer: TransferModel;
 
+  @Input()
+  public message: string;
+
   @Output()
   public edit: EventEmitter<TransferModel> = new EventEmitter();
 

@@ -1,6 +1,11 @@
-<div transfer-view [transfer]="transfer"
-     (edit)="editTransfer($event)" (remove)="removeTransfer($event)"
-     *ngIf="!updateMark"></div>
-<div transfer-edit [transfer]="transfer"
-     (update)="updateTransfer($event)" (cancel)="cancelUpdateTransfer()"
-     *ngIf="updateMark"></div>
+<div class="card city-crossing-card"
+     [class.card-outline-danger]="transferCheck.danger"
+     [class.card-outline-warning]="transferCheck.warning"
+     [class.card-outline-success]="transferCheck.success">
+  <div transfer-view [transfer]="transfer" [message]="transferCheck.message"
+       (edit)="editTransfer($event)" (remove)="removeTransfer($event)"
+       *ngIf="!updateMark"></div>
+  <div transfer-edit [transfer]="transfer"
+       (update)="updateTransfer($event)" (cancel)="cancelUpdateTransfer()"
+       *ngIf="updateMark"></div>
+</div>

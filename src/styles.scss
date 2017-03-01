@@ -46,3 +46,10 @@ blockquote {
     margin: 6px 0 0 0;
   }
 }
+
+md-tooltip-component {
+  & > .mat-tooltip {
+    font-size: 20px !important; //we need it because component overloaded our styles after loading
+    max-width: 500px !important; //we need it because component overloaded our styles after loading
+  }
+}

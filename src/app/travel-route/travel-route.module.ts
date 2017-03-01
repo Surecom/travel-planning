@@ -12,6 +12,7 @@ import { MdProgressCircleModule } from '@angular/material/progress-spinner';
 import { MdSnackBarModule } from '@angular/material/snack-bar';
 import { MdSidenavModule } from '@angular/material/sidenav/sidenav';
 import { MdTabsModule } from '@angular/material/tabs/tab-group';
+import { MdTooltipModule } from '@angular/material/tooltip/tooltip';
 
 import { schema } from './db';
 
@@ -59,7 +60,8 @@ import { TransferPointComponent } from './transfer-point/transfer-point.componen
     MdProgressCircleModule,
     MdSnackBarModule,
     MdSidenavModule,
-    MdTabsModule
+    MdTabsModule,
+    MdTooltipModule
   ],
   entryComponents: [
     CityCrossingModalComponent
