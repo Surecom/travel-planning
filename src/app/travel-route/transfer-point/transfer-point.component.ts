@@ -1,5 +1,4 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import { TransferModel, ITransferModel } from '../models/transfer.model';
