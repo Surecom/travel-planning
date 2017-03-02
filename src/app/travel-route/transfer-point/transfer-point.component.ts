@@ -1,10 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import { TransferModel, ITransferModel } from '../models/transfer.model';
 import { CityModel } from '../models/city.model';
 import { UpdateTransfer, RemoveTransfer } from '../actions/transfer.action';
+import { TransferCheck } from '../models/trasfer-check';
 
 @Component({
   selector: '[transfer-point]',
@@ -15,11 +15,14 @@ import { UpdateTransfer, RemoveTransfer } from '../actions/transfer.action';
 export class TransferPointComponent implements OnInit {
 
   @Input()
+  public transferCheck: TransferCheck;
+
+  @Input()
   public transfer: TransferModel;
 
   private updateMark = false;
 
-  constructor(private store: Store<CityModel>) { }
+  constructor(private store: Store<CityModel>) {}
 
   ngOnInit() {}
 

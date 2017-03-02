@@ -1,8 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import * as moment from 'moment';
+import { Component, OnInit, Input, Output, EventEmitter, SkipSelf } from '@angular/core';
 
 import { TransferModel } from '../models/transfer.model';
 import { TravelRoute } from '../common/constants';
+import { TransferListComponent } from '../transfer-list/transfer-list.component';
 
 @Component({
   selector: '[transfer-view]',
@@ -14,26 +14,21 @@ export class TransferViewComponent implements OnInit {
   @Input()
   public transfer: TransferModel;
 
+  @Input()
+  public message: string;
+
   @Output()
   public edit: EventEmitter<TransferModel> = new EventEmitter();
 
   @Output()
   public remove: EventEmitter<TransferModel> = new EventEmitter();
 
-  constructor() { }
+  constructor(@SkipSelf() private transferList: TransferListComponent) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   getTotalTransferTime(transfer: TransferModel): string {
-    const tmpTo = +moment(transfer.to, TravelRoute.TIME_FORMAT);
-    const tmpFrom = +moment(transfer.from, TravelRoute.TIME_FORMAT);
-    let totalTime: string;
-    if (tmpFrom > tmpTo) {
-      totalTime = moment(moment('24:00', TravelRoute.TIME_FORMAT).diff(moment(tmpFrom - tmpTo))).format(TravelRoute.TIME_FORMAT);
-    } else {
-      totalTime = moment(tmpTo - tmpFrom).utc().format(TravelRoute.TIME_FORMAT);
-    }
-    return `Total transfer time is ${totalTime}`;
+    const transferTime = this.transferList.getTotalTransferTime(transfer.from, transfer.to).format(TravelRoute.TIME_FORMAT);
+    return `Total transfer time is ${transferTime}`;
   }
 }

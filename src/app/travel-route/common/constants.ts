@@ -3,5 +3,10 @@
  */
 export const TravelRoute = {
   DATE_FORMAT: 'Do MMM YY',
-  TIME_FORMAT: 'HH:mm'
+  TIME_FORMAT: 'HH:mm',
+  TRANSFERS: {
+    MIN_TIME: 60,
+    MAX_TIME: 180,
+    OVERLOAD_TIME: 2880
+  }
 };
