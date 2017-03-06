@@ -1,0 +1,14 @@
+<h4>
+  <small class="text-muted">Cost: </small>
+  <span class="warning-message" [mdTooltip]="'Cities living cost'" [mdTooltipPosition]="'below'">
+    {{citiesCost}}
+  </span>
+  <small class="text-muted"> + </small>
+  <span class="warning-message" [mdTooltip]="'Transfers cost'" [mdTooltipPosition]="'below'">
+    {{transfersCost}}
+  </span>
+  <small class="text-muted"> = </small>
+  <span class="warning-message" [mdTooltip]="'Total travel cost'" [mdTooltipPosition]="'below'">
+    {{transfersCost + citiesCost}}
+  </span>
+</h4>

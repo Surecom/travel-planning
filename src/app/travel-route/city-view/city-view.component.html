@@ -1,11 +1,13 @@
 <div class="city-point d-flex justify-content-end align-content-stretch flex-wrap">
   <div class="city-point-info">
-    <h4>
+    <h2 class="mt-1">
       <small class="text-muted">From:</small>
       {{city.from}}
       <small class="text-muted">To:</small>
       {{city.to}}
-    </h4>
+      <small class="text-muted"> | Cost of living in the city:</small>
+      {{city.cost}}
+    </h2>
     <h1 class="display-3">{{city.title}}</h1>
     <hr *ngIf="city.description"/>
     <div [innerHtml]="city.description">

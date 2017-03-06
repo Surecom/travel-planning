@@ -4,6 +4,8 @@ import { Store } from '@ngrx/store';
 
 import { CityModel } from '../models/city.model';
 import { addCity } from '../actions/city.actions';
+import { minValueValidator } from '../validators/min-value.validator';
+import { numberValidator } from '../validators/number.validator';
 
 @Component({
   selector: '[city-add]',
@@ -21,7 +23,8 @@ export class CityAddComponent implements OnInit, AfterViewInit, OnChanges {
   public formErrors = {
     title: '',
     from: '',
-    to: ''
+    to: '',
+    cost: ''
   };
   private text: string;
 
@@ -31,6 +34,11 @@ export class CityAddComponent implements OnInit, AfterViewInit, OnChanges {
     },
     from: {
       required: 'Field is required'
+    },
+    cost: {
+      required: 'Field is required',
+      minValueValidator: 'Cost must be more than 0',
+      numberValidator: 'Cost must be number'
     },
     title: {
       required: 'Field is required',
@@ -45,6 +53,7 @@ export class CityAddComponent implements OnInit, AfterViewInit, OnChanges {
     this.cityForm = this.formBuilder.group({
       to: ['', Validators.required],
       from: ['', Validators.required],
+      cost: ['', [Validators.required, minValueValidator(0), numberValidator]],
       title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       description: ['']
     });

@@ -1,6 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MdDialogRef } from '@angular/material/dialog/dialog-ref';
+import { minValueValidator } from '../validators/min-value.validator';
+import { numberValidator } from '../validators/number.validator';
 
 @Component({
   selector: 'city-crossing-modal',
@@ -15,7 +17,8 @@ export class CityCrossingModalComponent implements OnInit {
   public formErrors = {
     way: '',
     from: '',
-    to: ''
+    to: '',
+    cost: ''
   };
 
   private validationMessages = {
@@ -24,6 +27,11 @@ export class CityCrossingModalComponent implements OnInit {
     },
     from: {
       required: 'Field is required'
+    },
+    cost: {
+      required: 'Field is required',
+      minValueValidator: 'Cost must be more than 0',
+      numberValidator: 'Cost must be number'
     },
     way: {
       required: 'Field is required',
@@ -39,6 +47,7 @@ export class CityCrossingModalComponent implements OnInit {
       to: ['01:00', Validators.required],
       from: ['00:00', Validators.required],
       cityId: [''],
+      cost: ['', [Validators.required, minValueValidator(0), numberValidator]],
       way: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       info: ['']
     });
