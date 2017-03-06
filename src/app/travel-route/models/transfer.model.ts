@@ -12,6 +12,7 @@ export interface ITransferModel {
   info: string;
   from: string;
   to: string;
+  cost: number;
 }
 
 export class TransferModel extends Model {
@@ -21,6 +22,7 @@ export class TransferModel extends Model {
   public info: string;
   public from: string;
   public to: string;
+  public cost: number;
 
   constructor(model: ITransferModel) {
     super();
@@ -30,6 +32,7 @@ export class TransferModel extends Model {
     this.info = model.info;
     this.from = model.from;
     this.to = model.to;
+    this.cost = model.cost;
   }
 
   public toModel(): ITransferModel {
@@ -39,7 +42,8 @@ export class TransferModel extends Model {
       way: this.way,
       info: this.info,
       from: this.from,
-      to: this.to
+      to: this.to,
+      cost: this.cost
     };
   }
 }

@@ -1,18 +1,28 @@
 <div class="d-flex justify-content-end align-content-stretch flex-wrap">
   <div class="card-img-overlay">
     <form [formGroup]="transferUpdateForm" novalidate>
-      <div class="form-group row">
-        <div class="col-sm-2">
-          <div class="input-group">
-            <span class="input-group-addon">From:</span>
-            <input type="text" time-picker class="flatpickr form-control" formControlName="from">
+      <div class="row">
+        <div class="form-group row col-sm-6">
+          <div class="col-sm-6">
+            <div class="input-group">
+              <span class="input-group-addon">From:</span>
+              <input type="text" time-picker class="flatpickr form-control" formControlName="from">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="input-group">
+              <span class="input-group-addon">To:</span>
+              <input type="text" time-picker class="flatpickr form-control" formControlName="to">
+            </div>
           </div>
         </div>
-        <div class="col-sm-2">
+        <div class="form-group row col-sm-6"
+             [class.has-danger]="formErrors.cost">
           <div class="input-group">
-            <span class="input-group-addon">To:</span>
-            <input type="text" time-picker class="flatpickr form-control" formControlName="to">
+            <span class="input-group-addon">Transfer cost:</span>
+            <input type="text" class=" form-control" formControlName="cost">
           </div>
+          <div *ngIf="formErrors.cost" class="form-control-feedback">{{formErrors.cost}}</div>
         </div>
       </div>
       <div [class.has-danger]="formErrors.way"

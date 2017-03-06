@@ -39,6 +39,7 @@ import { TimePickerDirective } from './date-time-pickers/time-picker.directive';
 import { TransferViewComponent } from './transfer-view/transfer-view.component';
 import { TransferEditComponent } from './transfer-edit/transfer-edit.component';
 import { TransferPointComponent } from './transfer-point/transfer-point.component';
+import { TotalCostComponent } from './total-cost/total-cost.component';
 
 @NgModule({
   imports: [
@@ -82,7 +83,8 @@ import { TransferPointComponent } from './transfer-point/transfer-point.componen
     TimePickerDirective,
     TransferViewComponent,
     TransferEditComponent,
-    TransferPointComponent
+    TransferPointComponent,
+    TotalCostComponent
   ],
   exports: [TravelRouteComponent],
   providers: [SliderService]

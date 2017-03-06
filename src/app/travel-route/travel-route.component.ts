@@ -8,6 +8,7 @@ import { CityState } from './reducers/city.reducer';
 import { CityDateUpdate } from './models/city-date-update';
 import { TransferModel } from './models/transfer.model';
 import { LoadTransfers } from './actions/transfer.action';
+import { TransferState } from './reducers/transfer.reducer';
 
 @Component({
   selector: '[travel-route]',
@@ -19,6 +20,7 @@ export class TravelRouteComponent implements OnInit {
 
   public cities$: Observable<CityModel[]>;
   public citiesLoading$: Observable<boolean>;
+  public transfers$: Observable<TransferModel[]>;
 
   constructor(private store: Store<CityModel | TransferModel>) { }
 
@@ -27,6 +29,7 @@ export class TravelRouteComponent implements OnInit {
     this.store.dispatch(new LoadTransfers());
 
     this.cities$ = this.store.select('cities').map((state: CityState) => state.cities);
+    this.transfers$ = this.store.select('transfers').map((state: TransferState) => state.transfers);
     this.citiesLoading$ = this.store.select('cities').map((state: CityState) => state.loading);
   }
 

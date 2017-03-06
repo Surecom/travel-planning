@@ -9,6 +9,7 @@ export interface ICityModel {
   from: string;
   title: string;
   description: string;
+  cost: number;
 }
 
 export class CityModel extends Model {
@@ -16,6 +17,7 @@ export class CityModel extends Model {
   public from: string;
   public title: string;
   public description: string;
+  public cost: number;
 
   constructor(cityModel: ICityModel) {
     super();
@@ -23,6 +25,7 @@ export class CityModel extends Model {
     this.from = cityModel.from;
     this.title = cityModel.title;
     this.description = cityModel.description;
+    this.cost = cityModel.cost;
   }
 
   public toModel(): ICityModel {
@@ -31,7 +34,8 @@ export class CityModel extends Model {
       to: this.to,
       from: this.from,
       title: this.title,
-      description: this.description
+      description: this.description,
+      cost: this.cost
     };
   }
 }

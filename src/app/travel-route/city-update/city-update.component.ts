@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { CityModel, ICityModel } from '../models/city.model';
+import { minValueValidator } from '../validators/min-value.validator';
+import { numberValidator } from '../validators/number.validator';
 
 @Component({
   selector: '[city-update]',
@@ -22,7 +24,8 @@ export class CityUpdateComponent implements OnInit {
 
   public formErrors = {
     title: '',
-    description: ''
+    description: '',
+    cost: ''
   };
 
   private validationMessages = {
@@ -30,6 +33,11 @@ export class CityUpdateComponent implements OnInit {
       required: 'Field is required',
       minlength: 'Minimum length is 3 symbols',
       maxlength: 'Maximum length is 100 symbols'
+    },
+    cost: {
+      required: 'Field is required',
+      minValueValidator: 'Cost must be more than 0',
+      numberValidator: 'Cost must be number'
     }
   };
 
@@ -42,6 +50,7 @@ export class CityUpdateComponent implements OnInit {
       id: [this.city.id],
       to: [this.city.to],
       from: [this.city.from],
+      cost: [this.city.cost, [Validators.required, minValueValidator(0), numberValidator]],
       title: [this.city.title, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       description: [this.city.description]
     });

@@ -6,7 +6,9 @@
     <small class="text-muted">From:</small>
     {{transfer.from}}
     <small class="text-muted">To:</small>
-    {{transfer.to}}
+    {{transfer.to}} |
+    <small class="text-muted">Transfer cost:</small>
+    {{transfer.cost}}
     </p>
     <p class="card-text" [innerHtml]="transfer.info"></p>
     <p class="card-text">{{getTotalTransferTime(transfer)}}</p>

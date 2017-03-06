@@ -1,6 +1,8 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { TransferModel, ITransferModel } from '../models/transfer.model';
+import { minValueValidator } from '../validators/min-value.validator';
+import { numberValidator } from '../validators/number.validator';
 
 @Component({
   selector: '[transfer-edit]',
@@ -17,7 +19,8 @@ export class TransferEditComponent implements OnInit {
   public formErrors = {
     way: '',
     from: '',
-    to: ''
+    to: '',
+    cost: ''
   };
 
   private validationMessages = {
@@ -26,6 +29,11 @@ export class TransferEditComponent implements OnInit {
     },
     from: {
       required: 'Field is required'
+    },
+    cost: {
+      required: 'Field is required',
+      minValueValidator: 'Cost must be more than 0',
+      numberValidator: 'Cost must be number'
     },
     way: {
       required: 'Field is required',
@@ -50,6 +58,7 @@ export class TransferEditComponent implements OnInit {
       to: [this.transfer.to, Validators.required],
       from: [this.transfer.from, Validators.required],
       cityId: [this.transfer.cityId],
+      cost: [this.transfer.cost, [Validators.required, minValueValidator(0), numberValidator]],
       way: [this.transfer.way, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       info: [this.transfer.info]
     });

@@ -1,39 +1,48 @@
 <div class="mt-4">
   <form novalidate [formGroup]="cityForm" (ngSubmit)="onAdd(cityForm)">
-    <div class="form-group row"
-         [class.has-danger]="formErrors.from || formErrors.to">
-      <div class="col-sm-2">
-        <div class="input-group">
-          <span class="input-group-addon">From:</span>
-          <input class="flatpickr form-control" [class.form-control-danger]="formErrors.from"
-                [maxDate]="toInput.value" #fromInput
-                [currentValue]="fromLimit"
-                date-picker type="text" formControlName="from" >
-        </div>
-        <div *ngIf="formErrors.from" class="form-control-feedback">{{formErrors.from}}</div>
+    <div class="row">
+      <div class="form-group col-sm-6 row"
+           [class.has-danger]="formErrors.from || formErrors.to">
+          <div class="input-group col-sm-6">
+            <span class="input-group-addon">From:</span>
+            <input class="flatpickr form-control" [class.form-control-danger]="formErrors.from"
+                  [maxDate]="toInput.value" #fromInput
+                  [currentValue]="fromLimit"
+                  date-picker type="text" formControlName="from" >
+          </div>
+          <div *ngIf="formErrors.from" class="form-control-feedback">{{formErrors.from}}</div>
+          <div class="input-group col-sm-6">
+            <span class="input-group-addon">To:</span>
+            <input class="flatpickr form-control" [class.form-control-danger]="formErrors.to"
+                  [minDate]="fromInput.value" #toInput
+                  date-picker type="text" formControlName="to">
+          </div>
+          <div *ngIf="formErrors.to" class="form-control-feedback">{{formErrors.to}}</div>
       </div>
-      <div class="col-sm-2">
-        <div class="input-group">
-          <span class="input-group-addon">To:</span>
-          <input class="flatpickr form-control" [class.form-control-danger]="formErrors.to"
-                [minDate]="fromInput.value" #toInput
-                date-picker type="text" formControlName="to">
-        </div>
-        <div *ngIf="formErrors.to" class="form-control-feedback">{{formErrors.to}}</div>
+      <div class="form-group col-sm-4"
+           [class.has-danger]="formErrors.cost">
+          <div class="input-group">
+            <span class="input-group-addon">Cost of living in the city:</span>
+            <input class="form-control"
+                   [class.form-control-danger]="formErrors.cost"
+                   [class.form-control-success]="!formErrors.cost"
+                   type="text" formControlName="cost">
+          </div>
+          <div *ngIf="formErrors.cost" class="form-control-feedback">{{formErrors.cost}}</div>
       </div>
     </div>
-    <div class="form-group row"
-         [class.has-danger]="formErrors.title"
-         [class.has-success]="!formErrors.title && cityForm.get('title').valid && !cityForm.get('title').pristine">
-      <div class="input-group col-12">
-        <span class="input-group-addon">Title:</span>
-        <input class="form-control"
-               [class.form-control-danger]="formErrors.title"
-               [class.form-control-success]="!formErrors.title && cityForm.get('title').valid && !cityForm.get('title').pristine"
-               type="text" formControlName="title" placeholder="Enter Title">
+      <div class="form-group row"
+           [class.has-danger]="formErrors.title"
+           [class.has-success]="!formErrors.title && cityForm.get('title').valid && !cityForm.get('title').pristine">
+        <div class="input-group col-12">
+          <span class="input-group-addon">Title:</span>
+          <input class="form-control"
+                 [class.form-control-danger]="formErrors.title"
+                 [class.form-control-success]="!formErrors.title && cityForm.get('title').valid && !cityForm.get('title').pristine"
+                 type="text" formControlName="title" placeholder="Enter Title">
+        </div>
+        <div *ngIf="formErrors.title" class="form-control-feedback">{{formErrors.title}}</div>
       </div>
-      <div *ngIf="formErrors.title" class="form-control-feedback">{{formErrors.title}}</div>
-    </div>
     <div class="form-group row">
       <div class="col-12">
         <div text-editor [title]="'Description'"

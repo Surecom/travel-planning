@@ -1,12 +1,32 @@
 <div class="city-point d-flex justify-content-end align-content-stretch flex-wrap">
   <div class="city-point-info">
-    <h4>
-      <small class="text-muted">From:</small>
-      {{city.from}}
-      <small class="text-muted">To:</small>
-      {{city.to}}
-    </h4>
     <form [formGroup]="cityUpdateForm" novalidate>
+      <div class="row">
+        <div class="col col-md-auto">
+          <h2 class="mt-1">
+            <small class="text-muted">From:</small>
+            {{city.from}}
+            <small class="text-muted">To:</small>
+            {{city.to}}
+          </h2>
+        </div>
+        <div class="col-4">
+          <div [class.has-danger]="formErrors.cost"
+               [class.has-success]="!formErrors.cost && cityUpdateForm.get('cost').valid && !cityUpdateForm.get('cost').pristine">
+            <div class="input-group">
+              <span class="input-group-addon">Cost of living in the city</span>
+              <input type="text" class="form-control"
+                     [class.form-control-danger]="formErrors.cost"
+                     [class.form-control-success]="!formErrors.cost &&
+                                               cityUpdateForm.get('cost').valid &&
+                                               !cityUpdateForm.get('cost').pristine"
+                     placeholder="Cost of living in the city" formControlName="cost">
+            </div>
+            <div class="form-control-feedback">{{formErrors.cost}}</div>
+          </div>
+        </div>
+      </div>
+
       <div [class.has-danger]="formErrors.title"
            [class.has-success]="!formErrors.title && cityUpdateForm.get('title').valid && !cityUpdateForm.get('title').pristine">
         <div class="input-group input-group-lg">
