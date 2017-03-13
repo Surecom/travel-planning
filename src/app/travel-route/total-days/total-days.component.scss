@@ -1,0 +1,13 @@
+@media print {
+  small {
+    margin-right: 12px;
+    line-height: 21px;
+  }
+  span, small {
+    display: block;
+    float: left;
+  }
+  h4 {
+    font-size: .5cm !important;
+  }
+}

@@ -1,1 +1,22 @@
 @import "../city-point/city-point.component";
+
+@media print {
+  .controls {
+    display: none !important;
+  }
+  .city-point-info {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    div {
+      order: 3;
+    }
+    h2 {
+      order: 2;
+      font-size: .5cm;
+    }
+    h1 {
+      font-size: .5cm;
+    }
+  }
+}

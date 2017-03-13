@@ -48,3 +48,36 @@
     @include btn-control();
   }
 }
+
+@media print {
+  .card-img {
+    display: none;
+  }
+  .controls {
+    display: none !important;
+  }
+  .card-img-overlay {
+    justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-bottom: 0px;
+    padding-top: 10px;
+    .transfer-time {
+      font-weight: bold;
+      margin-top: -20px;
+    }
+    .card-text {
+      order: 2;
+      display: block;
+      font-size: .25cm !important;
+    }
+    .card-text:nth-child(2) {
+      order: 3;
+    }
+    h4 {
+      font-size: .3cm !important;
+      font-weight: bold;
+    }
+  }
+}
