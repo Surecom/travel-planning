@@ -5,7 +5,7 @@
   <h3><span class="badge badge-success" (click)="sidenav.toggle()"><i class="fa fa-bars" aria-hidden="true"></i></span></h3>
   <div class="row col-sm-12">
     <div total-days [cities]="(cities$ | async)" class="col-sm-2"></div>
-    <div total-cost [transfers]="(transfers$ | async)" [cities]="(cities$ | async)"></div>
+    <div total-cost [transfers]="(transfers$ | async)" [cities]="(cities$ | async)" class="col-sm-4"></div>
   </div>
   <div slider [cities]="(cities$ | async)" (updateCities)="updateCities($event)"></div>
   <md-tab-group>

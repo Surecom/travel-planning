@@ -19,3 +19,14 @@ button.add-transfer {
   width: 100%;
   @include btn-control();
 }
+
+@media print {
+  button {
+    display: none;
+  }
+  :host {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}

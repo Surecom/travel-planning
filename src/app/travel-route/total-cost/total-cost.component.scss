@@ -1,0 +1,21 @@
+@media print {
+  h4 {
+    font-size: .5cm !important;
+    span {
+      display: none;
+    }
+    span:last-child {
+      display: block;
+      float: left;
+    }
+    small {
+      display: none;
+    }
+    small:first-child {
+      display: block;
+      float: left;
+      margin-right: 12px;
+      line-height: 21px;
+    }
+  }
+}

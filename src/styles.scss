@@ -53,3 +53,19 @@ md-tooltip-component {
     max-width: 500px !important; //we need it because component overloaded our styles after loading
   }
 }
+
+@media print {
+  body {
+    font-size: .3cm !important;
+  }
+  @page {
+    size: 210mm 297mm;
+    margin: 25mm 45mm 25mm 25mm;
+  }
+  md-tab-header {
+    display: none !important; //component which generated it, overload this style
+  }
+  ol {
+    padding-left: 10px !important;
+  }
+}

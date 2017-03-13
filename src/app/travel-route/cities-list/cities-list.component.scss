@@ -21,3 +21,9 @@
     }
   }
 }
+
+@media print {
+  .page-break {
+    display: inline-block;
+  }
+}

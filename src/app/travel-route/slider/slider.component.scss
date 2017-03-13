@@ -13,3 +13,9 @@
 :host {
   margin: 5em;
 }
+
+@media print {
+  :host {
+    display: none;
+  }
+}

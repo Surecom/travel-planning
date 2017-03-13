@@ -24,3 +24,9 @@ md-tab-group {
     }
   }
 }
+
+@media print {
+  md-sidenav, h3 {
+    display: none;
+  }
+}

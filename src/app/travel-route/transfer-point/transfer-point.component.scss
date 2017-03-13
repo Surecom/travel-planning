@@ -7,3 +7,16 @@
 .card {
   margin-left: 100px;
 }
+
+@media print {
+  :host {
+    display: inline-block;
+    width: 50%;
+    margin-bottom: 10px;
+  }
+  .card {
+    height: 100%;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+}
