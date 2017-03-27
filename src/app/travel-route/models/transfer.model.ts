@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import { Model } from './model';
 
 export interface ITransferModel {
-  id: string;
+  id?: string;
   cityId: string;
   way: string;
   info: string;

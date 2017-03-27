@@ -4,7 +4,7 @@
 import { Model } from './model';
 
 export interface ICityModel {
-  id: string;
+  id?: string;
   to: string;
   from: string;
   title: string;

@@ -5,12 +5,12 @@ import { Store } from '@ngrx/store';
 import * as moment from 'moment';
 
 import { TransferModel, ITransferModel } from '../models/transfer.model';
-import { TransferState } from '../reducers/transfer.reducer';
 import { CityModel } from '../models/city.model';
 import { AddTransfer } from '../actions/transfer.action';
 import { CityCrossingModalComponent } from '../city-crossing-modal/city-crossing-modal.component';
 import { TravelRoute } from '../common/constants';
 import { TransferCheck } from '../models/trasfer-check';
+import { TravelState } from '../reducers/reducer';
 
 @Component({
   selector: '[transfer-list]',
@@ -34,9 +34,9 @@ export class TransferListComponent implements OnInit {
 
   ngOnInit() {
     this.transfers$ = this.store
-      .select('transfers')
-      .map((state: TransferState) => state.transfers.filter(transfer => transfer.cityId === this.city.id));
-    this.transfersLoading$ = this.store.select('transfers').map((state: TransferState) => state.loading);
+      .select('travel')
+      .map((state: TravelState) => state.transfers.filter(transfer => transfer.cityId === this.city.id));
+    this.transfersLoading$ = this.store.select('travel').map((state: TravelState) => state.loading);
   }
 
   getTotalTransferTime(from: string, to: string): moment.Moment {

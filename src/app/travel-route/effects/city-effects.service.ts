@@ -61,8 +61,8 @@ export class CityEffectsService {
     .mergeMap((cityUpdateModels: ICityDateUpdate[]) =>
       this.db.query('cities')
         .toArray()
-        .map((cities: CityModel[]) =>
-          filter(cities, (city: CityModel) => {
+        .map((cities: ICityModel[]) =>
+          filter(cities, (city: ICityModel) => {
             const newTo = find(cityUpdateModels, (model: ICityDateUpdate) => city.to === model.oldDate);
             const newFrom = find(cityUpdateModels, (model: ICityDateUpdate) => city.from === model.oldDate);
             if (newTo) {
@@ -74,10 +74,10 @@ export class CityEffectsService {
             return newTo || newFrom;
           })
         )
-        .mergeMap((newCities: CityModel[]) =>
+        .mergeMap((newCities: ICityModel[]) =>
           this.db.insert('cities', newCities)
             .toArray()
-            .map((updatedCities: CityModel[]) => {
+            .map((updatedCities: ICityModel[]) => {
               this.snackBar.open(`Cities dates updated successfully!`, null, {duration: 3000});
               return updateCitiesDateSuccess(updatedCities);
             })

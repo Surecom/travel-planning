@@ -1,0 +1,9 @@
+<div class="container d-dialog">
+  <h1 md-dialog-title>Upload Import-File dialog</h1>
+  <div class="d-flex flex-row justify-content-between">
+    <label class="btn btn-success">
+      Upload <input type="file" (change)="uploadFile($event)" hidden>
+    </label>
+    <button class="p-2" type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+  </div>
+</div>

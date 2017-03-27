@@ -1,5 +1,13 @@
 <md-sidenav-container>
   <md-sidenav [mode]="'side'" #sidenav>
+    <div class="imports">
+      <span [mdTooltip]="'Export travel'" [mdTooltipPosition]="'right'">
+        <button type="button" (click)="showExportModal()" class="btn btn-secondary"><i class="fa fa-cloud-upload" aria-hidden="true"></i></button>
+      </span>
+      <span [mdTooltip]="'Import travel'" [mdTooltipPosition]="'right'">
+        <button type="button" (click)="showImportModal()" class="btn btn-secondary"><i class="fa fa-cloud-download" aria-hidden="true"></i></button>
+      </span>
+    </div>
   </md-sidenav>
 
   <h3><span class="badge badge-success" (click)="sidenav.toggle()"><i class="fa fa-bars" aria-hidden="true"></i></span></h3>
@@ -10,7 +18,7 @@
   <div slider [cities]="(cities$ | async)" (updateCities)="updateCities($event)"></div>
   <md-tab-group>
     <md-tab [label]="'City List'">
-      <div cities-list [cities]="(cities$ | async)" [citiesLoading]="(citiesLoading$ | async)"></div>
+      <div cities-list [cities]="(cities$ | async)" [citiesLoading]="(loading$ | async)"></div>
     </md-tab>
     <md-tab [label]="'Add City'">
       <div city-add [cities]="(cities$ | async)"></div>

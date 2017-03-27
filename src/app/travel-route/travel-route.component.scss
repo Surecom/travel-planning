@@ -15,6 +15,21 @@
   }
 }
 
+.imports {
+  &> span {
+    & > button {
+      width: 68px;
+      height: 68px;
+      margin: 20px 20px 20px 4px;
+      border-radius: 50%;
+      display: block;
+      .fa {
+        font-size: 34px;
+      }
+    }
+  }
+}
+
 md-tab-group {
   /deep/ md-tab-header {
     .mat-tab-label-container .mat-tab-list {
@@ -30,3 +45,4 @@ md-tab-group {
     display: none;
   }
 }
+
