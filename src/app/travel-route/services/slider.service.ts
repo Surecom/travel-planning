@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import * as moment from 'moment';
 
-import { TravelRoute } from '../common/constants';
+import { TravelRouteConstants } from '../common/constants';
 
 @Injectable()
 export class SliderService {
@@ -19,7 +19,7 @@ export class SliderService {
       behaviour: 'tap-drag',
       tooltips: true,
       format: {
-        to: value => moment(Math.floor(value)).format(TravelRoute.DATE_FORMAT),
+        to: value => moment(Math.floor(value)).format(TravelRouteConstants.DATE_FORMAT),
         from: value => value
       }
     };

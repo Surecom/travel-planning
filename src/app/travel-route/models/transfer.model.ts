@@ -1,8 +1,6 @@
 /**
  * Created by Aliaksandr_Hladchank on 22-Feb-17.
  */
-import * as moment from 'moment';
-
 import { Model } from './model';
 
 export interface ITransferModel {
@@ -13,6 +11,7 @@ export interface ITransferModel {
   from: string;
   to: string;
   cost: number;
+  order: number;
 }
 
 export class TransferModel extends Model {
@@ -23,16 +22,17 @@ export class TransferModel extends Model {
   public from: string;
   public to: string;
   public cost: number;
+  public order: number;
 
-  constructor(model: ITransferModel) {
+  constructor(model: ITransferModel, order?: number) {
     super();
-    this.id = (+moment()).toString();
     this.cityId = model.cityId;
     this.way = model.way;
     this.info = model.info;
     this.from = model.from;
     this.to = model.to;
     this.cost = model.cost;
+    this.order = order || model.order;
   }
 
   public toModel(): ITransferModel {
@@ -43,7 +43,8 @@ export class TransferModel extends Model {
       info: this.info,
       from: this.from,
       to: this.to,
-      cost: this.cost
+      cost: this.cost,
+      order: this.order
     };
   }
 }

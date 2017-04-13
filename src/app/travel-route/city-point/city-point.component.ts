@@ -15,9 +15,9 @@ export class CityPointComponent {
   @Input()
   public city: CityModel;
 
-  private updateMark = false;
+  public updateMark = false;
 
-  constructor(private store: Store<CityModel>) { }
+  constructor(private store: Store<{}>) { }
 
   editCity() {
     this.updateMark = true;

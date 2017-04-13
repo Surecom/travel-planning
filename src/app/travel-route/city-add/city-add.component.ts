@@ -1,11 +1,13 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy, Input, QueryList, OnChanges } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
 
 import { CityModel } from '../models/city.model';
 import { addCity } from '../actions/city.actions';
 import { minValueValidator } from '../validators/min-value.validator';
 import { numberValidator } from '../validators/number.validator';
+import { TravelState } from '../reducers/reducer';
 
 @Component({
   selector: '[city-add]',
@@ -13,10 +15,13 @@ import { numberValidator } from '../validators/number.validator';
   styleUrls: ['./city-add.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CityAddComponent implements OnInit, AfterViewInit, OnChanges {
+export class CityAddComponent implements OnInit, AfterViewInit {
 
-  @Input()
-  private cities: QueryList<CityModel[]>;
+  public cities$: Observable<CityModel[]>;
+  public currentTravelId$: Observable<string>;
+  public cities: CityModel[];
+
+  private currentTravelId: string;
 
   public fromLimit: string;
   public cityForm: FormGroup;
@@ -47,41 +52,46 @@ export class CityAddComponent implements OnInit, AfterViewInit, OnChanges {
     }
   };
 
-  constructor(private formBuilder: FormBuilder, private store: Store<CityModel>) { }
+  constructor(private formBuilder: FormBuilder, private store: Store<TravelState>) { }
 
   ngOnInit() {
+    this.cities$ = this.store.select('travel').map((state: TravelState) => state.cities);
+    this.cities$.subscribe(res => {
+      this.cities = res;
+      if (this.cityForm) {
+        if (this.cities.length > 0) {
+          this.cityForm.get('to').setValue(this.cities[this.cities.length - 1].to);
+          this.cityForm.get('from').setValue(this.fromLimit = this.cities[this.cities.length - 1].to);
+          this.cityForm.get('from').disable();
+        } else if (this.cities.length === 0) {
+          this.cityForm.get('from').enable();
+          this.cityForm.reset();
+          this.fromLimit = null;
+        }
+      }
+    });
+    this.currentTravelId$ = this.store.select('travel').map((state: TravelState) => state.currentTravelId);
+    this.currentTravelId$.subscribe(res => this.currentTravelId = res);
     this.cityForm = this.formBuilder.group({
       to: ['', Validators.required],
       from: ['', Validators.required],
       cost: ['', [Validators.required, minValueValidator(0), numberValidator]],
       title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      description: ['']
+      description: [''],
+      travelId: ['']
     });
     this.cityForm.valueChanges.subscribe(this.validateForm.bind(this));
-  }
-
-  ngOnChanges(): void {
-    if (this.cityForm) {
-      if (this.cities.length > 0) {
-        this.cityForm.get('to').setValue(this.cities[this.cities.length - 1].to);
-        this.cityForm.get('from').setValue(this.fromLimit = this.cities[this.cities.length - 1].to);
-        this.cityForm.get('from').disable();
-      } else if (this.cities.length === 0) {
-        this.cityForm.get('from').enable();
-        this.cityForm.reset();
-        this.fromLimit = null;
-      }
-    }
   }
 
   ngAfterViewInit() {
   }
 
   onAdd(cityForm: FormGroup) {
-    this.cityForm.get('from').enable();
-    this.cityForm.get('description').setValue(this.text);
+    cityForm.get('from').enable();
+    cityForm.get('description').setValue(this.text);
+    cityForm.get('travelId').setValue(this.currentTravelId);
     this.store.dispatch(addCity(new CityModel(cityForm.value)));
-    this.cityForm.reset();
+    cityForm.reset();
   }
 
   onChangeHandler(text: string) {

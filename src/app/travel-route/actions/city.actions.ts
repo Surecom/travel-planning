@@ -2,14 +2,11 @@
  * Created by Surecom-npm on 2/19/2017.
  */
 import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
 
 import { CityModel, ICityModel } from '../models/city.model';
 import { ICityDateUpdate } from '../models/city-date-update';
 
 export const ActionTypes = {
-  LOAD_CITIES: '[CITY] LOAD_CITIES',
-  LOAD_CITIES_SUCCESS: '[CITY] LOAD_CITIES_SUCCESS',
   ADD_CITY: '[CITY] ADD_CITY',
   ADD_CITY_SUCCESS: '[CITY] ADD_CITY_SUCCESS',
   REMOVE_CITY: '[CITY] REMOVE_CITY',
@@ -18,20 +15,6 @@ export const ActionTypes = {
   UPDATE_CITIES_DATES_SUCCESS: '[CITY] UPDATE_CITIES_DATES_SUCCESS',
   UPDATE_CITY: '[CITY] UPDATE_CITY',
   UPDATE_CITY_SUCCESS: '[CITY] UPDATE_CITY_SUCCESS'
-};
-
-const loadCities: Function = (): Action => {
-  return {
-    type: ActionTypes.LOAD_CITIES,
-    payload: {}
-  };
-};
-
-const loadCitiesSuccess: Function = (cities: Observable<CityModel[]>): Action => {
-  return {
-    type: ActionTypes.LOAD_CITIES_SUCCESS,
-    payload: cities
-  };
 };
 
 const addCity: Function = (city: CityModel): Action => {
@@ -91,8 +74,6 @@ const removeCitySuccess: Function = (city: CityModel): Action => {
 };
 
 export {
-  loadCities,
-  loadCitiesSuccess,
   updateCitiesDate,
   updateCitiesDateSuccess,
   updateCity,

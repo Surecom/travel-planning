@@ -42,6 +42,9 @@ import { TotalCostComponent } from './total-cost/total-cost.component';
 import { UploadModalComponent } from './upload-modal/upload-modal.component';
 import { ImportModalComponent } from './import-modal/import-modal.component';
 import { TravelEffectsService } from './effects/travel-effects';
+import { TravelListComponent } from './travel-list/travel-list.component';
+import { TravelPointComponent } from './travel-point/travel-point.component';
+import { AddTravelModalComponent } from './add-travel-modal/add-travel-modal.component';
 
 @NgModule({
   imports: [
@@ -69,7 +72,8 @@ import { TravelEffectsService } from './effects/travel-effects';
   entryComponents: [
     CityCrossingModalComponent,
     UploadModalComponent,
-    ImportModalComponent
+    ImportModalComponent,
+    AddTravelModalComponent
   ],
   declarations: [
     TravelRouteComponent,
@@ -90,7 +94,10 @@ import { TravelEffectsService } from './effects/travel-effects';
     TransferPointComponent,
     TotalCostComponent,
     UploadModalComponent,
-    ImportModalComponent
+    ImportModalComponent,
+    TravelListComponent,
+    TravelPointComponent,
+    AddTravelModalComponent
   ],
   exports: [TravelRouteComponent],
   providers: [SliderService]

@@ -5,8 +5,6 @@ import { Action } from '@ngrx/store';
 import { TransferModel, ITransferModel } from '../models/transfer.model';
 
 export const ActionTypes = {
-  LOAD_TRANSFERS: '[TRANSFER] LOAD_TRANSFERS',
-  LOAD_TRANSFERS_SUCCESS: '[TRANSFER] LOAD_TRANSFERS_SUCCESS',
   ADD_TRANSFER: '[TRANSFER] ADD_TRANSFER',
   ADD_TRANSFER_SUCCESS: '[TRANSFER] ADD_TRANSFER_SUCCESS',
   REMOVE_TRANSFER: '[TRANSFER] REMOVE_TRANSFER',
@@ -14,16 +12,6 @@ export const ActionTypes = {
   UPDATE_TRANSFER: '[TRANSFER] UPDATE_TRANSFER',
   UPDATE_TRANSFER_SUCCESS: '[TRANSFER] UPDATE_TRANSFER_SUCCESS'
 };
-
-class LoadTransfers implements Action {
-  type = ActionTypes.LOAD_TRANSFERS;
-}
-
-class LoadTransfersSuccess implements Action {
-  type = ActionTypes.LOAD_TRANSFERS_SUCCESS;
-
-  constructor(public payload: TransferModel[]) { }
-}
 
 class AddTransfer implements Action {
   type = ActionTypes.ADD_TRANSFER;
@@ -58,12 +46,10 @@ class RemoveTransfer implements Action {
 class RemoveTransferSuccess implements Action {
   type = ActionTypes.REMOVE_TRANSFER_SUCCESS;
 
-  constructor(public payload: ITransferModel) { }
+  constructor(public payload: TransferModel) { }
 }
 
 export {
-  LoadTransfers,
-  LoadTransfersSuccess,
   UpdateTransfer,
   UpdateTransferSuccess,
   AddTransfer,

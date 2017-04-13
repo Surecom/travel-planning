@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, SkipSelf } from '@angular/core';
 
 import { TransferModel } from '../models/transfer.model';
-import { TravelRoute } from '../common/constants';
+import { TravelRouteConstants } from '../common/constants';
 import { TransferListComponent } from '../transfer-list/transfer-list.component';
 
 @Component({
@@ -28,7 +28,7 @@ export class TransferViewComponent implements OnInit {
   ngOnInit() {}
 
   getTotalTransferTime(transfer: TransferModel): string {
-    const transferTime = this.transferList.getTotalTransferTime(transfer.from, transfer.to).format(TravelRoute.TIME_FORMAT);
+    const transferTime = this.transferList.getTotalTransferTime(transfer.from, transfer.to).format(TravelRouteConstants.TIME_FORMAT);
     return `Total transfer time is ${transferTime}`;
   }
 }

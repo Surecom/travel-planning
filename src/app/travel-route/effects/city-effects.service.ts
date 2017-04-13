@@ -7,12 +7,10 @@ import { Observable } from 'rxjs/Observable';
 import { defer } from 'rxjs/observable/defer';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/toArray';
-import { sortBy, filter, find } from 'lodash';
-import * as moment from 'moment';
+import { filter, find } from 'lodash';
 
 import {
   ActionTypes,
-  loadCitiesSuccess,
   addCitySuccess,
   removeCitySuccess,
   updateCitiesDateSuccess,
@@ -20,7 +18,7 @@ import {
 } from '../actions/city.actions';
 import { CityModel, ICityModel } from '../models/city.model';
 import { ICityDateUpdate } from '../models/city-date-update';
-import { TravelRoute } from '../common/constants';
+import { TransferModel } from '../models/transfer.model';
 
 @Injectable()
 export class CityEffectsService {
@@ -29,17 +27,6 @@ export class CityEffectsService {
   openDB$: Observable<any> = defer(() => {
     return this.db.open('travel-planning');
   });
-
-  @Effect()
-  loadCities$: Observable<Action> =
-    this.actions$
-      .ofType(ActionTypes.LOAD_CITIES)
-      .switchMap(() =>
-        this.db.query('cities')
-          .toArray()
-          .map((cities: CityModel[]) => loadCitiesSuccess(
-            sortBy(cities, (city: CityModel) => +moment(city.from, TravelRoute.DATE_FORMAT))
-          )));
 
   @Effect()
   addCity$: Observable<Action> = this.actions$
@@ -88,12 +75,30 @@ export class CityEffectsService {
   removeCity$: Observable<Action> = this.actions$
     .ofType(ActionTypes.REMOVE_CITY)
     .map((city: Action) => <CityModel>city.payload)
-    .mergeMap((city: ICityModel) =>
-      this.db.executeWrite('cities', 'delete', [ city.id ])
-        .map(() => {
-          this.snackBar.open(`City ${city.title} removed successfully!`, null, {duration: 3000});
-          return removeCitySuccess(city);
-        })
+    .mergeMap((city: ICityModel) => this.db.query('transfers')
+      .toArray()
+      .mergeMap((transfers: TransferModel[]) => {
+        const transfersId: Array<string> = [];
+        for (let i = 0; i < transfers.length; i++) {
+          if (transfers[i].cityId === city.id) {
+            transfersId.push(transfers[i].id);
+          }
+        }
+        if (transfersId.length > 0) {
+          return Observable
+            .forkJoin(
+              this.db.executeWrite('transfers', 'delete', transfersId),
+              this.db.executeWrite('cities', 'delete', [ city.id ])
+            );
+        } else {
+          return this.db.executeWrite('cities', 'delete', [ city.id ]);
+        }
+      })
+      .toArray()
+      .map(() => {
+        this.snackBar.open(`City ${city.title} removed successfully!`, null, {duration: 3000});
+        return removeCitySuccess(city);
+      })
     );
 
   @Effect()

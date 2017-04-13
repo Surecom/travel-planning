@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 
 import { TransferModel } from '../models/transfer.model';
 import { importTravel } from '../actions/travel.actions';
+import { FileReaderEvent } from '../types';
 
 @Component({
   selector: '[import-modal]',

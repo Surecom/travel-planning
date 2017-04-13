@@ -10,7 +10,6 @@ import { defer } from 'rxjs/observable/defer';
 
 import {
   ActionTypes,
-  LoadTransfersSuccess,
   AddTransferSuccess,
   UpdateTransferSuccess,
   RemoveTransferSuccess
@@ -26,24 +25,12 @@ export class TransferEffectsService {
   });
 
   @Effect()
-  loadTransfers$: Observable<Action> =
-    this.actions$
-      .ofType(ActionTypes.LOAD_TRANSFERS)
-      .switchMap(() =>
-        this.db.query('transfers')
-          .toArray()
-          .map((transfers: TransferModel[]) => new LoadTransfersSuccess(transfers))
-      );
-
-  @Effect()
   addTransfer$: Observable<Action> = this.actions$
     .ofType(ActionTypes.ADD_TRANSFER)
     .map((transfer: Action) => (<TransferModel>transfer.payload).toModel())
     .mergeMap((transfer: ITransferModel) =>
       this.db.insert('transfers', [transfer])
-        .map(() => {
-          return new AddTransferSuccess(transfer);
-        })
+        .map(() =>  new AddTransferSuccess(transfer))
     );
 
   @Effect()
@@ -59,12 +46,11 @@ export class TransferEffectsService {
   removeTransfer$: Observable<Action> = this.actions$
     .ofType(ActionTypes.REMOVE_TRANSFER)
     .map((transfer: Action) => <TransferModel>transfer.payload)
-    .mergeMap((transfer: ITransferModel) =>
-      this.db.executeWrite('transfers', 'delete', [ transfer.id ])
-        .map(() => {
-          this.snackBar.open(`Transfer ${transfer.way} removed successfully!`, null, {duration: 3000});
-          return new RemoveTransferSuccess(transfer);
-        })
+    .mergeMap((transfer: TransferModel) => this.db.executeWrite('transfers', 'delete', [ transfer.id ])
+      .map(() => {
+        this.snackBar.open(`Transfer ${transfer.way} removed successfully!`, null, {duration: 3000});
+        return new RemoveTransferSuccess(transfer);
+      })
     );
 
   constructor(private actions$: Actions,

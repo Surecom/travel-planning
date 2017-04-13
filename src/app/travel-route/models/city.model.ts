@@ -10,6 +10,7 @@ export interface ICityModel {
   title: string;
   description: string;
   cost: number;
+  travelId: string;
 }
 
 export class CityModel extends Model {
@@ -18,6 +19,7 @@ export class CityModel extends Model {
   public title: string;
   public description: string;
   public cost: number;
+  public travelId: string;
 
   constructor(cityModel: ICityModel) {
     super();
@@ -26,6 +28,7 @@ export class CityModel extends Model {
     this.title = cityModel.title;
     this.description = cityModel.description;
     this.cost = cityModel.cost;
+    this.travelId = cityModel.travelId;
   }
 
   public toModel(): ICityModel {
@@ -35,7 +38,8 @@ export class CityModel extends Model {
       from: this.from,
       title: this.title,
       description: this.description,
-      cost: this.cost
+      cost: this.cost,
+      travelId: this.travelId
     };
   }
 }

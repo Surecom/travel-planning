@@ -6,6 +6,10 @@
 
 .mat-sidenav-container {
   background-color: white;
+  height: 100vh;
+  .mat-sidenav {
+    width: 400px;
+  }
   .mat-sidenav.mat-sidenav-opened {
     box-shadow: 0 0 20px;
     transition: box-shadow .1s linear;
@@ -20,7 +24,7 @@
     & > button {
       width: 68px;
       height: 68px;
-      margin: 20px 20px 20px 4px;
+      margin: 20px auto;
       border-radius: 50%;
       display: block;
       .fa {

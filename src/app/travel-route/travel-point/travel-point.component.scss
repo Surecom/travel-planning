@@ -1,0 +1,30 @@
+.card-inverse {
+ margin-top: 20px;
+ margin-right: 14px;
+  .card-img {
+    width: 100%;
+    opacity: 0.5;
+  }
+  .card-title {
+    color: #333333;
+  }
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  .controls {
+    button.control {
+      margin-bottom: 12px;
+      color: #ffffff;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+  }
+  .updateInput {
+    height: 100%;
+  }
+}
+
+.active {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.4);
+}
