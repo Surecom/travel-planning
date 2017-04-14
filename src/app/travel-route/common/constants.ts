@@ -1,7 +1,7 @@
 /**
  * Created by Surecom-npm on 2/19/2017.
  */
-export const TravelRoute = {
+export const TravelRouteConstants = {
   DATE_FORMAT: 'Do MMM YY',
   TIME_FORMAT: 'HH:mm',
   TRANSFERS: {

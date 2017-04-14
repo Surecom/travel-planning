@@ -1,7 +1,6 @@
-<md-progress-spinner *ngIf="citiesLoading" mode="indeterminate"></md-progress-spinner>
-<div *ngFor="let city of cities; let isLast = last;" class="page-break">
+<!--TODO Fix Spinner from IF-->
+<md-progress-spinner *ngIf="(loading$ | async)" mode="indeterminate"></md-progress-spinner>
+<div *ngFor="let city of (cities$ | async)" class="page-break">
   <div city-point [city]="city"></div>
-  <div *ngIf="!isLast">
-    <div transfer-list [city]="city"></div>
-  </div>
+  <div transfer-list [city]="city"></div>
 </div>

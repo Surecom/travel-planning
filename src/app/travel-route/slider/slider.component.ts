@@ -1,16 +1,19 @@
 import {
   Component, ViewChild, ElementRef, AfterViewInit, Input,
-  OnDestroy, ChangeDetectionStrategy, OnChanges, QueryList, Output, EventEmitter
+  OnDestroy, ChangeDetectionStrategy, Output, EventEmitter, OnInit
 } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
 
-import { assign, difference } from 'lodash';
+import { assign, difference, isEqual } from 'lodash';
 import * as noUiSlider from 'nouislider';
 import * as moment from 'moment';
 
 import { CityModel } from '../models/city.model';
-import { TravelRoute } from '../common/constants';
+import { TravelRouteConstants } from '../common/constants';
 import { SliderService } from '../services/slider.service';
 import { CityDateUpdate } from '../models/city-date-update';
+import { TravelState } from '../reducers/reducer';
 
 @Component({
   selector: '[slider]',
@@ -18,13 +21,13 @@ import { CityDateUpdate } from '../models/city-date-update';
   styleUrls: ['slider.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
+export class SliderComponent implements AfterViewInit, OnDestroy, OnInit {
 
   @Input()
   private softLimitDays = 4;
 
-  @Input()
-  private cities: QueryList<CityModel>;
+  public cities$: Observable<CityModel[]>;
+  private cities: CityModel[];
 
   @ViewChild('slider')
   private slider: ElementRef;
@@ -35,16 +38,22 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
   private days = 0;
   private oldValueDates: string[];
 
-  constructor(private sliderService: SliderService) {
+  constructor(private sliderService: SliderService, private store: Store<TravelState>) {
+  }
+
+  ngOnInit(): void {
+    this.cities$ = this.store.select('travel').map((state: TravelState) => state.cities);
+    this.cities$.subscribe(res => {
+      if (!isEqual(this.cities, res)) {
+        this.cities = res;
+        this.update();
+      }
+    });
   }
 
   ngOnDestroy(): void {
     this.slider.nativeElement.noUiSlider.off('change');
     this.slider.nativeElement.noUiSlider.destroy();
-  }
-
-  ngOnChanges(): void {
-    this.update();
   }
 
   ngAfterViewInit() {
@@ -59,16 +68,16 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnChanges {
     if (this.cities.length > 0) {
       ranges = this.cities
         .map((city: CityModel) =>
-          Math.abs(moment(city.to, TravelRoute.DATE_FORMAT).diff(moment(city.from, TravelRoute.DATE_FORMAT), 'days')));
+          Math.abs(moment(city.to, TravelRouteConstants.DATE_FORMAT).diff(moment(city.from, TravelRouteConstants.DATE_FORMAT), 'days')));
       this.days = ranges.reduce((s: number, o: number) => s + o);
     }
     const start: number[] = [0, ...ranges];
 
     for (let i = 0; i < this.cities.length; i++) {
       if (i === 0) {
-        start[i] = +moment(this.cities[i].from, TravelRoute.DATE_FORMAT).add(start[i], 'days');
+        start[i] = +moment(this.cities[i].from, TravelRouteConstants.DATE_FORMAT).add(start[i], 'days');
       }
-      start[i + 1] = +moment(this.cities[i].from, TravelRoute.DATE_FORMAT).add(start[i + 1], 'days');
+      start[i + 1] = +moment(this.cities[i].from, TravelRouteConstants.DATE_FORMAT).add(start[i + 1], 'days');
     }
 
     if (this.slider.nativeElement.noUiSlider) {

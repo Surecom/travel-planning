@@ -1,0 +1,18 @@
+<div class="mt-4">
+  <form novalidate [formGroup]="travelForm" (ngSubmit)="onAdd(travelForm)">
+    <div class="form-group row"
+         [class.has-danger]="formErrors.name"
+         [class.has-success]="!formErrors.name && travelForm.get('name').valid && !travelForm.get('name').pristine">
+      <div class="input-group col-12">
+        <span class="input-group-addon">Name:</span>
+        <input class="form-control"
+               [class.form-control-danger]="formErrors.name"
+               [class.form-control-success]="!formErrors.name && travelForm.get('name').valid && !travelForm.get('name').pristine"
+               type="text" formControlName="name" placeholder="Enter Title">
+      </div>
+      <div *ngIf="formErrors.name" class="form-control-feedback">{{formErrors.name}}</div>
+    </div>
+    <button [disabled]="travelForm.invalid" type="submit" class="btn btn-success btn-lg btn-block">Save Travel</button>
+    <button class="btn btn-lg btn-block" (click)="cancel()">Cancel</button>
+  </form>
+</div>

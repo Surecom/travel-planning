@@ -16,8 +16,7 @@ import { MdTooltipModule } from '@angular/material/tooltip/tooltip';
 
 import { schema } from './db';
 
-import { reducer as CityReducer } from './reducers/city.reducer';
-import { reducer as TransferReducer } from './reducers/transfer.reducer';
+import { reducer } from './reducers/reducer';
 
 import { TravelRouteRoutingModule } from './travel-route-routing.module';
 import { TravelRouteComponent } from './travel-route.component';
@@ -40,6 +39,12 @@ import { TransferViewComponent } from './transfer-view/transfer-view.component';
 import { TransferEditComponent } from './transfer-edit/transfer-edit.component';
 import { TransferPointComponent } from './transfer-point/transfer-point.component';
 import { TotalCostComponent } from './total-cost/total-cost.component';
+import { UploadModalComponent } from './upload-modal/upload-modal.component';
+import { ImportModalComponent } from './import-modal/import-modal.component';
+import { TravelEffectsService } from './effects/travel-effects';
+import { TravelListComponent } from './travel-list/travel-list.component';
+import { TravelPointComponent } from './travel-point/travel-point.component';
+import { AddTravelModalComponent } from './add-travel-modal/add-travel-modal.component';
 
 @NgModule({
   imports: [
@@ -48,11 +53,11 @@ import { TotalCostComponent } from './total-cost/total-cost.component';
     ReactiveFormsModule,
 
     StoreModule.provideStore({
-      cities: CityReducer,
-      transfers: TransferReducer
+      travel: reducer
     }),
     EffectsModule.run(CityEffectsService),
     EffectsModule.run(TransferEffectsService),
+    EffectsModule.run(TravelEffectsService),
     DBModule.provideDB(schema),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
 
@@ -65,7 +70,10 @@ import { TotalCostComponent } from './total-cost/total-cost.component';
     MdTooltipModule
   ],
   entryComponents: [
-    CityCrossingModalComponent
+    CityCrossingModalComponent,
+    UploadModalComponent,
+    ImportModalComponent,
+    AddTravelModalComponent
   ],
   declarations: [
     TravelRouteComponent,
@@ -84,7 +92,12 @@ import { TotalCostComponent } from './total-cost/total-cost.component';
     TransferViewComponent,
     TransferEditComponent,
     TransferPointComponent,
-    TotalCostComponent
+    TotalCostComponent,
+    UploadModalComponent,
+    ImportModalComponent,
+    TravelListComponent,
+    TravelPointComponent,
+    AddTravelModalComponent
   ],
   exports: [TravelRouteComponent],
   providers: [SliderService]

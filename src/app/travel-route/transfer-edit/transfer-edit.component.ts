@@ -60,7 +60,8 @@ export class TransferEditComponent implements OnInit {
       cityId: [this.transfer.cityId],
       cost: [this.transfer.cost, [Validators.required, minValueValidator(0), numberValidator]],
       way: [this.transfer.way, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-      info: [this.transfer.info]
+      info: [this.transfer.info],
+      order: [this.transfer.order]
     });
     this.transferUpdateForm.valueChanges.subscribe(this.validateForm.bind(this, this.transferUpdateForm));
   }
