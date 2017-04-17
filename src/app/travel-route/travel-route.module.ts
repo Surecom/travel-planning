@@ -6,13 +6,15 @@ import { EffectsModule } from '@ngrx/effects';
 import { DBModule } from '@ngrx/db';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { MdDialogModule } from '@angular/material/dialog';
-import { MdButtonModule } from '@angular/material/button';
-import { MdProgressCircleModule } from '@angular/material/progress-spinner';
-import { MdSnackBarModule } from '@angular/material/snack-bar';
-import { MdSidenavModule } from '@angular/material/sidenav/sidenav';
-import { MdTabsModule } from '@angular/material/tabs/tab-group';
-import { MdTooltipModule } from '@angular/material/tooltip/tooltip';
+import {
+  MdDialogModule,
+  MdButtonModule,
+  MdSnackBarModule,
+  MdSidenavModule,
+  MdTabsModule,
+  MdTooltipModule,
+  MdProgressSpinnerModule
+} from '@angular/material';
 
 import { schema } from './db';
 
@@ -45,10 +47,12 @@ import { TravelEffectsService } from './effects/travel-effects';
 import { TravelListComponent } from './travel-list/travel-list.component';
 import { TravelPointComponent } from './travel-point/travel-point.component';
 import { AddTravelModalComponent } from './add-travel-modal/add-travel-modal.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
     CommonModule,
+    BrowserAnimationsModule,
     TravelRouteRoutingModule,
     ReactiveFormsModule,
 
@@ -63,7 +67,7 @@ import { AddTravelModalComponent } from './add-travel-modal/add-travel-modal.com
 
     MdDialogModule,
     MdButtonModule,
-    MdProgressCircleModule,
+    MdProgressSpinnerModule,
     MdSnackBarModule,
     MdSidenavModule,
     MdTabsModule,

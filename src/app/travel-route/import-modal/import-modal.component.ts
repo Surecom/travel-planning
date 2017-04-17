@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialogRef } from '@angular/material/dialog/dialog-ref';
+import { MdDialogRef } from '@angular/material';
 import { AES, enc } from 'crypto-js';
 import { CityModel } from '../models/city.model';
 import { Store } from '@ngrx/store';
@@ -31,7 +31,7 @@ export class ImportModalComponent implements OnInit {
       const reader = new FileReader();
       reader.readAsText(file, 'UTF-8');
       reader.onload = (evt: FileReaderEvent) => {
-        const importArr = AES.decrypt(evt.target.result, this.dialogRef.config.data).toString(enc.Utf8);
+        const importArr = AES.decrypt(evt.target.result, this.dialogRef._containerInstance.dialogConfig.data).toString(enc.Utf8);
         const dump = JSON.parse(importArr);
         this.store.dispatch(importTravel(dump));
       };

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Database } from '@ngrx/db';
-import { MdSnackBar } from '@angular/material/snack-bar/snack-bar';
+import { MdSnackBar } from '@angular/material';
 import { Actions, Effect } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';

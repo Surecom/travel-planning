@@ -1,6 +1,7 @@
 <div city-view [city]="city"
      (edit)="editCity($event)" (remove)="removeCity($event)"
-     *ngIf="!updateMark"></div>
-<div city-update [city]="city"
-     (update)="updateCity($event)" (cancel)="cancelUpdateCity()"
-     *ngIf="updateMark"></div>
+     *ngIf="!updateMark; else updateTpl"></div>
+<ng-template #updateTpl>
+  <div city-update [city]="city"
+       (update)="updateCity($event)" (cancel)="cancelUpdateCity()"></div>
+</ng-template>

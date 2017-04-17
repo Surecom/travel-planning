@@ -8,7 +8,7 @@ import { Effect, Actions } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/toArray';
-import { MdSnackBar } from '@angular/material/snack-bar/snack-bar';
+import { MdSnackBar } from '@angular/material';
 
 import { CityModel, ICityModel } from '../models/city.model';
 import { ITransferModel, TransferModel } from '../models/transfer.model';
@@ -137,23 +137,23 @@ export class TravelEffectsService {
           return this.db.executeWrite('travels', 'delete', [ travel.id ]);
         } else {
           return Observable.forkJoin(
-            this.db.executeWrite('cities', 'delete', cityIds),
-            this.db.executeWrite('travels', 'delete', [ travel.id ]),
-            this.db.query('transfers')
-              .toArray()
-              .mergeMap((transfers: TransferModel[]) => {
-                const transferIds: Array<string> = [];
-                for (let i = 0; i < cityIds.length; i++) {
-                  for (let j = 0; j < transfers.length; j++) {
-                    if (transfers[j].cityId === cityIds[i]) {
-                      transferIds.push(transfers[j].id);
+              this.db.executeWrite('cities', 'delete', cityIds),
+              this.db.executeWrite('travels', 'delete', [ travel.id ]),
+              this.db.query('transfers')
+                .toArray()
+                .mergeMap((transfers: TransferModel[]) => {
+                  const transferIds: Array<string> = [];
+                  for (let i = 0; i < cityIds.length; i++) {
+                    for (let j = 0; j < transfers.length; j++) {
+                      if (transfers[j].cityId === cityIds[i]) {
+                        transferIds.push(transfers[j].id);
+                      }
                     }
                   }
-                }
-                if (transferIds.length > 0) {
-                  return this.db.executeWrite('transfers', 'delete', transferIds);
-                }
-              })
+                  if (transferIds.length > 0) {
+                    return this.db.executeWrite('transfers', 'delete', transferIds);
+                  }
+                })
             );
         }
       })

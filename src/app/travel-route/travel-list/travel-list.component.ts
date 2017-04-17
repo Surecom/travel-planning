@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, QueryList } from '@angular/core';
-import { MdDialog } from '@angular/material/dialog';
+import { MdDialog } from '@angular/material';
 
 import { TravelModel } from '../models/travel.model';
 import { AddTravelModalComponent } from '../add-travel-modal/add-travel-modal.component';
