@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
-import { MdDialog } from '@angular/material/dialog/dialog';
+import { MdDialog } from '@angular/material';
 import { Database } from '@ngrx/db';
 import { AES } from 'crypto-js';
 

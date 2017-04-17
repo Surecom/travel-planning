@@ -19,7 +19,7 @@
     <div total-cost class="col-sm-4"></div>
   </div>
   <div slider (updateCities)="updateCities($event)"></div>
-  <md-tab-group>
+  <md-tab-group [dynamicHeight]="true">
     <md-tab [label]="'City List'">
       <div cities-list></div>
     </md-tab>

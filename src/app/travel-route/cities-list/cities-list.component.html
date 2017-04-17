@@ -1,6 +1,7 @@
-<!--TODO Fix Spinner from IF-->
-<md-progress-spinner *ngIf="(loading$ | async)" mode="indeterminate"></md-progress-spinner>
-<div *ngFor="let city of (cities$ | async)" class="page-break">
-  <div city-point [city]="city"></div>
-  <div transfer-list [city]="city"></div>
-</div>
+<md-progress-spinner *ngIf="(loading$ | async); else cityPoint" mode="indeterminate"></md-progress-spinner>
+<ng-template #cityPoint>
+  <div *ngFor="let city of (cities$ | async)" class="page-break">
+    <div city-point [city]="city"></div>
+    <div transfer-list [city]="city"></div>
+  </div>
+</ng-template>

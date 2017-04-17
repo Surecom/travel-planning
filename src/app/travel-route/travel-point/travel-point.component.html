@@ -1,30 +1,33 @@
-<!--TODO 4th Angular If-->
 <div (click)="setCurrent()" [class]="'card card-inverse'" [class.active]="this.travel.id === this.currentTravelId">
   <img class="card-img" src="../../../assets/travel.jpg" alt="Card image">
-  <div class="card-img-overlay d-flex justify-content-between align-content-stretch flex-wrap">
-    <h4 *ngIf="!updateMark" class="card-title">{{travel.name}}</h4>
-    <div *ngIf="!updateMark" class="controls d-flex align-items-start flex-column">
-      <button class="control" md-button (click)="updateTravel()">Update</button>
-      <button class="control" md-button (click)="removeTravel(travel)">Delete</button>
-    </div>
-    <div *ngIf="updateMark" class="card-img-overlay">
-      <form novalidate [formGroup]="travelForm"
-            (ngSubmit)="saveTravel(travel)"
-             class="d-flex justify-content-between align-content-stretch flex-wrap">
-        <div class="form-group row updateInput"
-             [class.has-danger]="formErrors.name"
-             [class.has-success]="!formErrors.name && travelForm.get('name').valid && !travelForm.get('name').pristine">
+  <div *ngIf="!updateMark; else updateTpl" class="card-img-overlay d-flex justify-content-between align-content-stretch flex-wrap">
+      <h4 class="card-title">{{travel.name}}</h4>
+      <div class="controls d-flex align-items-start flex-column">
+        <button class="control" md-button (click)="updateTravel()">Update</button>
+        <button class="control" md-button (click)="removeTravel(travel)">Delete</button>
+      </div>
+  </div>
+  <ng-template #updateTpl>
+    <div class="card-img-overlay d-flex justify-content-between align-content-stretch flex-wrap">
+      <div class="card-img-overlay">
+        <form novalidate [formGroup]="travelForm"
+              (ngSubmit)="saveTravel(travel)"
+              class="d-flex justify-content-between align-content-stretch flex-wrap">
+          <div class="form-group row updateInput"
+               [class.has-danger]="formErrors.name"
+               [class.has-success]="!formErrors.name && travelForm.get('name').valid && !travelForm.get('name').pristine">
             <input class="form-control"
                    [class.form-control-danger]="formErrors.name"
                    [class.form-control-success]="!formErrors.name && travelForm.get('name').valid && !travelForm.get('name').pristine"
                    type="text" formControlName="name" placeholder="Enter Title">
-          <div *ngIf="formErrors.name" class="form-control-feedback">{{formErrors.name}}</div>
-        </div>
-        <div class="controls d-flex align-items-start flex-column">
-          <button class="control" md-button [disabled]="travelForm.invalid" type="submit">Save</button>
-          <button class="control" md-button (click)="cancel()">Cancel</button>
-        </div>
-      </form>
+            <div *ngIf="formErrors.name" class="form-control-feedback">{{formErrors.name}}</div>
+          </div>
+          <div class="controls d-flex align-items-start flex-column">
+            <button class="control" md-button [disabled]="travelForm.invalid" type="submit">Save</button>
+            <button class="control" md-button (click)="cancel()">Cancel</button>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
+  </ng-template>
 </div>

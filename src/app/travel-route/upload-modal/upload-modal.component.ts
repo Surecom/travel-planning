@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialogRef } from '@angular/material/dialog/dialog-ref';
+import { MdDialogRef } from '@angular/material';
 
 @Component({
   selector: 'upload-modal',
@@ -18,7 +18,7 @@ export class UploadModalComponent implements OnInit {
   }
 
   createAndOpenFile() {
-    const fileContent = this.dialogRef.config.data;
+    const fileContent = this.dialogRef._containerInstance.dialogConfig.data;
     const pom = document.createElement('a');
     const filename = 'export.txt';
     const bb = new Blob([fileContent], {type: 'text/plain'});

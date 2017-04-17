@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { MdDialogRef } from '@angular/material/dialog/dialog-ref';
+import { MdDialogRef } from '@angular/material';
 import { minValueValidator } from '../validators/min-value.validator';
 import { numberValidator } from '../validators/number.validator';
 

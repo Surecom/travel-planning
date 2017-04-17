@@ -13,6 +13,6 @@
       <div *ngIf="formErrors.name" class="form-control-feedback">{{formErrors.name}}</div>
     </div>
     <button [disabled]="travelForm.invalid" type="submit" class="btn btn-success btn-lg btn-block">Save Travel</button>
-    <button class="btn btn-lg btn-block" (click)="cancel()">Cancel</button>
+    <button class="btn btn-lg btn-block" type="button" (click)="cancel()">Cancel</button>
   </form>
 </div>

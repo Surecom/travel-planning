@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { MdDialogRef } from '@angular/material/dialog';
+import { MdDialogRef } from '@angular/material';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TravelModel } from '../models/travel.model';

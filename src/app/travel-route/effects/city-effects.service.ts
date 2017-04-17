@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MdSnackBar } from '@angular/material/snack-bar/snack-bar';
+import { MdSnackBar } from '@angular/material';
 import { Database } from '@ngrx/db';
 import { Action } from '@ngrx/store';
 import { Effect, Actions } from '@ngrx/effects';
