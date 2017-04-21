@@ -31,13 +31,22 @@ export class TransferListComponent implements OnInit {
   public countTransfers: number;
 
   constructor(private dialog: MdDialog,
-              private store: Store<TransferModel>) { }
+              private store: Store<{}>) { }
 
   ngOnInit() {
     this.transfers$ = this.store
       .select('travel')
-      .map((state: TravelState) => state.transfers.sort((a: TransferModel, b: TransferModel) => a.order - b.order));
-    this.transfersLoading$ = this.store.select('travel').map((state: TravelState) => state.loading);
+      .map((state: Map<string, TransferModel[]>) => {
+        const transfers = state.get('transfers');
+        const transfersByCity: TransferModel[] = [];
+        for (let i = 0; i < transfers.length; i++) {
+          if (transfers[i].cityId === this.city.id) {
+            transfersByCity.push(transfers[i]);
+          }
+        }
+        return transfersByCity.sort((a: TransferModel, b: TransferModel) => a.order - b.order);
+      });
+    this.transfersLoading$ = this.store.select('travel').map((state: Map<string, boolean>) => state.get('loading'));
     this.transfers$.subscribe(
       transfers => {
         this.countTransfers = transfers.length;

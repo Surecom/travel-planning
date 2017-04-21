@@ -19,10 +19,10 @@ export class TotalDaysComponent implements OnInit {
 
   public totalDays = 0;
 
-  constructor(private store: Store<TravelState>) { }
+  constructor(private store: Store<{}>) { }
 
   ngOnInit() {
-    this.cities$ = this.store.select('travel').map((state: TravelState) => state.cities);
+    this.cities$ = this.store.select('travel').map((state: any) => state.get('cities'));
     this.cities$.subscribe(res => {
       this.cities = res;
       if (this.cities.length > 0) {

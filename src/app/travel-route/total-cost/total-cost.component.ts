@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 
 import { TransferModel } from '../models/transfer.model';
 import { CityModel } from '../models/city.model';
-import { TravelState } from '../reducers/reducer';
 
 @Component({
   selector: '[total-cost]',
@@ -21,10 +20,10 @@ export class TotalCostComponent implements OnInit {
   public citiesCost = 0;
   public transfersCost = 0;
 
-  constructor(private store: Store<TravelState>) { }
+  constructor(private store: Store<{}>) { }
 
   ngOnInit(): void {
-    this.cities$ = this.store.select('travel').map((state: TravelState) => state.cities);
+    this.cities$ = this.store.select('travel').map((state: Map<string, CityModel[]>) => state.get('cities'));
     this.cities$.subscribe(res => {
       this.cities = res;
       if (this.cities.length > 0) {
@@ -35,10 +34,11 @@ export class TotalCostComponent implements OnInit {
         this.citiesCost = 0;
       }
     });
-    this.transfers$ = this.store.select('travel').map((state: TravelState) => {
+    this.transfers$ = this.store.select('travel').map((state: Map<string, TransferModel[]>) => {
       const tmp: TransferModel[] = [];
-      for (let j = 0; j < state.transfers.length; j++) {
-        tmp.push(state.transfers[j]);
+      const transfers: TransferModel[] = state.get('transfers');
+      for (let j = 0; j < transfers.length; j++) {
+        tmp.push(transfers[j]);
       }
       return tmp;
     });

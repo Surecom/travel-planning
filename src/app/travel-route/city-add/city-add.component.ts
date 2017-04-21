@@ -7,7 +7,6 @@ import { CityModel } from '../models/city.model';
 import { addCity } from '../actions/city.actions';
 import { minValueValidator } from '../validators/min-value.validator';
 import { numberValidator } from '../validators/number.validator';
-import { TravelState } from '../reducers/reducer';
 
 @Component({
   selector: '[city-add]',
@@ -52,10 +51,10 @@ export class CityAddComponent implements OnInit, AfterViewInit {
     }
   };
 
-  constructor(private formBuilder: FormBuilder, private store: Store<TravelState>) { }
+  constructor(private formBuilder: FormBuilder, private store: Store<{}>) { }
 
   ngOnInit() {
-    this.cities$ = this.store.select('travel').map((state: TravelState) => state.cities);
+    this.cities$ = this.store.select('travel').map((state: Map<string, CityModel[]>) => state.get('cities'));
     this.cities$.subscribe(res => {
       this.cities = res;
       if (this.cityForm) {
@@ -70,7 +69,7 @@ export class CityAddComponent implements OnInit, AfterViewInit {
         }
       }
     });
-    this.currentTravelId$ = this.store.select('travel').map((state: TravelState) => state.currentTravelId);
+    this.currentTravelId$ = this.store.select('travel').map((state: Map<string, string>) => state.get('currentTravelId'));
     this.currentTravelId$.subscribe(res => this.currentTravelId = res);
     this.cityForm = this.formBuilder.group({
       to: ['', Validators.required],
