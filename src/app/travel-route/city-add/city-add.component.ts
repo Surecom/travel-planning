@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy } from '@angu
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import { List } from 'immutable';
 
 import { CityModel } from '../models/city.model';
 import { addCity } from '../actions/city.actions';
@@ -16,7 +17,7 @@ import { numberValidator } from '../validators/number.validator';
 })
 export class CityAddComponent implements OnInit, AfterViewInit {
 
-  public cities$: Observable<CityModel[]>;
+  public cities$: Observable<List<CityModel>>;
   public currentTravelId$: Observable<string>;
   public cities: CityModel[];
 
@@ -54,9 +55,9 @@ export class CityAddComponent implements OnInit, AfterViewInit {
   constructor(private formBuilder: FormBuilder, private store: Store<{}>) { }
 
   ngOnInit() {
-    this.cities$ = this.store.select('travel').map((state: Map<string, CityModel[]>) => state.get('cities'));
-    this.cities$.subscribe(res => {
-      this.cities = res;
+    this.cities$ = this.store.select('travel').map((state: Map<string, List<CityModel>>) => state.get('cities'));
+    this.cities$.subscribe((res: List<CityModel>) => {
+      this.cities = res.toJS();
       if (this.cityForm) {
         if (this.cities.length > 0) {
           this.cityForm.get('to').setValue(this.cities[this.cities.length - 1].to);

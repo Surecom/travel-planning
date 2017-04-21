@@ -147,7 +147,12 @@ export function reducer(state = initialState, action: Action) {
     }
     case ActionTypesTravel.SET_CURRENT_TRAVEL_SUCCESS: {
       return state.set('loading', false)
-        .setIn(['cities'], List(action.payload.cities))
+        .setIn(['cities'], List(
+          sortBy(
+              action.payload.cities,
+              (city: CityModel) => +moment(city.from, TravelRouteConstants.DATE_FORMAT)
+            )
+        ))
         .setIn(['transfers'], List(action.payload.transfers));
     }
     default: {

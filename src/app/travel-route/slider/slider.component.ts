@@ -44,7 +44,6 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnInit {
   ngOnInit(): void {
     this.cities$ = this.store.select('travel').map((state: Map<string, List<CityModel>>) => state.get('cities'));
     this.cities$.subscribe((res: List<CityModel>) => {
-      console.log(res);
       const cities = res.toJS();
       if (!isEqual(this.cities, cities)) {
         this.cities = cities;

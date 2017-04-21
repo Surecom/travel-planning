@@ -3,6 +3,7 @@ import { MdDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import * as moment from 'moment';
+import { List } from 'immutable';
 
 import { TransferModel, ITransferModel } from '../models/transfer.model';
 import { CityModel } from '../models/city.model';
@@ -10,7 +11,6 @@ import { AddTransfer } from '../actions/transfer.action';
 import { CityCrossingModalComponent } from '../city-crossing-modal/city-crossing-modal.component';
 import { TravelRouteConstants } from '../common/constants';
 import { TransferCheck } from '../models/trasfer-check';
-import { TravelState } from '../reducers/reducer';
 
 @Component({
   selector: '[transfer-list]',
@@ -36,8 +36,8 @@ export class TransferListComponent implements OnInit {
   ngOnInit() {
     this.transfers$ = this.store
       .select('travel')
-      .map((state: Map<string, TransferModel[]>) => {
-        const transfers = state.get('transfers');
+      .map((state: Map<string, List<TransferModel>>) => {
+        const transfers = state.get('transfers').toJS();
         const transfersByCity: TransferModel[] = [];
         for (let i = 0; i < transfers.length; i++) {
           if (transfers[i].cityId === this.city.id) {

@@ -23,6 +23,7 @@ export class DatePickerDirective implements OnInit, OnDestroy, OnChanges {
   constructor(private el: ElementRef) { }
 
   ngOnChanges(): void {
+    console.log('changes');
     if (this.datePicker) {
       if (this.maxDate) {
         this.datePicker.set('maxDate',
@@ -46,7 +47,10 @@ export class DatePickerDirective implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit(): void {
-    Flatpickr.prototype.parseDate = (date: string) => new Date(+moment(date, TravelRouteConstants.DATE_FORMAT));
+    Flatpickr.prototype.parseDate = (date: string) => {
+      console.log('init');
+      return new Date(+moment(date, TravelRouteConstants.DATE_FORMAT));
+    };
     this.datePicker = new Flatpickr(this.el.nativeElement, <any>{
       utc: true,
       dateFormat: TravelRouteConstants.DATE_FORMAT,
