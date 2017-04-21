@@ -97,20 +97,20 @@ export function reducer(state = initialState, action: Action) {
     }
     case ActionTypesTransfer.ADD_TRANSFER_SUCCESS: {
       return state.set('loading', false)
-        .updateIn(['transfers'], action.payload);
+        .updateIn(['transfers'], transfers => transfers.push(action.payload));
     }
     case ActionTypes.ADD_CITY_SUCCESS: {
       return state.set('loading', false)
         .updateIn(['cities'],
-          cities => sortBy(
-                [cities, action.payload],
+          cities => List(sortBy(
+                cities.push(action.payload).toJS(),
                 (city: CityModel) => +moment(city.from, TravelRouteConstants.DATE_FORMAT)
-              )
+              ))
           );
     }
     case ActionTypesTravel.ADD_TRAVEL_SUCCESS: {
       return state.set('loading', false)
-        .updateIn(['travels'], action.payload);
+        .updateIn(['travels'], travels => travels.push(action.payload));
     }
     // Removers
     case ActionTypesTransfer.REMOVE_TRANSFER_SUCCESS: {
@@ -127,10 +127,10 @@ export function reducer(state = initialState, action: Action) {
     }
     case ActionTypesTravel.REMOVE_TRAVEL_SUCCESS: {
       return state.set('loading', false)
-        .removeIn(['cities'])
+        .setIn(['cities'], List([]))
         .updateIn(['travels'],
           travels => travels.filter((travel: TravelModel) => travel.id !== action.payload.id) || [])
-        .removeIn(['transfers']);
+        .setIn(['transfers'], List([]));
     }
     // Importers
     case ActionTypesTravel.IMPORT_TRAVEL: {
