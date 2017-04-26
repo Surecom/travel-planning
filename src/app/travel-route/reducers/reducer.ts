@@ -8,8 +8,8 @@ import { Map, List } from 'immutable';
 
 import { CityModel } from '../models/city.model';
 import { ActionTypes } from '../actions/city.actions';
-import { ActionTypes as  ActionTypesTravel} from '../actions/travel.actions';
-import { ActionTypes as  ActionTypesTransfer} from '../actions/transfer.action';
+import { ActionTypes as  ActionTypesTravel } from '../actions/travel.actions';
+import { ActionTypes as  ActionTypesTransfer } from '../actions/transfer.action';
 import { TravelRouteConstants } from '../common/constants';
 import { TransferModel } from '../models/transfer.model';
 import { TravelModel } from '../models/travel.model';
@@ -62,23 +62,22 @@ export function reducer(state = initialState, action: Action) {
     case ActionTypes.UPDATE_CITIES_DATES_SUCCESS: {
       return state.set('loading', false)
         .updateIn(['cities'],
-          cities => {
-            return sortBy(
-              unionBy(action.payload, cities, 'id'),
-              (city: CityModel) => +moment(city.from, TravelRouteConstants.DATE_FORMAT)
-            );
-          });
+          cities => sortBy(
+            unionBy(action.payload, cities, 'id'),
+            (city: CityModel) => +moment(city.from, TravelRouteConstants.DATE_FORMAT)
+          )
+        );
     }
     case ActionTypes.UPDATE_CITY_SUCCESS: {
       return state.set('loading', false)
         .updateIn(['cities'],
-        cities => {
-          const tmp = [];
-          for (let i = 0; i < cities.length; i++) {
-            tmp.push(cities[i].id === action.payload.id ? action.payload : cities[i]);
-          }
-          return tmp;
-        });
+          cities => {
+            const tmp = [];
+            for (let i = 0; i < cities.length; i++) {
+              tmp.push(cities[i].id === action.payload.id ? action.payload : cities[i]);
+            }
+            return tmp;
+          });
     }
     case ActionTypesTravel.UPDATE_TRAVEL_SUCCESS: {
       return state.set('loading', false)
@@ -103,10 +102,10 @@ export function reducer(state = initialState, action: Action) {
       return state.set('loading', false)
         .updateIn(['cities'],
           cities => List(sortBy(
-                cities.push(action.payload).toJS(),
-                (city: CityModel) => +moment(city.from, TravelRouteConstants.DATE_FORMAT)
-              ))
-          );
+            cities.push(action.payload).toJS(),
+            (city: CityModel) => +moment(city.from, TravelRouteConstants.DATE_FORMAT)
+          ))
+        );
     }
     case ActionTypesTravel.ADD_TRAVEL_SUCCESS: {
       return state.set('loading', false)
@@ -116,14 +115,14 @@ export function reducer(state = initialState, action: Action) {
     case ActionTypesTransfer.REMOVE_TRANSFER_SUCCESS: {
       return state.set('loading', false)
         .updateIn(['transfers'],
-        transfers => transfers.filter((transfer: TransferModel) => transfer.id !== action.payload.id) || List([]));
+          transfers => transfers.filter((transfer: TransferModel) => transfer.id !== action.payload.id) || List([]));
     }
     case ActionTypes.REMOVE_CITY_SUCCESS: {
-     return state.set('loading', false)
-       .updateIn(['cities'],
-        cities => cities.filter((city: CityModel) => city.id !== action.payload.id) || List([]))
-       .updateIn(['transfers'],
-        transfers => transfers.filter((transfer: TransferModel) => transfer.cityId !== action.payload.id) || List([]));
+      return state.set('loading', false)
+        .updateIn(['cities'],
+          cities => cities.filter((city: CityModel) => city.id !== action.payload.id) || List([]))
+        .updateIn(['transfers'],
+          transfers => transfers.filter((transfer: TransferModel) => transfer.cityId !== action.payload.id) || List([]));
     }
     case ActionTypesTravel.REMOVE_TRAVEL_SUCCESS: {
       return state.set('loading', false)
@@ -155,9 +154,9 @@ export function reducer(state = initialState, action: Action) {
       return state.set('loading', false)
         .setIn(['cities'], List(
           sortBy(
-              action.payload.cities,
-              (city: CityModel) => +moment(city.from, TravelRouteConstants.DATE_FORMAT)
-            )
+            action.payload.cities,
+            (city: CityModel) => +moment(city.from, TravelRouteConstants.DATE_FORMAT)
+          )
         ))
         .setIn(['transfers'], List(action.payload.transfers));
     }
