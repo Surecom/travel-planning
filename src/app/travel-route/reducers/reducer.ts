@@ -50,10 +50,10 @@ export function reducer(state = initialState, action: Action) {
         .updateIn(['transfers'],
           transfers => {
             const tmp = [];
-            for (let i = 0; i < transfers.length; i++) {
-              tmp.push(transfers[i].id === action.payload.id ? action.payload : transfers[i]);
+            for (let i = 0; i < transfers.toJS().length; i++) {
+              tmp.push(transfers.toJS()[i].id === action.payload.id ? action.payload : transfers.toJS()[i]);
             }
-            return tmp;
+            return List(tmp);
           });
     }
     case ActionTypes.UPDATE_CITIES_DATES: {
@@ -62,10 +62,10 @@ export function reducer(state = initialState, action: Action) {
     case ActionTypes.UPDATE_CITIES_DATES_SUCCESS: {
       return state.set('loading', false)
         .updateIn(['cities'],
-          cities => sortBy(
-            unionBy(action.payload, cities, 'id'),
+          cities => List(sortBy(
+            unionBy(action.payload, cities.toJS(), 'id'),
             (city: CityModel) => +moment(city.from, TravelRouteConstants.DATE_FORMAT)
-          )
+          ))
         );
     }
     case ActionTypes.UPDATE_CITY_SUCCESS: {
@@ -73,10 +73,10 @@ export function reducer(state = initialState, action: Action) {
         .updateIn(['cities'],
           cities => {
             const tmp = [];
-            for (let i = 0; i < cities.length; i++) {
-              tmp.push(cities[i].id === action.payload.id ? action.payload : cities[i]);
+            for (let i = 0; i < cities.toJS().length; i++) {
+              tmp.push(cities.toJS()[i].id === action.payload.id ? action.payload : cities.toJS()[i]);
             }
-            return tmp;
+            return List(tmp);
           });
     }
     case ActionTypesTravel.UPDATE_TRAVEL_SUCCESS: {
@@ -84,10 +84,10 @@ export function reducer(state = initialState, action: Action) {
         .updateIn(['travels'],
           travels => {
             const tmp = [];
-            for (let i = 0; i < travels.length; i++) {
-              tmp.push(travels[i].id === action.payload.id ? action.payload : travels[i]);
+            for (let i = 0; i < travels.toJS().length; i++) {
+              tmp.push(travels.toJS()[i].id === action.payload.id ? action.payload : travels.toJS()[i]);
             }
-            return tmp;
+            return List(tmp);
           });
     }
     // Adders

@@ -1,10 +1,10 @@
-<div (click)="setCurrent($event)" [class]="'card card-inverse'" [class.active]="this.travel.id === this.currentTravelId">
+<div (click)="setCurrent()" [class]="'card card-inverse'" [class.active]="this.travel.id === this.currentTravelId">
   <img class="card-img" src="../../../assets/travel.jpg" alt="Card image">
   <div *ngIf="!updateMark; else updateTpl" class="card-img-overlay d-flex justify-content-between align-content-stretch flex-wrap">
       <h4 class="card-title">{{travel.name}}</h4>
       <div class="controls d-flex align-items-start flex-column">
-        <button class="control" md-button (click)="updateTravel()">Update</button>
-        <button class="control" md-button (click)="removeTravel(travel)">Delete</button>
+        <button class="control" md-button (click)="updateTravel($event)">Update</button>
+        <button class="control" md-button (click)="removeTravel($event, travel)">Delete</button>
       </div>
   </div>
   <ng-template #updateTpl>
@@ -24,7 +24,7 @@
           </div>
           <div class="controls d-flex align-items-start flex-column">
             <button class="control" md-button [disabled]="travelForm.invalid" type="submit">Save</button>
-            <button class="control" md-button (click)="cancel()">Cancel</button>
+            <button class="control" md-button (click)="cancel($event)">Cancel</button>
           </div>
         </form>
       </div>

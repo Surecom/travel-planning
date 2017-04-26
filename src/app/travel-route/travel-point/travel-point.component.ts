@@ -45,21 +45,22 @@ export class TravelPointComponent implements OnInit {
     this.travelForm.valueChanges.subscribe(this.validateForm.bind(this));
   }
 
-  public removeTravel(travel: TravelModel) {
+  public removeTravel(event: Event, travel: TravelModel) {
+    event.stopPropagation();
     this.store.dispatch(removeTravel(travel));
   }
 
-  public setCurrent(event) {
-    if (!event.target.classList.contains('mat-ripple')) {
-      this.store.dispatch(setCurrentTravel(this.travel.id));
-    }
+  public setCurrent() {
+    this.store.dispatch(setCurrentTravel(this.travel.id));
   }
 
-  public updateTravel() {
+  public updateTravel(event: Event) {
+    event.stopPropagation();
     this.updateMark = true;
   }
 
-  public cancel() {
+  public cancel(event: Event) {
+    event.stopPropagation();
     this.updateMark = false;
   }
 
