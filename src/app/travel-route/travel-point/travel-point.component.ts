@@ -3,7 +3,6 @@ import { Store } from '@ngrx/store';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 
-import { TravelState } from '../reducers/reducer';
 import { removeTravel, setCurrentTravel, updateTravel } from '../actions/travel.actions';
 import { TravelModel } from '../models/travel.model';
 
@@ -35,10 +34,10 @@ export class TravelPointComponent implements OnInit {
     }
   };
 
-  constructor(private store: Store<TravelState>, private formBuilder: FormBuilder) { }
+  constructor(private store: Store<{}>, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.currentTravelId$ = this.store.select('travel').map((state: TravelState) => state.currentTravelId);
+    this.currentTravelId$ = this.store.select('travel').map((state: Map<string, string>) => state.get('currentTravelId'));
     this.currentTravelId$.subscribe(res => this.currentTravelId = res);
     this.travelForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]]
@@ -46,7 +45,8 @@ export class TravelPointComponent implements OnInit {
     this.travelForm.valueChanges.subscribe(this.validateForm.bind(this));
   }
 
-  public removeTravel(travel: TravelModel) {
+  public removeTravel(event: Event, travel: TravelModel) {
+    event.stopPropagation();
     this.store.dispatch(removeTravel(travel));
   }
 
@@ -54,11 +54,13 @@ export class TravelPointComponent implements OnInit {
     this.store.dispatch(setCurrentTravel(this.travel.id));
   }
 
-  public updateTravel() {
+  public updateTravel(event: Event) {
+    event.stopPropagation();
     this.updateMark = true;
   }
 
-  public cancel() {
+  public cancel(event: Event) {
+    event.stopPropagation();
     this.updateMark = false;
   }
 

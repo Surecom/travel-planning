@@ -45,10 +45,14 @@ const importTravel: Function = (dbElements: IDBElements): Action => {
   };
 };
 
-const importTravelSuccess: Function = (travelId: string): Action => {
+const importTravelSuccess: Function = (cities: CityModel[], transfers: TransferModel[], travel: TravelModel): Action => {
   return {
     type: ActionTypes.IMPORT_TRAVEL_SUCCESS,
-    payload: travelId
+    payload: {
+      cities,
+      transfers,
+      travel
+    }
   };
 };
 

@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
+import { List, Map } from 'immutable';
 
 import { CityModel } from '../models/city.model';
 import { TravelRouteConstants } from '../common/constants';
-import { TravelState } from '../reducers/reducer';
 
 @Component({
   selector: '[total-days]',
@@ -14,17 +14,17 @@ import { TravelState } from '../reducers/reducer';
 })
 export class TotalDaysComponent implements OnInit {
 
-  public cities$: Observable<CityModel[]>;
+  public cities$: Observable<List<CityModel>>;
   public cities: CityModel[];
 
   public totalDays = 0;
 
-  constructor(private store: Store<TravelState>) { }
+  constructor(private store: Store<{}>) { }
 
   ngOnInit() {
-    this.cities$ = this.store.select('travel').map((state: TravelState) => state.cities);
-    this.cities$.subscribe(res => {
-      this.cities = res;
+    this.cities$ = this.store.select('travel').map((state: Map<string, List<CityModel>>) => state.get('cities'));
+    this.cities$.subscribe((res: List<CityModel>) => {
+      this.cities = res.toJS();
       if (this.cities.length > 0) {
         this.totalDays = this.cities
           .map(city => moment(city.to, TravelRouteConstants.DATE_FORMAT).diff(moment(city.from, TravelRouteConstants.DATE_FORMAT), 'days'))

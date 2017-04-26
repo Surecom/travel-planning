@@ -4,11 +4,12 @@
 import { Action } from '@ngrx/store';
 import * as moment from 'moment';
 import { sortBy, unionBy } from 'lodash';
+import { Map, List } from 'immutable';
 
 import { CityModel } from '../models/city.model';
 import { ActionTypes } from '../actions/city.actions';
-import { ActionTypes as  ActionTypesTravel} from '../actions/travel.actions';
-import { ActionTypes as  ActionTypesTransfer} from '../actions/transfer.action';
+import { ActionTypes as  ActionTypesTravel } from '../actions/travel.actions';
+import { ActionTypes as  ActionTypesTransfer } from '../actions/transfer.action';
 import { TravelRouteConstants } from '../common/constants';
 import { TransferModel } from '../models/transfer.model';
 import { TravelModel } from '../models/travel.model';
@@ -21,165 +22,143 @@ export interface TravelState {
   currentTravelId: string;
 }
 
-const initialState: TravelState = {
+const initialState = Map({
   loading: false,
-  cities: [],
-  transfers: [],
-  travels: [],
+  cities: List<CityModel>(),
+  transfers: List<TransferModel>(),
+  travels: List<TravelModel>(),
   currentTravelId: ''
-};
+});
 
-export function reducer(state: TravelState = initialState, action: Action): TravelState {
+export function reducer(state = initialState, action: Action) {
   switch (action.type) {
     // Loaders
     case ActionTypesTravel.LOAD_TRAVELS: {
-      return Object.assign({}, state, {
-        loading: true,
-        travels: []
-      });
+      return state.set('loading', true)
+        .setIn(['travels'], List());
     }
     case ActionTypesTravel.LOAD_TRAVELS_SUCCESS: {
-      return Object.assign({}, state, {
-        loading: false,
-        travels: action.payload
-      });
+      return state.set('loading', false)
+        .setIn(['travels'], List(action.payload));
     }
     // Updaters
     case ActionTypesTransfer.UPDATE_TRANSFER: {
-      return Object.assign({}, state, {
-        loading: true,
-        transfers: state.transfers
-      });
+      return state.set('loading', true);
     }
     case ActionTypesTransfer.UPDATE_TRANSFER_SUCCESS: {
-      const tmp = [];
-      for (let i = 0; i < state.transfers.length; i++) {
-        tmp.push(state.transfers[i].id === action.payload.id ? action.payload : state.transfers[i]);
-      }
-      return Object.assign({}, state, {
-        loading: false,
-        transfers: tmp
-      });
+      return state.set('loading', false)
+        .updateIn(['transfers'],
+          transfers => {
+            const tmp = [];
+            for (let i = 0; i < transfers.toJS().length; i++) {
+              tmp.push(transfers.toJS()[i].id === action.payload.id ? action.payload : transfers.toJS()[i]);
+            }
+            return List(tmp);
+          });
     }
     case ActionTypes.UPDATE_CITIES_DATES: {
-      return Object.assign({}, state, {
-        loading: true,
-        cities: state.cities
-      });
+      return state.set('loading', true);
     }
     case ActionTypes.UPDATE_CITIES_DATES_SUCCESS: {
-      const tmp = sortBy(
-        unionBy(action.payload, state.cities, 'id'),
-        (city: CityModel) => +moment(city.from, TravelRouteConstants.DATE_FORMAT)
-      );
-      return Object.assign({}, state, {
-        loading: false,
-        cities: tmp
-      });
+      return state.set('loading', false)
+        .updateIn(['cities'],
+          cities => List(sortBy(
+            unionBy(action.payload, cities.toJS(), 'id'),
+            (city: CityModel) => +moment(city.from, TravelRouteConstants.DATE_FORMAT)
+          ))
+        );
     }
     case ActionTypes.UPDATE_CITY_SUCCESS: {
-      const tmp = [];
-      for (let i = 0; i < state.cities.length; i++) {
-        tmp.push(state.cities[i].id === action.payload.id ? action.payload : state.cities[i]);
-      }
-      return Object.assign({}, state, {
-        loading: false,
-        cities: tmp
-      });
+      return state.set('loading', false)
+        .updateIn(['cities'],
+          cities => {
+            const tmp = [];
+            for (let i = 0; i < cities.toJS().length; i++) {
+              tmp.push(cities.toJS()[i].id === action.payload.id ? action.payload : cities.toJS()[i]);
+            }
+            return List(tmp);
+          });
     }
     case ActionTypesTravel.UPDATE_TRAVEL_SUCCESS: {
-      const tmp = [];
-      for (let i = 0; i < state.travels.length; i++) {
-        tmp.push(state.travels[i].id === action.payload.id ? action.payload : state.travels[i]);
-      }
-      return Object.assign({}, state, {
-        loading: false,
-        travels: tmp
-      });
+      return state.set('loading', false)
+        .updateIn(['travels'],
+          travels => {
+            const tmp = [];
+            for (let i = 0; i < travels.toJS().length; i++) {
+              tmp.push(travels.toJS()[i].id === action.payload.id ? action.payload : travels.toJS()[i]);
+            }
+            return List(tmp);
+          });
     }
     // Adders
     case ActionTypesTransfer.ADD_TRANSFER: {
-      return Object.assign({}, state, {
-        loading: true,
-        transfers: state.transfers
-      });
+      return state.set('loading', true);
     }
     case ActionTypesTransfer.ADD_TRANSFER_SUCCESS: {
-      return Object.assign({}, state, {
-        loading: false,
-        transfers: [...state.transfers, action.payload]
-      });
+      return state.set('loading', false)
+        .updateIn(['transfers'], transfers => transfers.push(action.payload));
     }
     case ActionTypes.ADD_CITY_SUCCESS: {
-      return Object.assign({}, state, {
-        loading: false,
-        cities: sortBy(
-          [...state.cities, action.payload],
-          (city: CityModel) => +moment(city.from, TravelRouteConstants.DATE_FORMAT)
-        )
-      });
+      return state.set('loading', false)
+        .updateIn(['cities'],
+          cities => List(sortBy(
+            cities.push(action.payload).toJS(),
+            (city: CityModel) => +moment(city.from, TravelRouteConstants.DATE_FORMAT)
+          ))
+        );
     }
     case ActionTypesTravel.ADD_TRAVEL_SUCCESS: {
-      return Object.assign({}, state, {
-        loading: false,
-        travels: [...state.travels, action.payload]
-      });
+      return state.set('loading', false)
+        .updateIn(['travels'], travels => travels.push(action.payload));
     }
     // Removers
     case ActionTypesTransfer.REMOVE_TRANSFER_SUCCESS: {
-      return Object.assign({}, state, {
-        loading: false,
-        transfers: state.transfers.filter((transfer: TransferModel) => transfer.id !== action.payload.id) || []
-      });
+      return state.set('loading', false)
+        .updateIn(['transfers'],
+          transfers => transfers.filter((transfer: TransferModel) => transfer.id !== action.payload.id) || List([]));
     }
     case ActionTypes.REMOVE_CITY_SUCCESS: {
-      return Object.assign({}, state, {
-        loading: false,
-        cities: state.cities.filter((city: CityModel) => city.id !== action.payload.id) || [],
-        transfers: state.transfers.filter((transfer: TransferModel) => transfer.cityId !== action.payload.id) || []
-      });
+      return state.set('loading', false)
+        .updateIn(['cities'],
+          cities => cities.filter((city: CityModel) => city.id !== action.payload.id) || List([]))
+        .updateIn(['transfers'],
+          transfers => transfers.filter((transfer: TransferModel) => transfer.cityId !== action.payload.id) || List([]));
     }
     case ActionTypesTravel.REMOVE_TRAVEL_SUCCESS: {
-      const tmp: Array<TransferModel> = [];
-      for (let i = 0; i < state.cities.length; i++) {
-        for (let j = 0; j < state.transfers.length; j++) {
-          if (state.cities[i].travelId !== action.payload.id) {
-            tmp.push(state.transfers[j]);
-          }
-        }
-      }
-      return Object.assign({}, state, {
-        loading: false,
-        cities: state.cities.filter((city: CityModel) => city.travelId !== action.payload.id) || [],
-        transfers: tmp,
-        travels: state.travels.filter((travel: TravelModel) => travel.id !== action.payload.id) || []
-      });
+      return state.set('loading', false)
+        .setIn(['cities'], List([]))
+        .updateIn(['travels'],
+          travels => travels.filter((travel: TravelModel) => travel.id !== action.payload.id) || List([]))
+        .setIn(['transfers'], List([]));
     }
     // Importers
     case ActionTypesTravel.IMPORT_TRAVEL: {
-      return Object.assign({}, state, {
-        loading: true
-      });
+      return state.set('loading', true);
     }
     case ActionTypesTravel.IMPORT_TRAVEL_SUCCESS: {
-      return Object.assign({}, state, {
-        loading: false,
-        currentTravelId: action.payload
-      });
+      return state.set('loading', false)
+        .setIn(['currentTravelId'], action.payload.travel.id)
+        .updateIn(['travels'], travels => travels.push(action.payload.travel))
+        .setIn(['cities'], List(sortBy(
+          action.payload.cities,
+          (city: CityModel) => +moment(city.from, TravelRouteConstants.DATE_FORMAT)
+        )))
+        .setIn(['transfers'], List(action.payload.transfers));
     }
     // Setters
     case ActionTypesTravel.SET_CURRENT_TRAVEL: {
-      return Object.assign({}, state, {
-        loading: true,
-        currentTravelId: action.payload
-      });
+      return state.set('loading', true)
+        .setIn(['currentTravelId'], action.payload);
     }
     case ActionTypesTravel.SET_CURRENT_TRAVEL_SUCCESS: {
-      return Object.assign({}, state, {
-        loading: false,
-        cities: action.payload.cities,
-        transfers: action.payload.transfers
-      });
+      return state.set('loading', false)
+        .setIn(['cities'], List(
+          sortBy(
+            action.payload.cities,
+            (city: CityModel) => +moment(city.from, TravelRouteConstants.DATE_FORMAT)
+          )
+        ))
+        .setIn(['transfers'], List(action.payload.transfers));
     }
     default: {
       return state;
