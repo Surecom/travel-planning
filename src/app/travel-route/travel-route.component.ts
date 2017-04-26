@@ -44,7 +44,7 @@ export class TravelRouteComponent implements OnInit {
         this.store.dispatch(setCurrentTravel(travels[0].id));
       }
     });
-    this.currentTravelId$ = this.store.select('travel').map((state: any) => state.get('currentTravelId'));
+    this.currentTravelId$ = this.store.select('travel').map((state: Map<string, string>) => state.get('currentTravelId'));
     this.currentTravelId$.subscribe(res => this.currentTravelId = res);
   }
 
