@@ -116,20 +116,20 @@ export function reducer(state = initialState, action: Action) {
     case ActionTypesTransfer.REMOVE_TRANSFER_SUCCESS: {
       return state.set('loading', false)
         .updateIn(['transfers'],
-        transfers => transfers.filter((transfer: TransferModel) => transfer.id !== action.payload.id) || []);
+        transfers => transfers.filter((transfer: TransferModel) => transfer.id !== action.payload.id) || List([]));
     }
     case ActionTypes.REMOVE_CITY_SUCCESS: {
      return state.set('loading', false)
        .updateIn(['cities'],
-        cities => cities.filter((city: CityModel) => city.id !== action.payload.id) || [])
+        cities => cities.filter((city: CityModel) => city.id !== action.payload.id) || List([]))
        .updateIn(['transfers'],
-        transfers => transfers.filter((transfer: TransferModel) => transfer.cityId !== action.payload.id) || []);
+        transfers => transfers.filter((transfer: TransferModel) => transfer.cityId !== action.payload.id) || List([]));
     }
     case ActionTypesTravel.REMOVE_TRAVEL_SUCCESS: {
       return state.set('loading', false)
         .setIn(['cities'], List([]))
         .updateIn(['travels'],
-          travels => travels.filter((travel: TravelModel) => travel.id !== action.payload.id) || [])
+          travels => travels.filter((travel: TravelModel) => travel.id !== action.payload.id) || List([]))
         .setIn(['transfers'], List([]));
     }
     // Importers
@@ -138,7 +138,13 @@ export function reducer(state = initialState, action: Action) {
     }
     case ActionTypesTravel.IMPORT_TRAVEL_SUCCESS: {
       return state.set('loading', false)
-        .setIn(['currentTravelId'], action.payload);
+        .setIn(['currentTravelId'], action.payload.travel.id)
+        .updateIn(['travels'], travels => travels.push(action.payload.travel))
+        .setIn(['cities'], List(sortBy(
+          action.payload.cities,
+          (city: CityModel) => +moment(city.from, TravelRouteConstants.DATE_FORMAT)
+        )))
+        .setIn(['transfers'], List(action.payload.transfers));
     }
     // Setters
     case ActionTypesTravel.SET_CURRENT_TRAVEL: {

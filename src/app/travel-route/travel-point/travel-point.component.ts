@@ -49,8 +49,10 @@ export class TravelPointComponent implements OnInit {
     this.store.dispatch(removeTravel(travel));
   }
 
-  public setCurrent() {
-    this.store.dispatch(setCurrentTravel(this.travel.id));
+  public setCurrent(event) {
+    if (!event.target.classList.contains('mat-ripple')) {
+      this.store.dispatch(setCurrentTravel(this.travel.id));
+    }
   }
 
   public updateTravel() {

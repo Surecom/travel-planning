@@ -1,4 +1,4 @@
-<div (click)="setCurrent()" [class]="'card card-inverse'" [class.active]="this.travel.id === this.currentTravelId">
+<div (click)="setCurrent($event)" [class]="'card card-inverse'" [class.active]="this.travel.id === this.currentTravelId">
   <img class="card-img" src="../../../assets/travel.jpg" alt="Card image">
   <div *ngIf="!updateMark; else updateTpl" class="card-img-overlay d-flex justify-content-between align-content-stretch flex-wrap">
       <h4 class="card-title">{{travel.name}}</h4>
