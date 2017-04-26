@@ -117,7 +117,7 @@ export class TravelEffectsService {
           this.db.insert('transfers', transfersArr),
           this.db.insert('travels', [exportArr.travel])
         )
-        .map(() => importTravelSuccess(exportArr.travel.id));
+        .map(() => importTravelSuccess(citiesArr, transfersArr, exportArr.travel));
     });
 
   @Effect()
@@ -137,11 +137,11 @@ export class TravelEffectsService {
           return this.db.executeWrite('travels', 'delete', [ travel.id ]);
         } else {
           return Observable.forkJoin(
-              this.db.executeWrite('cities', 'delete', cityIds),
               this.db.executeWrite('travels', 'delete', [ travel.id ]),
+              this.db.executeWrite('cities', 'delete', cityIds),
               this.db.query('transfers')
                 .toArray()
-                .mergeMap((transfers: TransferModel[]) => {
+                .map((transfers: TransferModel[]) => {
                   const transferIds: Array<string> = [];
                   for (let i = 0; i < cityIds.length; i++) {
                     for (let j = 0; j < transfers.length; j++) {

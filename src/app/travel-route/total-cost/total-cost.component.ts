@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
+import { List, Map } from 'immutable';
 
 import { TransferModel } from '../models/transfer.model';
 import { CityModel } from '../models/city.model';
-import { TravelState } from '../reducers/reducer';
 
 @Component({
   selector: '[total-cost]',
@@ -15,18 +15,18 @@ export class TotalCostComponent implements OnInit {
 
   private transfers: TransferModel[];
   private cities: CityModel[];
-  public cities$: Observable<CityModel[]>;
+  public cities$: Observable<List<CityModel>>;
   public transfers$: Observable<TransferModel[]>;
 
   public citiesCost = 0;
   public transfersCost = 0;
 
-  constructor(private store: Store<TravelState>) { }
+  constructor(private store: Store<{}>) { }
 
   ngOnInit(): void {
-    this.cities$ = this.store.select('travel').map((state: TravelState) => state.cities);
-    this.cities$.subscribe(res => {
-      this.cities = res;
+    this.cities$ = this.store.select('travel').map((state: Map<string, List<CityModel>>) => state.get('cities'));
+    this.cities$.subscribe((res: List<CityModel>) => {
+      this.cities = res.toJS();
       if (this.cities.length > 0) {
         this.citiesCost = this.cities
           .map(city => +city.cost)
@@ -35,10 +35,11 @@ export class TotalCostComponent implements OnInit {
         this.citiesCost = 0;
       }
     });
-    this.transfers$ = this.store.select('travel').map((state: TravelState) => {
+    this.transfers$ = this.store.select('travel').map((state: Map<string, List<TransferModel>>) => {
       const tmp: TransferModel[] = [];
-      for (let j = 0; j < state.transfers.length; j++) {
-        tmp.push(state.transfers[j]);
+      const transfers: TransferModel[] = state.get('transfers').toJS();
+      for (let j = 0; j < transfers.length; j++) {
+        tmp.push(transfers[j]);
       }
       return tmp;
     });

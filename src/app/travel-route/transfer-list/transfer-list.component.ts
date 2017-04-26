@@ -3,6 +3,7 @@ import { MdDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import * as moment from 'moment';
+import { List } from 'immutable';
 
 import { TransferModel, ITransferModel } from '../models/transfer.model';
 import { CityModel } from '../models/city.model';
@@ -10,7 +11,6 @@ import { AddTransfer } from '../actions/transfer.action';
 import { CityCrossingModalComponent } from '../city-crossing-modal/city-crossing-modal.component';
 import { TravelRouteConstants } from '../common/constants';
 import { TransferCheck } from '../models/trasfer-check';
-import { TravelState } from '../reducers/reducer';
 
 @Component({
   selector: '[transfer-list]',
@@ -31,13 +31,22 @@ export class TransferListComponent implements OnInit {
   public countTransfers: number;
 
   constructor(private dialog: MdDialog,
-              private store: Store<TransferModel>) { }
+              private store: Store<{}>) { }
 
   ngOnInit() {
     this.transfers$ = this.store
       .select('travel')
-      .map((state: TravelState) => state.transfers.sort((a: TransferModel, b: TransferModel) => a.order - b.order));
-    this.transfersLoading$ = this.store.select('travel').map((state: TravelState) => state.loading);
+      .map((state: Map<string, List<TransferModel>>) => {
+        const transfers = state.get('transfers').toJS();
+        const transfersByCity: TransferModel[] = [];
+        for (let i = 0; i < transfers.length; i++) {
+          if (transfers[i].cityId === this.city.id) {
+            transfersByCity.push(transfers[i]);
+          }
+        }
+        return transfersByCity.sort((a: TransferModel, b: TransferModel) => a.order - b.order);
+      });
+    this.transfersLoading$ = this.store.select('travel').map((state: Map<string, boolean>) => state.get('loading'));
     this.transfers$.subscribe(
       transfers => {
         this.countTransfers = transfers.length;

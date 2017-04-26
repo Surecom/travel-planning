@@ -8,12 +8,12 @@ import { Store } from '@ngrx/store';
 import { assign, difference, isEqual } from 'lodash';
 import * as noUiSlider from 'nouislider';
 import * as moment from 'moment';
+import { List } from 'immutable';
 
 import { CityModel } from '../models/city.model';
 import { TravelRouteConstants } from '../common/constants';
 import { SliderService } from '../services/slider.service';
 import { CityDateUpdate } from '../models/city-date-update';
-import { TravelState } from '../reducers/reducer';
 
 @Component({
   selector: '[slider]',
@@ -26,7 +26,7 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnInit {
   @Input()
   private softLimitDays = 4;
 
-  public cities$: Observable<CityModel[]>;
+  public cities$: Observable<List<CityModel>>;
   private cities: CityModel[];
 
   @ViewChild('slider')
@@ -38,14 +38,15 @@ export class SliderComponent implements AfterViewInit, OnDestroy, OnInit {
   private days = 0;
   private oldValueDates: string[];
 
-  constructor(private sliderService: SliderService, private store: Store<TravelState>) {
+  constructor(private sliderService: SliderService, private store: Store<{}>) {
   }
 
   ngOnInit(): void {
-    this.cities$ = this.store.select('travel').map((state: TravelState) => state.cities);
-    this.cities$.subscribe(res => {
-      if (!isEqual(this.cities, res)) {
-        this.cities = res;
+    this.cities$ = this.store.select('travel').map((state: Map<string, List<CityModel>>) => state.get('cities'));
+    this.cities$.subscribe((res: List<CityModel>) => {
+      const cities = res.toJS();
+      if (!isEqual(this.cities, cities)) {
+        this.cities = cities;
         this.update();
       }
     });

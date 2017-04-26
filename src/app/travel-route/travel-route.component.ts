@@ -5,9 +5,9 @@ import 'rxjs/add/observable/forkJoin';
 import { MdDialog } from '@angular/material';
 import { Database } from '@ngrx/db';
 import { AES } from 'crypto-js';
+import { Map, List } from 'immutable';
 
 import { updateCitiesDate } from './actions/city.actions';
-import { TravelState } from './reducers/reducer';
 import { CityDateUpdate } from './models/city-date-update';
 import { UploadModalComponent } from './upload-modal/upload-modal.component';
 import { CityExportModel, TransferExportModel } from './models/export.model';
@@ -26,24 +26,25 @@ import { TransferModel } from './models/transfer.model';
 export class TravelRouteComponent implements OnInit {
 
   private key = 'PANDAS POWER ITS IMPOSSIBLE';
-  public travels$: Observable<TravelModel[]>;
+  public travels$: Observable<List<TravelModel>>;
   public currentTravelId$: Observable<string>;
   public isDisabled = false;
   private currentTravelId = '';
   private currentTravelIdChanged = true;
 
-  constructor(private store: Store<TravelState>, private dialog: MdDialog, private db: Database) { }
+  constructor(private store: Store<{}>, private dialog: MdDialog, private db: Database) { }
 
   ngOnInit() {
     this.store.dispatch(loadTravels());
-    this.travels$ = this.store.select('travel').map((state: TravelState) => state.travels);
-    this.travels$.subscribe(res => {
-      if (res.length > 0 && this.currentTravelIdChanged) {
+    this.travels$ = this.store.select('travel').map((state: Map<string, List<TravelModel>>) => state.get('travels'));
+    this.travels$.subscribe((res: List<TravelModel>) => {
+      const travels = res.toJS();
+      if (travels.length > 0 && this.currentTravelIdChanged) {
         this.currentTravelIdChanged = false;
-        this.store.dispatch(setCurrentTravel(res[0].id));
+        this.store.dispatch(setCurrentTravel(travels[0].id));
       }
     });
-    this.currentTravelId$ = this.store.select('travel').map((state: TravelState) => state.currentTravelId);
+    this.currentTravelId$ = this.store.select('travel').map((state: Map<string, string>) => state.get('currentTravelId'));
     this.currentTravelId$.subscribe(res => this.currentTravelId = res);
   }
 

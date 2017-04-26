@@ -2,12 +2,12 @@ import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy } from '@angu
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import { List } from 'immutable';
 
 import { CityModel } from '../models/city.model';
 import { addCity } from '../actions/city.actions';
 import { minValueValidator } from '../validators/min-value.validator';
 import { numberValidator } from '../validators/number.validator';
-import { TravelState } from '../reducers/reducer';
 
 @Component({
   selector: '[city-add]',
@@ -17,7 +17,7 @@ import { TravelState } from '../reducers/reducer';
 })
 export class CityAddComponent implements OnInit, AfterViewInit {
 
-  public cities$: Observable<CityModel[]>;
+  public cities$: Observable<List<CityModel>>;
   public currentTravelId$: Observable<string>;
   public cities: CityModel[];
 
@@ -52,12 +52,12 @@ export class CityAddComponent implements OnInit, AfterViewInit {
     }
   };
 
-  constructor(private formBuilder: FormBuilder, private store: Store<TravelState>) { }
+  constructor(private formBuilder: FormBuilder, private store: Store<{}>) { }
 
   ngOnInit() {
-    this.cities$ = this.store.select('travel').map((state: TravelState) => state.cities);
-    this.cities$.subscribe(res => {
-      this.cities = res;
+    this.cities$ = this.store.select('travel').map((state: Map<string, List<CityModel>>) => state.get('cities'));
+    this.cities$.subscribe((res: List<CityModel>) => {
+      this.cities = res.toJS();
       if (this.cityForm) {
         if (this.cities.length > 0) {
           this.cityForm.get('to').setValue(this.cities[this.cities.length - 1].to);
@@ -70,7 +70,7 @@ export class CityAddComponent implements OnInit, AfterViewInit {
         }
       }
     });
-    this.currentTravelId$ = this.store.select('travel').map((state: TravelState) => state.currentTravelId);
+    this.currentTravelId$ = this.store.select('travel').map((state: Map<string, string>) => state.get('currentTravelId'));
     this.currentTravelId$.subscribe(res => this.currentTravelId = res);
     this.cityForm = this.formBuilder.group({
       to: ['', Validators.required],
