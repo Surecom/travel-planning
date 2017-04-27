@@ -20,7 +20,7 @@ export class TransferPointComponent implements OnInit {
   @Input()
   public transfer: TransferModel;
 
-  private updateMark = false;
+  public updateMark = false;
 
   constructor(private store: Store<CityModel>) {}
 

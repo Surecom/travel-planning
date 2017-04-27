@@ -13,7 +13,7 @@ import { AddTravelModalComponent } from '../add-travel-modal/add-travel-modal.co
 export class TravelListComponent implements OnChanges {
 
   @Input()
-  private travels: List<TravelModel>;
+  public travels: List<TravelModel>;
 
   @Output()
   private disableTab: EventEmitter<string> = new EventEmitter();
