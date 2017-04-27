@@ -19,7 +19,7 @@ export class TravelPointComponent implements OnInit {
   public updateMark = false;
 
   public currentTravelId$: Observable<string>;
-  private currentTravelId: string;
+  public currentTravelId: string;
 
   public travelForm: FormGroup;
   public formErrors = {

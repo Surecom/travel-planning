@@ -4,13 +4,13 @@ import { TravelRouteComponent } from './travel-route/travel-route.component';
 
 const routes: Routes = [{
   path: '',
-  redirectTo: '/travel',
+  redirectTo: 'travel',
   pathMatch: 'full'
 }, {
   path: 'travel',
   component: TravelRouteComponent
 }, {
-  path: '**', redirectTo: '/travel'
+  path: '**', redirectTo: 'travel'
 }];
 
 @NgModule({
