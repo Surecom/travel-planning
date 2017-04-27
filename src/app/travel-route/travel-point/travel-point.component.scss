@@ -1,9 +1,13 @@
 .card-inverse {
  margin-top: 20px;
  margin-right: 14px;
+ height: 200px;
   .card-img {
     width: 100%;
     opacity: 0.5;
+    background-image: url("../../../assets/travel.jpg");
+    background-size: contain;
+    height: 100%;
   }
   .card-title {
     color: #333333;
